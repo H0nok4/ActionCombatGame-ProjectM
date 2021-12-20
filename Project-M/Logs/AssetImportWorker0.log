@@ -208,3 +208,4 @@ Received Import Request.
   path: Packages/com.unity.2d.animation/IK/Runtime/Solvers/CCD2D.cs
   artifactKey: Guid(8016d85182d14704da1cf959d18ac860) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Start importing Packages/com.unity.2d.animation/IK/Runtime/Solvers/CCD2D.cs using Guid(8016d85182d14704da1cf959d18ac860) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bbbcbfcd35fb3b8be2367f30998a18ca') in 0.045947 seconds 
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
