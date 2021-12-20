@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Assets\Script\Basic\Character\CharacterBase.cs" />
     <Compile Include="Assets\Script\Basic\MapConfig.cs" />
+    <Compile Include="Assets\Script\MVC\Controller\CharacterController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
