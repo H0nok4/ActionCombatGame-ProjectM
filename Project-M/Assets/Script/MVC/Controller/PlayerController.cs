@@ -4,23 +4,62 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField]GameObject _character;
+    [SerializeField] GameObject _character;
+    [SerializeField] GameObject _characterSprite;
+    Animator animator;
+    Rigidbody2D rig;
+    int MoveX = 0;
+    int MoveY = 0;
+    int moveSpeed = 3;
     // Start is called before the first frame update
     void Start()
     {
-        
+        animator = _character.GetComponentInChildren<Animator>();
+        rig = _character.GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (isCharacterFlip(_character.transform.position)) {
-            _character.transform.localScale = new Vector3(1,1,1);
+        if (Input.GetKey(KeyCode.LeftShift)) {
+            moveSpeed = 6;
         } else {
-            _character.transform.localScale = new Vector3(-1,1,1);
+            moveSpeed = 3;
+        }
+        MoveX = 0;
+        MoveY = 0;
+        if (isCharacterFlip(_character.transform.position)) {
+            _characterSprite.transform.localScale = new Vector3(1,1,1);
+        } else {
+            _characterSprite.transform.localScale = new Vector3(-1,1,1);
         }
 
+        if (Input.GetKey(KeyCode.A)) {
+            MoveX -= 1;
+        }
+        if (Input.GetKey(KeyCode.D)) {
+            MoveX += 1;
+        }
+        if (Input.GetKey(KeyCode.W)) {
+            MoveY += 1;
+        }
+        if (Input.GetKey(KeyCode.S)) {
+            MoveY -= 1;
+        }
 
+        if (MoveX != 0 || MoveY != 0) {
+            Move(MoveX,MoveY);
+        } else {
+            animator.SetBool("IsMove",false);
+            rig.velocity = new Vector2(0,0);
+        }
+
+    }
+
+    public void Move(int x,int y) {
+        animator.SetBool("IsMove",true);
+        rig.transform.Translate(new Vector3(x,y)* moveSpeed * Time.deltaTime);
+        Debug.Log($"MoveX = {x},MoveY = {y}");
     }
 
     /// <summary>
