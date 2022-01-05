@@ -7,7 +7,7 @@ public class CharacterController : MonoBehaviour
     private CharacterModel _model;
     [SerializeField] GameObject characterGameobject;//临时使用，以后需要根据每个角色生成对应的实例再传入
     [SerializeField] GameObject characterSpriteobject;
-
+    [SerializeField] GameObject WeaponObject;
     public PlayerController playerController;
     public CharacterController() {
 
@@ -25,6 +25,7 @@ public class CharacterController : MonoBehaviour
     private void FixedUpdate() {
         MoveCharacter();
         ChangeCharacterDirection();
+        UpdateWeaponRotation();
     }
 
     public void MoveCharacter() {
@@ -56,6 +57,17 @@ public class CharacterController : MonoBehaviour
             _model.CharacterRig.velocity = new Vector2(0,0);
         }
 
+    }
+
+    public void UpdateWeaponRotation() {
+        var mousePos = playerController.GetPlayerMouseWorldPos();
+        Debug.Log($"mousePos = {mousePos}");
+        var characterPos = characterGameobject.transform.position;
+        var angle = Vector2.Angle(Vector2.down,(new Vector2(mousePos.x,mousePos.y) - new Vector2(characterPos.x,characterPos.y)).normalized);
+        Debug.Log($"angle = {angle}");
+        WeaponObject.transform.eulerAngles = new Vector3(0,0,angle);
+
+        
     }
 
     public void ChangeCharacterDirection() {

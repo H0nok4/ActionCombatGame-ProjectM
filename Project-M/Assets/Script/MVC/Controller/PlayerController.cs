@@ -20,6 +20,12 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
+    public Vector3 GetPlayerMouseWorldPos() {
+        var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        return mousePos;
+    }
+
 
 
     /// <summary>
