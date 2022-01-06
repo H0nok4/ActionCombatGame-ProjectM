@@ -35,7 +35,11 @@ public class CharacterController : MonoBehaviour
         //普通攻击
         if (Input.GetKeyDown(KeyCode.Mouse0)) {
             var fireObject = Instantiate(tempFireObject,firePos.transform.position,Quaternion.identity);
-            StartCoroutine(MoveFireObject(fireObject,firePos.transform.position,playerController.GetPlayerMouseWorldPos()));
+            Vector2 targetVec = (playerController.GetPlayerMouseWorldPos() - characterGameobject.transform.position);//想要攻击的位置
+            Vector2 normalVec = targetVec.normalized;//归一化的方向向量
+            var attackRange = targetVec.magnitude;//攻击范围，先取为到目标长度
+            var resultVec = normalVec * Mathf.Clamp(attackRange,0,3);//最终的攻击位置，需要限定在0~角色的攻击范围内，这里用3先代替攻击范围
+            StartCoroutine(MoveFireObject(fireObject,firePos.transform.position,resultVec,Mathf.Clamp(attackRange / 4,0.25f,0.75f)));//攻击动画时间随着攻击位置的长度增加而增加，最低不低于0.25,需要将0~攻击范围映射到0.25~1
         }
     }
 
@@ -43,11 +47,11 @@ public class CharacterController : MonoBehaviour
         //将动画时间映射到0~1之间来计算动画曲线
         float curT = 0;
         while (curT <= 1) {
-            var thdPos = (targetWorldPos - startPos)/ 2 + (2 * (Vector2.up));
+            var thdPos = (targetWorldPos - startPos)/ 2 + (Vector2.up);
 
             var curPos = Math.CalculateCubicBezierPointfor2C(curT, startPos, thdPos, targetWorldPos);
             fireObject.transform.position = curPos;
-            curT = curT + (Time.fixedDeltaTime) / animationTime;//将动画的时间归一化成0~1的范围
+            curT = curT + ((Time.fixedDeltaTime) / animationTime);//将动画的时间归一化成0~1的范围
             yield return new WaitForFixedUpdate();
         }
 
@@ -65,7 +69,7 @@ public class CharacterController : MonoBehaviour
         }
 
         if (Input.GetKey(KeyCode.A)) {
-            MoveX -= 1;
+             MoveX -= 1;
         }
         if (Input.GetKey(KeyCode.D)) {
             MoveX += 1;
