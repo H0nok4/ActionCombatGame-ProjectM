@@ -8,6 +8,8 @@ public class CharacterController : MonoBehaviour
     [SerializeField] GameObject characterGameobject;//临时使用，以后需要根据每个角色生成对应的实例再传入
     [SerializeField] GameObject characterSpriteobject;
     [SerializeField] GameObject WeaponObject;
+    [SerializeField] GameObject tempFireObject;
+    [SerializeField] GameObject firePos;
     public PlayerController playerController;
     public CharacterController() {
 
@@ -19,14 +21,39 @@ public class CharacterController : MonoBehaviour
     }
 
     private void Update() {
-        
+        Fire();
     }
 
     private void FixedUpdate() {
         MoveCharacter();
         ChangeCharacterDirection();
         UpdateWeaponRotation();
+
     }
+
+    public void Fire() {
+        //普通攻击
+        if (Input.GetKeyDown(KeyCode.Mouse0)) {
+            var fireObject = Instantiate(tempFireObject,firePos.transform.position,Quaternion.identity);
+            StartCoroutine(MoveFireObject(fireObject,firePos.transform.position,playerController.GetPlayerMouseWorldPos()));
+        }
+    }
+
+    IEnumerator MoveFireObject(GameObject fireObject,Vector2 startPos,Vector2 targetWorldPos,float animationTime = 0.5f) {
+        //将动画时间映射到0~1之间来计算动画曲线
+        float curT = 0;
+        while (curT <= 1) {
+            var thdPos = (targetWorldPos - startPos)/ 2 + (2 * (Vector2.up));
+
+            var curPos = Math.CalculateCubicBezierPointfor2C(curT, startPos, thdPos, targetWorldPos);
+            fireObject.transform.position = curPos;
+            curT = curT + (Time.fixedDeltaTime) / animationTime;//将动画的时间归一化成0~1的范围
+            yield return new WaitForFixedUpdate();
+        }
+
+        yield break;
+    }
+
 
     public void MoveCharacter() {
         int MoveX = 0;
@@ -61,10 +88,8 @@ public class CharacterController : MonoBehaviour
 
     public void UpdateWeaponRotation() {
         var mousePos = playerController.GetPlayerMouseWorldPos();
-        Debug.Log($"mousePos = {mousePos}");
         var characterPos = characterGameobject.transform.position;
         var angle = Vector2.Angle(Vector2.up,(new Vector2(mousePos.x,mousePos.y) - new Vector2(characterPos.x,characterPos.y)).normalized);
-        Debug.Log($"angle = {angle}");
         WeaponObject.transform.eulerAngles = new Vector3(0,0,angle * -(_model._characterSprite.transform.localScale.x));
 
         
