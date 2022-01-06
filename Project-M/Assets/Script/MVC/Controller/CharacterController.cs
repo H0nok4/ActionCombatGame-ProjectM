@@ -63,9 +63,9 @@ public class CharacterController : MonoBehaviour
         var mousePos = playerController.GetPlayerMouseWorldPos();
         Debug.Log($"mousePos = {mousePos}");
         var characterPos = characterGameobject.transform.position;
-        var angle = Vector2.Angle(Vector2.down,(new Vector2(mousePos.x,mousePos.y) - new Vector2(characterPos.x,characterPos.y)).normalized);
+        var angle = Vector2.Angle(Vector2.up,(new Vector2(mousePos.x,mousePos.y) - new Vector2(characterPos.x,characterPos.y)).normalized);
         Debug.Log($"angle = {angle}");
-        WeaponObject.transform.eulerAngles = new Vector3(0,0,angle);
+        WeaponObject.transform.eulerAngles = new Vector3(0,0,angle * -(_model._characterSprite.transform.localScale.x));
 
         
     }
