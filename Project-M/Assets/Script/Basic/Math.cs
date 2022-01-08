@@ -62,4 +62,10 @@ public class Math
         p += tt * p2;
         return p;
     }
+
+    public static float RangeMapping(float leftRange,float rightRange,float min,float max,float cur) {
+        var result = leftRange + (rightRange - leftRange) / (max - min) * (cur - min);
+
+        return result;
+    }
 }

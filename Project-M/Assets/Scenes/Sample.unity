@@ -574,7 +574,7 @@ MonoBehaviour:
   characterGameobject: {fileID: 758135174}
   characterSpriteobject: {fileID: 1235894366}
   WeaponObject: {fileID: 136445020}
-  tempFireObject: {fileID: 5213965120311522044, guid: 85192997a9a97574da9940046a36b33f,
+  tempFireObject: {fileID: 4154467439692931487, guid: 85192997a9a97574da9940046a36b33f,
     type: 3}
   firePos: {fileID: 2095508681}
   playerController: {fileID: 1983992671}

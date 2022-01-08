@@ -32,7 +32,7 @@ public class CharacterController : MonoBehaviour
     }
 
     public void Fire() {
-        //普通攻击
+        //klee普通攻击
         if (Input.GetKeyDown(KeyCode.Mouse0)) {
             var fireObject = Instantiate(tempFireObject,firePos.transform.position,Quaternion.identity);
             Vector2 targetVec = (playerController.GetPlayerMouseWorldPos() - characterGameobject.transform.position);//想要攻击的位置
@@ -41,13 +41,18 @@ public class CharacterController : MonoBehaviour
 
             int count = Math.BetweenLineAndCircle(characterGameobject.transform.position, 3, characterGameobject.transform.position,
                 playerController.GetPlayerMouseWorldPos(), out resultPos, out otherPos);
-            Debug.Log(count);
+            Vector3 startPos = new Vector2(firePos.transform.position.x,firePos.transform.position.y);
+
+            Vector3 targetPos = playerController.GetPlayerMouseWorldPos();
+            Vector3 resultVec = resultPos - new Vector2(characterGameobject.transform.position.x,characterGameobject.transform.position.y);
             if (count >= 1) {
-                StartCoroutine(MoveFireObject(fireObject, firePos.transform.position, resultPos, Mathf.Clamp(resultPos.magnitude / 4, 0.25f, 0.75f)));//攻击动画时间随着攻击位置的长度增加而增加，最低不低于0.25,需要将0~攻击范围映射到0.25~1
+                var animTime = Math.RangeMapping(0.25f,0.5f,0f,3f,resultVec.magnitude);
+                StartCoroutine(MoveFireObject(fireObject, firePos.transform.position, resultPos, animTime));//攻击动画时间随着攻击位置的长度增加而增加，最低不低于0.25,需要将0~攻击范围映射到0.25~1
 
             }
             else {
-                StartCoroutine(MoveFireObject(fireObject, firePos.transform.position, playerController.GetPlayerMouseWorldPos(), Mathf.Clamp(targetVec.magnitude / 4, 0.25f, 0.75f)));
+                var animTime = Math.RangeMapping(0.25f,0.5f,0f,3f,targetVec.magnitude);
+                StartCoroutine(MoveFireObject(fireObject, startPos,targetPos , animTime));
             }
             
         }
@@ -55,11 +60,26 @@ public class CharacterController : MonoBehaviour
 
     IEnumerator MoveFireObject(GameObject fireObject,Vector2 startPos,Vector2 targetWorldPos,float animationTime = 0.5f) {
         //将动画时间映射到0~1之间来计算动画曲线
-        float curT = 0;
-        while (curT <= 1) {
-            var thdPos = (targetWorldPos - startPos)/ 2 + (Vector2.up);
 
-            var curPos = Math.CalculateCubicBezierPointfor2C(curT, startPos, thdPos, targetWorldPos);
+        //计算第三个点
+        float curT = 0;
+        var halfTargetVec = (targetWorldPos - startPos) / 2;
+        float angle = 0;
+        if (targetWorldPos.x > startPos.x) {
+            //如果在右边，计算与右向量的夹角
+            angle = Vector2.Angle(halfTargetVec,Vector2.right);
+        } else {
+            //在左半边，就算与左向量的夹角
+            angle = Vector2.Angle(halfTargetVec,Vector2.left);
+        }
+        //夹角最大值为90度，最小值为0度
+        var normalVec = new Vector2(0,1 - Mathf.Abs(angle / 90));
+
+        var thdVec = halfTargetVec + (normalVec + startPos); 
+
+        while (curT <= 1) {
+            //开始播放
+            var curPos = Math.CalculateCubicBezierPointfor2C(curT, startPos, thdVec, targetWorldPos);
             fireObject.transform.position = curPos;
             curT = curT + ((Time.fixedDeltaTime) / animationTime);//将动画的时间归一化成0~1的范围
             yield return new WaitForFixedUpdate();

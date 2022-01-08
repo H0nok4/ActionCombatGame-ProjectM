@@ -32,7 +32,6 @@ public class CharacterModel
     public void Move(int x,int y) {
         animator.SetBool("IsMove",true);
         CharacterRig.transform.Translate(new Vector3(x,y) * moveSpeed * Time.deltaTime);
-        Debug.Log($"MoveX = {x},MoveY = {y}");
     }
 
 }
