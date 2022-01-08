@@ -36,10 +36,20 @@ public class CharacterController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0)) {
             var fireObject = Instantiate(tempFireObject,firePos.transform.position,Quaternion.identity);
             Vector2 targetVec = (playerController.GetPlayerMouseWorldPos() - characterGameobject.transform.position);//想要攻击的位置
-            Vector2 normalVec = targetVec.normalized;//归一化的方向向量
-            var attackRange = targetVec.magnitude;//攻击范围，先取为到目标长度
-            var resultVec = normalVec * Mathf.Clamp(attackRange,0,3);//最终的攻击位置，需要限定在0~角色的攻击范围内，这里用3先代替攻击范围
-            StartCoroutine(MoveFireObject(fireObject,firePos.transform.position,resultVec,Mathf.Clamp(attackRange / 4,0.25f,0.75f)));//攻击动画时间随着攻击位置的长度增加而增加，最低不低于0.25,需要将0~攻击范围映射到0.25~1
+            Vector2 resultPos = new Vector2();
+            Vector2 otherPos = new Vector2();
+
+            int count = Math.BetweenLineAndCircle(characterGameobject.transform.position, 3, characterGameobject.transform.position,
+                playerController.GetPlayerMouseWorldPos(), out resultPos, out otherPos);
+            Debug.Log(count);
+            if (count >= 1) {
+                StartCoroutine(MoveFireObject(fireObject, firePos.transform.position, resultPos, Mathf.Clamp(resultPos.magnitude / 4, 0.25f, 0.75f)));//攻击动画时间随着攻击位置的长度增加而增加，最低不低于0.25,需要将0~攻击范围映射到0.25~1
+
+            }
+            else {
+                StartCoroutine(MoveFireObject(fireObject, firePos.transform.position, playerController.GetPlayerMouseWorldPos(), Mathf.Clamp(targetVec.magnitude / 4, 0.25f, 0.75f)));
+            }
+            
         }
     }
 
