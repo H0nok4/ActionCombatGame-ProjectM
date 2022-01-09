@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UpdateRunner : MonoBehaviour
+public class UpdateRunner : MonoSingleton<UpdateRunner>
 {
     public List<IUpdatable> updatables = new List<IUpdatable>();
 
