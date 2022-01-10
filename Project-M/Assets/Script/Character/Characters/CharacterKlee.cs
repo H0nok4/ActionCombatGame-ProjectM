@@ -4,8 +4,61 @@ using UnityEngine;
 
 public class CharacterKlee : CharacterBase
 {
-    public override void NormalAttack() {
+    public override void NormalAttack(Vector2 inputVec) {
         //TODO:Klee的普通攻击
+        if (Input.GetKeyDown(KeyCode.Mouse0)) {
+            var fireObject = GameObjectPool.Instance.CreatProjectileFromPool("Klee_Attack_Projectile");
+            Vector2 targetVec = (inputVec - new Vector2(GameObject.transform.position.x,GameObject.transform.position.y));//想要攻击的位置
+            Vector2 resultPos = new Vector2();
+            Vector2 otherPos = new Vector2();
 
+            int count = Math.BetweenLineAndCircle(GameObject.transform.position, 3, GameObject.transform.position,
+                inputVec, out resultPos, out otherPos);
+            Vector3 startPos = new Vector2(Weapon.FirePos.transform.position.x, Weapon.FirePos.transform.position.y);
+
+            Vector3 targetPos = inputVec;
+            Vector3 resultVec = resultPos - new Vector2(GameObject.transform.position.x, GameObject.transform.position.y);
+            if (count >= 1) {
+                var animTime = Math.RangeMapping(0.25f, 0.5f, 0f, 3f, resultVec.magnitude);
+                //StartCoroutine(MoveFireObject(fireObject, Weapon.FirePos.transform.position, resultPos, animTime));//攻击动画时间随着攻击位置的长度增加而增加，最低不低于0.25,需要将0~攻击范围映射到0.25~1
+
+            }
+            else {
+                var animTime = Math.RangeMapping(0.25f, 0.5f, 0f, 3f, targetVec.magnitude);
+                //StartCoroutine(MoveFireObject(fireObject, startPos, targetPos, animTime));
+            }
+        }
+    }
+
+    IEnumerator MoveFireObject(GameObject fireObject, Vector2 startPos, Vector2 targetWorldPos, float animationTime = 0.5f) {
+        //将动画时间映射到0~1之间来计算动画曲线
+
+        //计算第三个点
+        float curT = 0;
+        var halfTargetVec = (targetWorldPos - startPos) / 2;
+        float angle = 0;
+        if (targetWorldPos.x > startPos.x) {
+            //如果在右边，计算与右向量的夹角
+            angle = Vector2.Angle(halfTargetVec, Vector2.right);
+        }
+        else {
+            //在左半边，就算与左向量的夹角
+            angle = Vector2.Angle(halfTargetVec, Vector2.left);
+        }
+        //夹角最大值为90度，最小值为0度
+        var normalVec = new Vector2(0, 1 - Mathf.Abs(angle / 90));
+
+        var thdVec = halfTargetVec + (normalVec + startPos);
+
+        while (curT <= 1) {
+            //开始播放
+            var curPos = Math.CalculateCubicBezierPointfor2C(curT, startPos, thdVec, targetWorldPos);
+            fireObject.transform.position = curPos;
+            curT = curT + ((Time.fixedDeltaTime) / animationTime);//将动画的时间归一化成0~1的范围
+            yield return new WaitForFixedUpdate();
+        }
+
+        GameObjectPool.Instance.RemoveGameObjectToPool(fireObject);
+        yield break;
     }
 }

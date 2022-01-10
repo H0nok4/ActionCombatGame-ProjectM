@@ -31,13 +31,11 @@ public class DataCenter : MonoSingleton<DataCenter>
 
     #endregion
 
-    private void Start() {
+    public override void OnInitialize() {
         //TODO:未来会将数据库的读取放在其他地方，防止开启游戏时间太久，可能是战斗开始前的初始化过程，再加个进度条之类的
-        
+        base.OnInitialize();
         LoadRes();
     }
-
-
 
 
     public void LoadRes() {

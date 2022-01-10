@@ -7,8 +7,9 @@ public class GameObjectPool : MonoSingleton<GameObjectPool>
     //对象池类，负责游戏的各种对象的生成与销毁
     private static Dictionary<string,List<GameObject>> ObjectPool = new Dictionary<string,List<GameObject>>();
     private GameObject _objectPoolGO;
-    private void Start() {
-        _objectPoolGO = Instantiate(new GameObject(),Vector3.zero,Quaternion.identity);
+    public override void OnInitialize() {
+        base.OnInitialize();
+        _objectPoolGO = Instantiate(new GameObject(), Vector3.zero, Quaternion.identity);
     }
 
     #region 从对象池内创建物体
@@ -47,6 +48,13 @@ public class GameObjectPool : MonoSingleton<GameObjectPool>
     public GameObject CreatCharacter(string characterName) {
         var characterGameObject = DataCenter.Instance.GetCharacterByName(characterName);
         var instanceGo = Instantiate(characterGameObject, Vector3.zero, Quaternion.identity);
+
+        return instanceGo;
+    }
+
+    public GameObject CreatWeapon(string weaponName) {
+        var weaponGameObject = DataCenter.Instance.GetWeaponByName(weaponName);
+        var instanceGo = Instantiate(weaponGameObject, Vector3.zero, Quaternion.identity);
 
         return instanceGo;
     }

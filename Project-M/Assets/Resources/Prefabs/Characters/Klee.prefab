@@ -113,7 +113,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6274431397723669131}
   - component: {fileID: 6274431397723669124}
-  - component: {fileID: 6274431397723669130}
   m_Layer: 0
   m_Name: Klee
   m_TagString: Untagged
@@ -157,22 +156,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &6274431397723669130
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6274431397723669125}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a35c81744707dc48a9ee213379f8d3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characterGameobject: {fileID: 6274431397723669125}
-  characterSpriteobject: {fileID: 6274431396039293789}
-  WeaponObject: {fileID: 0}
-  tempFireObject: {fileID: 4154467439692931487, guid: 85192997a9a97574da9940046a36b33f,
-    type: 3}
-  firePos: {fileID: 0}
-  playerController: {fileID: 0}

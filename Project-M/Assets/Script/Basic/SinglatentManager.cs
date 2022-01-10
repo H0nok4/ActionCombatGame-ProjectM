@@ -5,11 +5,6 @@ using UnityEngine;
 public class SinglatentManager : MonoBehaviour
 {
 
-    private void Start() {
-        GameObjectPool.Init();
-        DataCenter.Init();
-        UpdateRunner.Init();
-    }
 
 
 }

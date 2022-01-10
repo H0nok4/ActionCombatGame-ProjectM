@@ -13,10 +13,10 @@ public class CharacterBase : ICharacter {
     public int MoveSpeed;
     public string CharacterName;
 
-    public GameObject CharacterGameObject;
-    public GameObject CharacterSprite;
-    public GameObject CharacterWeaponObject;
-    public Animator CharacterAnimator;
+    public GameObject GameObject;
+    public SpriteRenderer Sprite;
+    public Weapon Weapon;
+    public Animator Animator;
 
     public virtual void Init(CharacterProperty property) {
         InitWithCharacterProperty(property);
@@ -32,31 +32,31 @@ public class CharacterBase : ICharacter {
         CharacterName = property.CharacterName;
     }
 
-    public virtual void Burst() {
+    public virtual void Burst(Vector2 inputVec) {
         throw new System.NotImplementedException();
     }
 
-    public virtual void Dash() {
+    public virtual void Dash(Vector2 inputVec) {
         throw new System.NotImplementedException();
     }
 
-    public virtual void Move() {
+    public virtual void Move(Vector2 inputVec) {
         throw new System.NotImplementedException();
     }
 
-    public virtual void NormalAttack() {
+    public virtual void NormalAttack(Vector2 inputVec) {
         throw new System.NotImplementedException();
     }
 
-    public virtual int OnDamage() {
+    public virtual int OnDamage(int damage) {
         throw new System.NotImplementedException();
     }
 
-    public virtual void Skill() {
+    public virtual void Skill(Vector2 inputVec) {
         throw new System.NotImplementedException();
     }
 
-    public virtual void Smash() {
+    public virtual void Smash(Vector2 inputVec) {
         throw new System.NotImplementedException();
     }
 }

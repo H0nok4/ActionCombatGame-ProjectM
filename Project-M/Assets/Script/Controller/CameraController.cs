@@ -3,12 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+public class CameraController : MonoSingleton<CameraController>
 {
     public GameObject CharacterObject;//临时测试用
 
+    private void Start() {
+        CharacterObject = CharacterController.Instance.characterBase.GameObject;
+    }
 
     private void FixedUpdate() {
+
         //只是测试用，后续需要抽象成方法，并且修改各个参数
         var mouseWorldPosition = GetPlayerMouseWorldPosition();
         var characterPos = CharacterObject.transform.position;

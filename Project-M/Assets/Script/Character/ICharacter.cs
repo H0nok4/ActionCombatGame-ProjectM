@@ -6,18 +6,18 @@ public interface ICharacter
 {
     public void Init(CharacterProperty property);
 
-    public void Dash();
+    public void Dash(Vector2 inputVec);
 
-    public void NormalAttack();
+    public void NormalAttack(Vector2 inputVec);
 
-    public void Smash();
+    public void Smash(Vector2 inputVec);
 
-    public void Move();
+    public void Move(Vector2 inputVec);
 
-    public void Skill();
+    public void Skill(Vector2 inputVec);
 
-    public void Burst();
+    public void Burst(Vector2 inputVec);
 
-    public int OnDamage();
+    public int OnDamage(int damage);
 
 }
