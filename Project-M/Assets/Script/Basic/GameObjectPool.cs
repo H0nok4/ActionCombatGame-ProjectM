@@ -11,6 +11,7 @@ public class GameObjectPool : MonoSingleton<GameObjectPool>
         _objectPoolGO = Instantiate(new GameObject(),Vector3.zero,Quaternion.identity);
     }
 
+    #region 从对象池内创建物体
     public GameObject CreatProjectileFromPool(string projectileName) {
         if (ObjectPool.ContainsKey(projectileName)) {
             //对象池中保存着对应的实例，取出里面的实例并返回
@@ -33,7 +34,9 @@ public class GameObjectPool : MonoSingleton<GameObjectPool>
             return instanceGo;
         }
     }
+    #endregion
 
+    #region 直接创造物体
     public GameObject CreatProjectile(string projectileName) {
         var projectileGameobejct = DataCenter.Instance.GetProjectileByName(projectileName);
         var instanceGo = Instantiate(projectileGameobejct,new Vector3(0,0,0),Quaternion.identity);
@@ -41,6 +44,15 @@ public class GameObjectPool : MonoSingleton<GameObjectPool>
         return instanceGo;
     }
 
+    public GameObject CreatCharacter(string characterName) {
+        var characterGameObject = DataCenter.Instance.GetCharacterByName(characterName);
+        var instanceGo = Instantiate(characterGameObject, Vector3.zero, Quaternion.identity);
+
+        return instanceGo;
+    }
+    #endregion
+
+    #region 移除物体到对象池
     public void RemoveGameObjectToPool(GameObject go) {
         if (ObjectPool.ContainsKey(go.name)) {
             ObjectPool[go.name].Add(go);
@@ -54,5 +66,6 @@ public class GameObjectPool : MonoSingleton<GameObjectPool>
 
         }
     }
+    #endregion
 
 }

@@ -11,6 +11,12 @@ public class CharacterBase : ICharacter {
     public int MaxBurstEnergy;
     public int CurBurstEnergy;
     public int MoveSpeed;
+    public string CharacterName;
+
+    public GameObject CharacterGameObject;
+    public GameObject CharacterSprite;
+    public GameObject CharacterWeaponObject;
+    public Animator CharacterAnimator;
 
     public virtual void Init(CharacterProperty property) {
         InitWithCharacterProperty(property);
@@ -23,7 +29,7 @@ public class CharacterBase : ICharacter {
         Energy = property.Energy;
         MaxBurstEnergy = property.BurstEnergy;
         CurBurstEnergy = 0;
-        
+        CharacterName = property.CharacterName;
     }
 
     public virtual void Burst() {

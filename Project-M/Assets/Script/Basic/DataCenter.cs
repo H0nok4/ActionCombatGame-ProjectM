@@ -6,13 +6,26 @@ public class DataCenter : MonoSingleton<DataCenter>
 {
     #region 资源集
     private Dictionary<string,GameObject> _projectile = new Dictionary<string,GameObject>();
-
+    private Dictionary<string,GameObject> _character = new Dictionary<string, GameObject>();
+    private Dictionary<string, GameObject> _weapon = new Dictionary<string, GameObject>();
     #endregion
 
     #region 属性
     public Dictionary<string,GameObject> GetProjectile {
         get {
             return _projectile;
+        }
+    }
+
+    public Dictionary<string, GameObject> GetCharacter {
+        get {
+            return _character;
+        }
+    }
+
+    public Dictionary<string, GameObject> GetWeapon {
+        get {
+            return _weapon;
         }
     }
 
@@ -29,6 +42,8 @@ public class DataCenter : MonoSingleton<DataCenter>
 
     public void LoadRes() {
         LoadProjectileFromRes();   
+        LoadCharacterFromRes();
+        LoadWeaponFromRes();
     }
     #region 调取资源
     public GameObject GetProjectileByName(string name) {
@@ -39,18 +54,48 @@ public class DataCenter : MonoSingleton<DataCenter>
         Debug.LogError($"读取Projectile失败，Name = {name}");
         return null;
     }
+
+    public GameObject GetCharacterByName(string name) {
+        if (_character.ContainsKey(name)) {
+            return _character[name];
+        }
+
+        Debug.LogError($"读取charcter失败，Name = {name}");
+        return null;
+    }
+
+    public GameObject GetWeaponByName(string name) {
+        if (_weapon.ContainsKey(name)) {
+            return _weapon[name];
+        }
+
+        Debug.LogError($"读取Weapon失败，Name = {name}");
+        return null;
+    }
     #endregion
 
 
     #region 读取资源放在对应的字典内
     public void LoadProjectileFromRes() {
-        Debug.Log($"开始读取Projectile");
         var projectiles = Resources.LoadAll("Prefabs/Projectiles");
-        Debug.Log($"读取完毕Projectile,Count = {projectiles.Length}");
         foreach (var projectile in projectiles) {
-            Debug.Log($"读取到一个子弹，Name = {projectile}");
             _projectile.Add(projectile.name,(GameObject)projectile);
         }
+    }
+
+    public void LoadCharacterFromRes() {
+        var characters = Resources.LoadAll("Prefabs/Characters");
+        foreach (var character in characters) {
+            _character.Add(character.name,(GameObject)character);
+        }
+    }
+
+    public void LoadWeaponFromRes() {
+        var weapons = Resources.LoadAll("Prefabs/Weapon");
+        foreach (var weapon in weapons) {
+            _weapon.Add(weapon.name,(GameObject)weapon);
+        }
+
     }
     #endregion
 
