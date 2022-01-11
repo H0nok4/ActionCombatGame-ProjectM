@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Math
+public class PMMath
 {
     /// <summary>
     /// 获得线段与直线的交点

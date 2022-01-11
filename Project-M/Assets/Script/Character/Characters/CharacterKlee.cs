@@ -12,19 +12,19 @@ public class CharacterKlee : CharacterBase
             Vector2 resultPos = new Vector2();
             Vector2 otherPos = new Vector2();
 
-            int count = Math.BetweenLineAndCircle(GameObject.transform.position, 3, GameObject.transform.position,
+            int count = PMMath.BetweenLineAndCircle(GameObject.transform.position, 3, GameObject.transform.position,
                 inputVec, out resultPos, out otherPos);
             Vector3 startPos = new Vector2(Weapon.FirePos.transform.position.x, Weapon.FirePos.transform.position.y);
 
             Vector3 targetPos = inputVec;
             Vector3 resultVec = resultPos - new Vector2(GameObject.transform.position.x, GameObject.transform.position.y);
             if (count >= 1) {
-                var animTime = Math.RangeMapping(0.25f, 0.5f, 0f, 3f, resultVec.magnitude);
+                var animTime = PMMath.RangeMapping(0.25f, 0.5f, 0f, 3f, resultVec.magnitude);
                 //StartCoroutine(MoveFireObject(fireObject, Weapon.FirePos.transform.position, resultPos, animTime));//攻击动画时间随着攻击位置的长度增加而增加，最低不低于0.25,需要将0~攻击范围映射到0.25~1
 
             }
             else {
-                var animTime = Math.RangeMapping(0.25f, 0.5f, 0f, 3f, targetVec.magnitude);
+                var animTime = PMMath.RangeMapping(0.25f, 0.5f, 0f, 3f, targetVec.magnitude);
                 //StartCoroutine(MoveFireObject(fireObject, startPos, targetPos, animTime));
             }
         }
@@ -52,7 +52,7 @@ public class CharacterKlee : CharacterBase
 
         while (curT <= 1) {
             //开始播放
-            var curPos = Math.CalculateCubicBezierPointfor2C(curT, startPos, thdVec, targetWorldPos);
+            var curPos = PMMath.CalculateCubicBezierPointfor2C(curT, startPos, thdVec, targetWorldPos);
             fireObject.transform.position = curPos;
             curT = curT + ((Time.fixedDeltaTime) / animationTime);//将动画的时间归一化成0~1的范围
             yield return new WaitForFixedUpdate();

@@ -16,7 +16,7 @@ public class CharacterFactory
         characterBase.Weapon = weapon.GetComponent<Weapon>();
         characterBase.Sprite = character.GetComponentInChildren<SpriteRenderer>();
         characterBase.Animator = character.GetComponentInChildren<Animator>();
-
+        characterBase.Rigbody = character.GetComponent<Rigidbody2D>();
         return characterBase;
     }
 
