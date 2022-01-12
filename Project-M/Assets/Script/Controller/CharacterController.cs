@@ -19,6 +19,10 @@ public class CharacterController : MonoSingleton<CharacterController>
         characterBase = CharacterFactory.CreatCharacterInstance(characterKlee, "SkyBook");
     }
 
+    private void Update() {
+        characterBase.NormalAttack(playerController.GetPlayerMouseWorldPos());
+    }
+
     private void FixedUpdate() {
         MoveCharacter();
         ChangeCharacterDirection();

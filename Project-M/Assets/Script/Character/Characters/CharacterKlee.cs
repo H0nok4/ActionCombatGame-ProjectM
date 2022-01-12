@@ -20,12 +20,12 @@ public class CharacterKlee : CharacterBase
             Vector3 resultVec = resultPos - new Vector2(GameObject.transform.position.x, GameObject.transform.position.y);
             if (count >= 1) {
                 var animTime = PMMath.RangeMapping(0.25f, 0.5f, 0f, 3f, resultVec.magnitude);
-                //StartCoroutine(MoveFireObject(fireObject, Weapon.FirePos.transform.position, resultPos, animTime));//攻击动画时间随着攻击位置的长度增加而增加，最低不低于0.25,需要将0~攻击范围映射到0.25~1
+                new UnityTask(MoveFireObject(fireObject, Weapon.FirePos.transform.position, resultPos, animTime));//攻击动画时间随着攻击位置的长度增加而增加，最低不低于0.25,需要将0~攻击范围映射到0.25~1
 
             }
             else {
                 var animTime = PMMath.RangeMapping(0.25f, 0.5f, 0f, 3f, targetVec.magnitude);
-                //StartCoroutine(MoveFireObject(fireObject, startPos, targetPos, animTime));
+                new UnityTask(MoveFireObject(fireObject, startPos, targetPos, animTime));
             }
         }
     }
