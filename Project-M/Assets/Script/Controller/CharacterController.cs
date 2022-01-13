@@ -60,12 +60,12 @@ public class CharacterController : MonoSingleton<CharacterController>
     }
 
     public void UpdateWeaponRotation() {
-        //var mousePos = playerController.GetPlayerMouseWorldPos();
-        //var characterPos = characterGameobject.transform.position;
-        //var angle = Vector2.Angle(Vector2.up,(new Vector2(mousePos.x,mousePos.y) - new Vector2(characterPos.x,characterPos.y)).normalized);
-        //WeaponObject.transform.eulerAngles = new Vector3(0,0,angle * -(_model._characterSprite.transform.localScale.x));
+        var mousePos = playerController.GetPlayerMouseWorldPos();
+        var characterPos = characterBase.GameObject.transform.position;
+        var angle = Vector2.Angle(Vector2.up,(new Vector2(mousePos.x,mousePos.y) - new Vector2(characterPos.x,characterPos.y)).normalized);
+        characterBase.Weapon.transform.eulerAngles = new Vector3(0,0,angle * -(characterBase.Sprite.flipX == true?-1:1));
 
-        
+
     }
 
     public void ChangeCharacterDirection() {
