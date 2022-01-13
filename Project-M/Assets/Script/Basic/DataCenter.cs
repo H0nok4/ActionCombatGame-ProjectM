@@ -5,9 +5,10 @@ using UnityEngine;
 public class DataCenter : MonoSingleton<DataCenter>
 {
     #region 资源集
-    private Dictionary<string,GameObject> _projectile = new Dictionary<string,GameObject>();
-    private Dictionary<string,GameObject> _character = new Dictionary<string, GameObject>();
-    private Dictionary<string, GameObject> _weapon = new Dictionary<string, GameObject>();
+    private readonly Dictionary<string,GameObject> _projectile = new Dictionary<string,GameObject>();
+    private readonly Dictionary<string,GameObject> _character = new Dictionary<string, GameObject>();
+    private readonly Dictionary<string,GameObject> _weapon = new Dictionary<string, GameObject>();
+    private readonly Dictionary<string, CharacterProperty> _characterProperty = new Dictionary<string, CharacterProperty>();
     #endregion
 
     #region 属性
@@ -42,7 +43,9 @@ public class DataCenter : MonoSingleton<DataCenter>
         LoadProjectileFromRes();   
         LoadCharacterFromRes();
         LoadWeaponFromRes();
+        LoadCharacterPropertyFromRes();
     }
+
     #region 调取资源
     public GameObject GetProjectileByName(string name) {
         if (_projectile.ContainsKey(name)) {
@@ -70,6 +73,15 @@ public class DataCenter : MonoSingleton<DataCenter>
         Debug.LogError($"读取Weapon失败，Name = {name}");
         return null;
     }
+
+    public CharacterProperty GetCharacterPropertyByName(string name) {
+        if (_characterProperty.ContainsKey(name)) {
+            return _characterProperty[name];
+        }
+
+        Debug.LogError($"读取CharacterProperty，Name = {name}");
+        return null;
+    }
     #endregion
 
 
@@ -94,6 +106,13 @@ public class DataCenter : MonoSingleton<DataCenter>
             _weapon.Add(weapon.name,(GameObject)weapon);
         }
 
+    }
+
+    public void LoadCharacterPropertyFromRes() {
+        var characterProertys = Resources.LoadAll("Prefabs/CharacterProperty");
+        foreach (var property in characterProertys){
+            _characterProperty.Add(property.name,(CharacterProperty)property);
+        }
     }
     #endregion
 

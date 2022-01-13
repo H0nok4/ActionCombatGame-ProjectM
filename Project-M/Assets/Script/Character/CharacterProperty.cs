@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//[CreateAssetMenu(menuName = "Character",fileName = "CharacterBase")]
-public class CharacterProperty// : ScriptableObject
+[CreateAssetMenu(menuName = "Character",fileName = "CharacterBase")]
+public class CharacterProperty : ScriptableObject
 {
     [SerializeField] string _CharacterName;
     [SerializeField] int _health;
@@ -12,10 +12,6 @@ public class CharacterProperty// : ScriptableObject
     [SerializeField] int _energy;
     [SerializeField] int _burstEnergy;
     [SerializeField] int _moveSpeed;
-
-    public CharacterProperty() {
-        _CharacterName = "Klee";
-    }
 
     public string CharacterName {
         get {

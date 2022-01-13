@@ -6,21 +6,21 @@ using UnityEngine;
 public class CharacterController : MonoSingleton<CharacterController>
 {
     public CharacterBase characterBase;
-    public PlayerController playerController;
 
     public override void OnInitialize() {
 
     }
 
     private void Start() {
-        CharacterProperty temp = new CharacterProperty();
+        //Test
+        var KleeProperty = DataCenter.Instance.GetCharacterPropertyByName("Klee");
         var characterKlee = new CharacterKlee();
-        characterKlee.Init(temp);
+        characterKlee.Init(KleeProperty);
         characterBase = CharacterFactory.CreatCharacterInstance(characterKlee, "SkyBook");
     }
 
     private void Update() {
-        characterBase.NormalAttack(playerController.GetPlayerMouseWorldPos());
+        characterBase.NormalAttack(PlayerController.Instance.GetPlayerMouseWorldPos());
     }
 
     private void FixedUpdate() {
@@ -60,7 +60,7 @@ public class CharacterController : MonoSingleton<CharacterController>
     }
 
     public void UpdateWeaponRotation() {
-        var mousePos = playerController.GetPlayerMouseWorldPos();
+        var mousePos = PlayerController.Instance.GetPlayerMouseWorldPos();
         var characterPos = characterBase.GameObject.transform.position;
         var angle = Vector2.Angle(Vector2.up,(new Vector2(mousePos.x,mousePos.y) - new Vector2(characterPos.x,characterPos.y)).normalized);
         characterBase.Weapon.transform.eulerAngles = new Vector3(0,0,angle * -(characterBase.Sprite.flipX == true?-1:1));
@@ -69,7 +69,7 @@ public class CharacterController : MonoSingleton<CharacterController>
     }
 
     public void ChangeCharacterDirection() {
-        if (playerController.isCharacterFlip(characterBase.GameObject.transform.position)) {
+        if (PlayerController.Instance.isCharacterFlip(characterBase.GameObject.transform.position)) {
             characterBase.Sprite.flipX = false;
         } else {
             characterBase.Sprite.flipX = true;

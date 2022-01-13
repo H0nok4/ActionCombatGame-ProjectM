@@ -41,6 +41,18 @@ public class CharacterBase : ICharacter {
     public virtual void Dash(Vector2 inputVec) {
         //基础通用的冲刺方法，如果有特别的冲刺方式就在各自的类里实现
         Debug.Log("基础的冲刺方法");
+        //右键冲刺，如果角色有速度的话，朝着速度方向冲刺一段距离，如果没有速度，朝着鼠标方向冲刺一段距离
+        //冲刺过程中应该有无敌帧 
+        //短时间内冲刺有CD
+        //冲刺消耗体力
+        //冲刺后如果还按住冲刺键，进入奔跑状态
+        if (Rigbody.velocity == Vector2.zero) {
+            //没有速度，朝着鼠标方向冲刺一段距离
+        }
+        else {
+            //当前有速度，朝着速度方向冲刺一段距离
+
+        }
     }
 
     public virtual void Move(Vector2 inputVec) {
@@ -55,6 +67,11 @@ public class CharacterBase : ICharacter {
         else {
             Animator.SetBool("IsMove", false);
             Rigbody.velocity = Vector2.zero;
+        }
+
+        if (Mathf.Abs(Vector2.Angle(Rigbody.velocity,(PlayerController.Instance.GetPlayerMouseWorldPos() -GameObject.transform.position))) > 90) {
+            //当鼠标指向的方向和前进方向的夹角大于90°，说明移动和目视方向是反向的，减缓移动速度
+            Rigbody.velocity /= 1.5f;
         }
 
     }

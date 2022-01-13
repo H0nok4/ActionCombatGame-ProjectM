@@ -9,7 +9,7 @@ public class GameObjectPool : MonoSingleton<GameObjectPool>
     private GameObject _objectPoolGO;
     public override void OnInitialize() {
         base.OnInitialize();
-        _objectPoolGO = Instantiate(new GameObject(), Vector3.zero, Quaternion.identity);
+        _objectPoolGO = new GameObject("@ObjectPool");
     }
 
     #region 从对象池内创建物体
@@ -58,6 +58,7 @@ public class GameObjectPool : MonoSingleton<GameObjectPool>
 
         return instanceGo;
     }
+
     #endregion
 
     #region 移除物体到对象池
