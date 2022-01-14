@@ -21,6 +21,9 @@ public class CharacterController : MonoSingleton<CharacterController>
 
     private void Update() {
         characterBase.NormalAttack(PlayerController.Instance.GetPlayerMouseWorldPos());
+        if (Input.GetKeyDown(KeyCode.Mouse1)) {
+            characterBase.Dash(PlayerController.Instance.GetPlayerMouseWorldPos());
+        }
     }
 
     private void FixedUpdate() {

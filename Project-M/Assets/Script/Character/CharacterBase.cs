@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum MoveState {
+    Move,
+    Dash
+}
+
 public class CharacterBase : ICharacter {
     public int MaxHealth;
     public int CurHealth;
@@ -12,6 +17,8 @@ public class CharacterBase : ICharacter {
     public int CurBurstEnergy;
     public int MoveSpeed;
     public string CharacterName;
+
+    public MoveState moveState;
 
     public GameObject GameObject;
     public SpriteRenderer Sprite;
@@ -48,6 +55,7 @@ public class CharacterBase : ICharacter {
         //冲刺后如果还按住冲刺键，进入奔跑状态
         if (Rigbody.velocity == Vector2.zero) {
             //没有速度，朝着鼠标方向冲刺一段距离
+            Rigbody.velocity = PlayerController.Instance.GetPlayerMouseWorldPos().normalized * 10;
         }
         else {
             //当前有速度，朝着速度方向冲刺一段距离
