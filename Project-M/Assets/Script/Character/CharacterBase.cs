@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum MoveState {
+    Idle,
     Move,
     Dash
 }
@@ -18,7 +19,8 @@ public class CharacterBase : ICharacter {
     public int MoveSpeed;
     public string CharacterName;
 
-    public MoveState moveState;
+    public MoveState MoveState;
+    public bool Invincible;
 
     public GameObject GameObject;
     public SpriteRenderer Sprite;
@@ -53,33 +55,38 @@ public class CharacterBase : ICharacter {
         //短时间内冲刺有CD
         //冲刺消耗体力
         //冲刺后如果还按住冲刺键，进入奔跑状态
-        
-        if (Rigbody.velocity == Vector2.zero) {
-            //没有速度，朝着鼠标方向冲刺一段距离
-            moveState = MoveState.Dash;
-            new UnityTask(StartDash(inputVec));
+        if (MoveState == MoveState.Move ||MoveState == MoveState.Idle) {
+            if (Rigbody.velocity == Vector2.zero) {
+                //没有速度，朝着鼠标方向冲刺一段距离
+                MoveState = MoveState.Dash;
+                new UnityTask(StartDash(inputVec));
+            } else {
+                //当前有速度，朝着速度方向冲刺一段距离
+                MoveState = MoveState.Dash;
+                new UnityTask(StartDash(new Vector2(GameObject.transform.position.x,GameObject.transform.position.y) + Rigbody.velocity));
+            }
         }
-        else {
-            //当前有速度，朝着速度方向冲刺一段距离
-            moveState = MoveState.Dash;
-            new UnityTask(StartDash(new Vector2(GameObject.transform.position.x,GameObject.transform.position.y) + Rigbody.velocity));
-        }
+
     }
 
     IEnumerator StartDash(Vector2 inputVector) {
         //开始冲刺
         Animator.SetBool("IsDash",true);
         Rigbody.velocity = (inputVector - new Vector2(GameObject.transform.position.x,GameObject.transform.position.y)).normalized * 6;
-        yield return new WaitForSeconds(0.25f);
+        Invincible = true;
+        yield return new WaitForSeconds(0.1f);
+        //闪避无敌帧判定
+        Invincible = false;
+        yield return new WaitForSeconds(0.15f);
         //冲刺停止
         Rigbody.velocity = Vector2.zero;
         Animator.SetBool("IsDash",false);
-        moveState = MoveState.Move;
+        MoveState = MoveState.Move;
 
     }
 
     public virtual void Move(Vector2 inputVec) {
-        if (moveState == MoveState.Move) {
+        if (MoveState == MoveState.Move) {
             if (Mathf.Abs(inputVec.x) == 1 && Mathf.Abs(inputVec.y) == 1) {
                 Animator.SetBool("IsMove",true);
                 Rigbody.velocity = inputVec * (MoveSpeed / Mathf.Sqrt(2));
