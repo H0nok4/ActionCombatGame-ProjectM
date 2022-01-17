@@ -53,35 +53,49 @@ public class CharacterBase : ICharacter {
         //短时间内冲刺有CD
         //冲刺消耗体力
         //冲刺后如果还按住冲刺键，进入奔跑状态
+        
         if (Rigbody.velocity == Vector2.zero) {
             //没有速度，朝着鼠标方向冲刺一段距离
-            Rigbody.velocity = PlayerController.Instance.GetPlayerMouseWorldPos().normalized * 10;
+            moveState = MoveState.Dash;
+            new UnityTask(StartDash(inputVec));
         }
         else {
             //当前有速度，朝着速度方向冲刺一段距离
-
+            moveState = MoveState.Dash;
+            new UnityTask(StartDash(new Vector2(GameObject.transform.position.x,GameObject.transform.position.y) + Rigbody.velocity));
         }
     }
 
+    IEnumerator StartDash(Vector2 inputVector) {
+        //开始冲刺
+        Animator.SetBool("IsDash",true);
+        Rigbody.velocity = (inputVector - new Vector2(GameObject.transform.position.x,GameObject.transform.position.y)).normalized * 6;
+        yield return new WaitForSeconds(0.25f);
+        //冲刺停止
+        Rigbody.velocity = Vector2.zero;
+        Animator.SetBool("IsDash",false);
+        moveState = MoveState.Move;
+
+    }
+
     public virtual void Move(Vector2 inputVec) {
-        if (Mathf.Abs(inputVec.x) == 1 && Mathf.Abs(inputVec.y) == 1) {
-            Animator.SetBool("IsMove", true);
-            Rigbody.velocity = inputVec * (MoveSpeed / Mathf.Sqrt(2));
-        }
-        else if (inputVec.x != 0 || inputVec.y != 0) {
-            Animator.SetBool("IsMove", true);
-            Rigbody.velocity = inputVec * MoveSpeed;
-        }
-        else {
-            Animator.SetBool("IsMove", false);
-            Rigbody.velocity = Vector2.zero;
-        }
+        if (moveState == MoveState.Move) {
+            if (Mathf.Abs(inputVec.x) == 1 && Mathf.Abs(inputVec.y) == 1) {
+                Animator.SetBool("IsMove",true);
+                Rigbody.velocity = inputVec * (MoveSpeed / Mathf.Sqrt(2));
+            } else if (inputVec.x != 0 || inputVec.y != 0) {
+                Animator.SetBool("IsMove",true);
+                Rigbody.velocity = inputVec * MoveSpeed;
+            } else {
+                Animator.SetBool("IsMove",false);
+                Rigbody.velocity = Vector2.zero;
+            }
 
-        if (Mathf.Abs(Vector2.Angle(Rigbody.velocity,(PlayerController.Instance.GetPlayerMouseWorldPos() -GameObject.transform.position))) > 90) {
-            //当鼠标指向的方向和前进方向的夹角大于90°，说明移动和目视方向是反向的，减缓移动速度
-            Rigbody.velocity /= 1.5f;
+            if (Mathf.Abs(Vector2.Angle(Rigbody.velocity,(PlayerController.Instance.GetPlayerMouseWorldPos() - GameObject.transform.position))) > 90) {
+                //当鼠标指向的方向和前进方向的夹角大于90°，说明移动和目视方向是反向的，减缓移动速度
+                Rigbody.velocity /= 1.5f;
+            }
         }
-
     }
 
     public virtual void NormalAttack(Vector2 inputVec) {
