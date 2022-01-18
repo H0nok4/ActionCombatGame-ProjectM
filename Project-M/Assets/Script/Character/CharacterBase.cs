@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +14,8 @@ public class CharacterBase : ICharacter {
     public int CurHealth;
     public int Attack;
     public float AttackRange;
-    public int Energy;
+    public int MaxEnergy;
+    public float CurEnergy;
     public int MaxBurstEnergy;
     public int CurBurstEnergy;
     public int MoveSpeed;
@@ -21,6 +23,8 @@ public class CharacterBase : ICharacter {
 
     public MoveState MoveState;
     public bool Invincible;
+
+    public long LastTimeUseEnergy;
 
     public GameObject GameObject;
     public SpriteRenderer Sprite;
@@ -36,7 +40,8 @@ public class CharacterBase : ICharacter {
         CurHealth = MaxHealth;
         Attack = property.Attack;
         AttackRange = property.AttackRange;
-        Energy = property.Energy;
+        MaxEnergy = property.Energy;
+        CurEnergy = MaxEnergy;
         MaxBurstEnergy = property.BurstEnergy;
         CurBurstEnergy = 0;
         CharacterName = property.CharacterName;
@@ -55,18 +60,21 @@ public class CharacterBase : ICharacter {
         //短时间内冲刺有CD
         //冲刺消耗体力
         //冲刺后如果还按住冲刺键，进入奔跑状态
-        if (MoveState == MoveState.Move ||MoveState == MoveState.Idle) {
-            if (Rigbody.velocity == Vector2.zero) {
-                //没有速度，朝着鼠标方向冲刺一段距离
-                MoveState = MoveState.Dash;
-                new UnityTask(StartDash(inputVec));
-            } else {
-                //当前有速度，朝着速度方向冲刺一段距离
-                MoveState = MoveState.Dash;
-                new UnityTask(StartDash(new Vector2(GameObject.transform.position.x,GameObject.transform.position.y) + Rigbody.velocity));
+        if (MoveState == MoveState.Move || MoveState == MoveState.Idle) {
+            //Temp:冲刺需要消耗体力
+            Debug.Log($"当前体力为：{CurEnergy}");
+            if (UseEnergy(20)) {
+                if (Rigbody.velocity == Vector2.zero) {
+                    //没有速度，朝着鼠标方向冲刺一段距离
+                    MoveState = MoveState.Dash;
+                    new UnityTask(StartDash(inputVec));
+                } else {
+                    //当前有速度，朝着速度方向冲刺一段距离
+                    MoveState = MoveState.Dash;
+                    new UnityTask(StartDash(new Vector2(GameObject.transform.position.x,GameObject.transform.position.y) + Rigbody.velocity));
+                }
             }
         }
-
     }
 
     IEnumerator StartDash(Vector2 inputVector) {
@@ -86,7 +94,7 @@ public class CharacterBase : ICharacter {
     }
 
     public virtual void Move(Vector2 inputVec) {
-        if (MoveState == MoveState.Move) {
+        if (MoveState == MoveState.Move || MoveState == MoveState.Idle) {
             if (Mathf.Abs(inputVec.x) == 1 && Mathf.Abs(inputVec.y) == 1) {
                 Animator.SetBool("IsMove",true);
                 Rigbody.velocity = inputVec * (MoveSpeed / Mathf.Sqrt(2));
@@ -102,6 +110,8 @@ public class CharacterBase : ICharacter {
                 //当鼠标指向的方向和前进方向的夹角大于90°，说明移动和目视方向是反向的，减缓移动速度
                 Rigbody.velocity /= 1.5f;
             }
+
+            MoveState = MoveState.Move;
         }
     }
 
@@ -111,6 +121,30 @@ public class CharacterBase : ICharacter {
 
     public virtual int OnDamage(int damage) {
         throw new System.NotImplementedException();
+    }
+
+    public virtual bool UseEnergy(int energy) {
+        var curTime = (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000000;
+        //可以消耗体力
+        if (CurEnergy >= energy) {
+            CurEnergy -= energy;
+            LastTimeUseEnergy = curTime;
+            return true;
+        }
+
+        return false;
+    }
+
+    public virtual void RecoverEnergy() {
+        var curTime = (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000000;
+        if (curTime - LastTimeUseEnergy > 2 && CurEnergy < MaxEnergy) {
+            //TODO:恢复体力
+            CurEnergy += 10 * Time.fixedDeltaTime;
+        }
+
+        if (CurEnergy > MaxEnergy) {
+            CurEnergy = MaxEnergy;
+        }
     }
 
     public virtual void Skill(Vector2 inputVec) {

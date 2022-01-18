@@ -30,7 +30,7 @@ public class CharacterController : MonoSingleton<CharacterController>
         MoveCharacter();
         ChangeCharacterDirection();
         UpdateWeaponRotation();
-
+        characterBase.RecoverEnergy();
     }
     public void MoveCharacter() {
         int MoveX = 0;
