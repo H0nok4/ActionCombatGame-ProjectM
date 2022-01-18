@@ -25,7 +25,6 @@ public class PlayerController : MonoSingleton<PlayerController> {
 
     public bool GetPressAttackButton() {
         if (!isHoldingAttackButton && isSmashed == false) {
-
             return isAttack;
         }
 
@@ -42,9 +41,10 @@ public class PlayerController : MonoSingleton<PlayerController> {
             }
         }
 
-
         return false;
     }
+
+    
 
     public void UpdateAttackButton() {
         if (Input.GetKeyDown(KeyCode.Mouse0)) {

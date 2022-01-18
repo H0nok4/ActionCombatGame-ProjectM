@@ -60,10 +60,13 @@ public class CharacterKlee : CharacterBase
         }
 
         GameObjectPool.Instance.RemoveGameObjectToPool(fireObject);
+        //TODO:对落地区域造成伤害
+
         yield break;
     }
 
     public override void Smash(Vector2 inputVec) {
         Debug.Log("Klee的重击");
+        //TODO：对目标方向发射一条爆炸射线
     }
 }
