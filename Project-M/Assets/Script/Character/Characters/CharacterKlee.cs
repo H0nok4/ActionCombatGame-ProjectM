@@ -6,28 +6,29 @@ public class CharacterKlee : CharacterBase
 {
     public override void NormalAttack(Vector2 inputVec) {
         //TODO:Klee的普通攻击
-        if (Input.GetKeyDown(KeyCode.Mouse0)) {
-            var fireObject = GameObjectPool.Instance.CreatProjectileFromPool("Klee_Attack_Projectile");
-            Vector2 targetVec = (inputVec - new Vector2(GameObject.transform.position.x,GameObject.transform.position.y));//想要攻击的位置
-            Vector2 resultPos = new Vector2();
-            Vector2 otherPos = new Vector2();
+        
+        var fireObject = GameObjectPool.Instance.CreatProjectileFromPool("Klee_Attack_Projectile");
+        Vector2 targetVec = (inputVec - new Vector2(GameObject.transform.position.x,GameObject.transform.position.y));//想要攻击的位置
+        Vector2 resultPos = new Vector2();
+        Vector2 otherPos = new Vector2();
 
-            int count = PMMath.BetweenLineAndCircle(GameObject.transform.position, 3, GameObject.transform.position,
-                inputVec, out resultPos, out otherPos);
-            Vector3 startPos = new Vector2(Weapon.FirePos.transform.position.x, Weapon.FirePos.transform.position.y);
+        int count = PMMath.BetweenLineAndCircle(GameObject.transform.position, 3, GameObject.transform.position,
+            inputVec, out resultPos, out otherPos);
+        Vector3 startPos = new Vector2(Weapon.FirePos.transform.position.x, Weapon.FirePos.transform.position.y);
 
-            Vector3 targetPos = inputVec;
-            Vector3 resultVec = resultPos - new Vector2(GameObject.transform.position.x, GameObject.transform.position.y);
-            if (count >= 1) {
-                var animTime = PMMath.RangeMapping(0.25f, 0.5f, 0f, 3f, resultVec.magnitude);
-                new UnityTask(MoveFireObject(fireObject, Weapon.FirePos.transform.position, resultPos, animTime));//攻击动画时间随着攻击位置的长度增加而增加，最低不低于0.25,需要将0~攻击范围映射到0.25~1
+        Vector3 targetPos = inputVec;
+        Vector3 resultVec = resultPos - new Vector2(GameObject.transform.position.x, GameObject.transform.position.y);
+        if (count >= 1) {
+            var animTime = PMMath.RangeMapping(0.25f, 0.5f, 0f, 3f, resultVec.magnitude);
+            new UnityTask(MoveFireObject(fireObject, Weapon.FirePos.transform.position, resultPos, animTime));//攻击动画时间随着攻击位置的长度增加而增加，最低不低于0.25,需要将0~攻击范围映射到0.25~1
 
-            }
-            else {
-                var animTime = PMMath.RangeMapping(0.25f, 0.5f, 0f, 3f, targetVec.magnitude);
-                new UnityTask(MoveFireObject(fireObject, startPos, targetPos, animTime));
-            }
         }
+        else {
+            var animTime = PMMath.RangeMapping(0.25f, 0.5f, 0f, 3f, targetVec.magnitude);
+            new UnityTask(MoveFireObject(fireObject, startPos, targetPos, animTime));
+        }
+        
+        Debug.Log("Klee的普通攻击");
     }
 
     IEnumerator MoveFireObject(GameObject fireObject, Vector2 startPos, Vector2 targetWorldPos, float animationTime = 0.5f) {
@@ -60,5 +61,9 @@ public class CharacterKlee : CharacterBase
 
         GameObjectPool.Instance.RemoveGameObjectToPool(fireObject);
         yield break;
+    }
+
+    public override void Smash(Vector2 inputVec) {
+        Debug.Log("Klee的重击");
     }
 }

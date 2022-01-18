@@ -116,7 +116,7 @@ public class CharacterBase : ICharacter {
     }
 
     public virtual void NormalAttack(Vector2 inputVec) {
-        throw new System.NotImplementedException();
+        Debug.Log("基础的攻击方法");
     }
 
     public virtual int OnDamage(int damage) {
@@ -152,6 +152,6 @@ public class CharacterBase : ICharacter {
     }
 
     public virtual void Smash(Vector2 inputVec) {
-        throw new System.NotImplementedException();
+        Debug.Log("基础的重击方法");
     }
 }

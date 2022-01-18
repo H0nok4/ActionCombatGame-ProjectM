@@ -20,9 +20,13 @@ public class CharacterController : MonoSingleton<CharacterController>
     }
 
     private void Update() {
-        characterBase.NormalAttack(PlayerController.Instance.GetPlayerMouseWorldPos());
+
         if (Input.GetKeyDown(KeyCode.Mouse1)) {
             characterBase.Dash(PlayerController.Instance.GetPlayerMouseWorldPos());
+        }else if (PlayerController.Instance.GetNormalSmashInput()) {
+            characterBase.Smash(PlayerController.Instance.GetPlayerMouseWorldPos());
+        }else if (PlayerController.Instance.GetPressAttackButton()) {
+            characterBase.NormalAttack(PlayerController.Instance.GetPlayerMouseWorldPos());
         }
     }
 
