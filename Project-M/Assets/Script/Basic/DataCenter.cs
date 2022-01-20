@@ -9,6 +9,7 @@ public class DataCenter : MonoSingleton<DataCenter>
     private readonly Dictionary<string,GameObject> _character = new Dictionary<string, GameObject>();
     private readonly Dictionary<string,GameObject> _weapon = new Dictionary<string, GameObject>();
     private readonly Dictionary<string, CharacterProperty> _characterProperty = new Dictionary<string, CharacterProperty>();
+    private readonly Dictionary<string, GameObject> _UI = new Dictionary<string, GameObject>();
     #endregion
 
     #region 属性
@@ -44,6 +45,7 @@ public class DataCenter : MonoSingleton<DataCenter>
         LoadCharacterFromRes();
         LoadWeaponFromRes();
         LoadCharacterPropertyFromRes();
+        LoadAllUIFromRes();
     }
 
     #region 调取资源
@@ -82,6 +84,15 @@ public class DataCenter : MonoSingleton<DataCenter>
         Debug.LogError($"读取CharacterProperty，Name = {name}");
         return null;
     }
+
+    public GameObject GetUIByName(string name) {
+        if (_UI.ContainsKey(name)) {
+            return _UI[name];
+        }
+
+        Debug.LogError($"读取UI失败，Name = {name}");
+        return null;
+    }
     #endregion
 
 
@@ -112,6 +123,13 @@ public class DataCenter : MonoSingleton<DataCenter>
         var characterProertys = Resources.LoadAll("Prefabs/CharacterProperty");
         foreach (var property in characterProertys){
             _characterProperty.Add(property.name,(CharacterProperty)property);
+        }
+    }
+
+    public void LoadAllUIFromRes() {
+        var UIs = Resources.LoadAll("Prefabs/UI");
+        foreach (var ui in UIs) {
+            _UI.Add(ui.name, (GameObject)ui);
         }
     }
     #endregion

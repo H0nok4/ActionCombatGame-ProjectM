@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.ComTypes;
 using UnityEngine;
 
 public class GameObjectPool : MonoSingleton<GameObjectPool>
@@ -32,6 +33,27 @@ public class GameObjectPool : MonoSingleton<GameObjectPool>
             var projectileGameobejct = DataCenter.Instance.GetProjectileByName(projectileName);
             var instanceGo = Instantiate(projectileGameobejct,Vector3.zero,Quaternion.identity);
             instanceGo.name = projectileName;
+            return instanceGo;
+        }
+    }
+
+    public GameObject CreatUIFromPool(string uiName) {
+        if (ObjectPool.ContainsKey(uiName)) {
+            var objects = ObjectPool[uiName];
+            var needObject = objects[objects.Count - 1];
+            objects.RemoveAt(objects.Count - 1);
+            if (objects.Count == 0) {
+                ObjectPool.Remove(uiName);
+            }
+            needObject.SetActive(true);
+            needObject.transform.SetParent(null);
+
+            return needObject;
+        }
+        else {
+            var uiGameobejct = DataCenter.Instance.GetUIByName(uiName);
+            var instanceGo = Instantiate(uiGameobejct,Vector3.zero,Quaternion.identity);
+            instanceGo.name = uiGameobejct.name;
             return instanceGo;
         }
     }
