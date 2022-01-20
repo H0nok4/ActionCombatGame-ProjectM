@@ -66,7 +66,7 @@ public class CharacterKlee : CharacterBase
             Debug.Log(col.gameObject.name);
             var canDamage = col.gameObject.GetComponent<IDamageable>();
             if (canDamage != null) {
-                canDamage.OnDamage(30);
+                canDamage.OnDamage(Attack);
             }
         }
         yield break;
