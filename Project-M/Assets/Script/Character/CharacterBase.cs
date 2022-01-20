@@ -9,7 +9,7 @@ public enum MoveState {
     Dash
 }
 
-public class CharacterBase : ICharacter {
+public class CharacterBase : ICharacter,IDamageable {
     public int MaxHealth;
     public int CurHealth;
     public int Attack;
@@ -153,5 +153,9 @@ public class CharacterBase : ICharacter {
 
     public virtual void Smash(Vector2 inputVec) {
         Debug.Log("基础的重击方法");
+    }
+
+    public virtual int OnDamage() {
+        throw new System.NotImplementedException();
     }
 }

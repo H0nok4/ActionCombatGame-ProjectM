@@ -61,7 +61,14 @@ public class CharacterKlee : CharacterBase
 
         GameObjectPool.Instance.RemoveGameObjectToPool(fireObject);
         //TODO:对落地区域造成伤害
-
+        var cols = Physics2D.OverlapCircleAll(new Vector3(fireObject.gameObject.transform.position.x,fireObject.gameObject.transform.position.y,0), 1f);
+        foreach (var col in cols) {
+            Debug.Log(col.gameObject.name);
+            var canDamage = col.gameObject.GetComponent<IDamageable>();
+            if (canDamage != null) {
+                canDamage.OnDamage(30);
+            }
+        }
         yield break;
     }
 

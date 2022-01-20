@@ -39,12 +39,6 @@ public class CharacterController : MonoSingleton<CharacterController>
     public void MoveCharacter() {
         int MoveX = 0;
         int MoveY = 0;
-        if (Input.GetKey(KeyCode.LeftShift)) {
-            characterBase.MoveSpeed = 6;
-        }
-        else {
-            characterBase.MoveSpeed = 3;
-        }
 
         if (Input.GetKey(KeyCode.A)) {
             MoveX -= 1;

@@ -18,6 +18,4 @@ public interface ICharacter
 
     public void Burst(Vector2 inputVec);
 
-    public int OnDamage(int damage);
-
 }
