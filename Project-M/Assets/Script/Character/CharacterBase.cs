@@ -6,7 +6,8 @@ using UnityEngine;
 public enum MoveState {
     Idle,
     Move,
-    Dash
+    Dash,
+    Run
 }
 
 public class CharacterBase : ICharacter,IDamageable {
@@ -119,10 +120,6 @@ public class CharacterBase : ICharacter,IDamageable {
         Debug.Log("基础的攻击方法");
     }
 
-    public virtual int OnDamage(int damage) {
-        throw new System.NotImplementedException();
-    }
-
     public virtual bool UseEnergy(int energy) {
         var curTime = (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000000;
         //可以消耗体力
@@ -137,7 +134,7 @@ public class CharacterBase : ICharacter,IDamageable {
 
     public virtual void RecoverEnergy() {
         var curTime = (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000000;
-        if (curTime - LastTimeUseEnergy > 2 && CurEnergy < MaxEnergy) {
+        if (curTime - LastTimeUseEnergy > 1 && CurEnergy < MaxEnergy) {
             //TODO:恢复体力
             CurEnergy += 10 * Time.fixedDeltaTime;
         }
@@ -155,7 +152,14 @@ public class CharacterBase : ICharacter,IDamageable {
         Debug.Log("基础的重击方法");
     }
 
-    public virtual int OnDamage() {
-        throw new System.NotImplementedException();
+    public virtual int OnDamage(int damagePoint) {
+        Debug.Log("基础的受击方法");
+        CurHealth -= damagePoint;
+
+        if (CurHealth <= 0) {
+            Debug.Log("角色阵亡");
+        }
+
+        return CurHealth;
     }
 }
