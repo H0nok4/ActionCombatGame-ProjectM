@@ -6,7 +6,8 @@ public class CharacterKlee : CharacterBase
 {
     public override void NormalAttack(Vector2 inputVec) {
         //TODO:Klee的普通攻击
-        
+        this.Rigbody.velocity = Vector2.zero;
+
         var fireObject = GameObjectPool.Instance.CreatProjectileFromPool("Klee_Attack_Projectile");
         Vector2 targetVec = (inputVec - new Vector2(GameObject.transform.position.x,GameObject.transform.position.y));//想要攻击的位置
         Vector2 resultPos = new Vector2();

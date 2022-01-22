@@ -20,6 +20,7 @@ public class CharacterController : MonoSingleton<CharacterController>
     }
 
     private void Update() {
+        characterBase.Update();
 
         if (Input.GetKeyDown(KeyCode.Mouse1)) {
             characterBase.Dash(PlayerController.Instance.GetPlayerMouseWorldPos());
@@ -31,34 +32,14 @@ public class CharacterController : MonoSingleton<CharacterController>
     }
 
     private void FixedUpdate() {
-        MoveCharacter();
+        characterBase.FixUpdate();
+
+        //TODO：将这些移到角色的FixUpdate中
         ChangeCharacterDirection();
         UpdateWeaponRotation();
         characterBase.RecoverEnergy();
     }
-    public void MoveCharacter() {
-        int MoveX = 0;
-        int MoveY = 0;
 
-        if (Input.GetKey(KeyCode.A)) {
-            MoveX -= 1;
-        }
-        if (Input.GetKey(KeyCode.D)) {
-            MoveX += 1;
-        }
-        if (Input.GetKey(KeyCode.W)) {
-            MoveY += 1;
-        }
-        if (Input.GetKey(KeyCode.S)) {
-            MoveY -= 1;
-        }
-
-
-        characterBase.Move(new Vector2(MoveX,MoveY));
-        
-
-
-    }
 
     public void UpdateWeaponRotation() {
         var mousePos = PlayerController.Instance.GetPlayerMouseWorldPos();

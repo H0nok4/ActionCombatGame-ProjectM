@@ -10,6 +10,12 @@ public enum MoveState {
     Run
 }
 
+public enum CharacterState{
+    Move,
+    Attack,
+
+}
+
 public class CharacterBase : ICharacter,IDamageable {
     public int MaxHealth;
     public int CurHealth;
@@ -23,9 +29,13 @@ public class CharacterBase : ICharacter,IDamageable {
     public string CharacterName;
 
     public MoveState MoveState;
+    public CharacterState State;
     public bool Invincible;
 
     public long LastTimeUseEnergy;
+
+    //物理状态相关
+    public Vector2 MoveVec;
 
     public GameObject GameObject;
     public SpriteRenderer Sprite;
@@ -76,6 +86,47 @@ public class CharacterBase : ICharacter,IDamageable {
                 }
             }
         }
+    }
+
+    public virtual void Update() {
+        if (State == CharacterState.Attack) {
+            //TODO:攻击的时候需要停止无法移动，但是又可以通过冲刺打断攻击进入移动状态
+        }else if (State == CharacterState.Move) {
+            //TODO：移动的时候可以随时进入攻击状态
+            UpdateMoveVec();
+
+            //TODO:随时进入攻击状态
+        }
+    }
+
+    public void UpdateMoveVec() {
+        int MoveX = 0;
+        int MoveY = 0;
+
+        if (Input.GetKey(KeyCode.A)) {
+            MoveX -= 1;
+        }
+        if (Input.GetKey(KeyCode.D)) {
+            MoveX += 1;
+        }
+        if (Input.GetKey(KeyCode.W)) {
+            MoveY += 1;
+        }
+        if (Input.GetKey(KeyCode.S)) {
+            MoveY -= 1;
+        }
+
+        MoveVec = new Vector2(MoveX, MoveY);
+    }
+
+    public virtual void FixUpdate() {
+        //更新角色的物理状态，比如移动等
+        UpdatePosition();
+    }
+
+    public void UpdatePosition() {
+        //TODO:根据物理引擎更新角色的状态
+        Move(MoveVec);
     }
 
     IEnumerator StartDash(Vector2 inputVector) {
