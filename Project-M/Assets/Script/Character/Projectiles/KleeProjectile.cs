@@ -1,18 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
-public class KleeProjectile : MonoBehaviour
+public class KleeProjectile : ProjectileBase
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public override void Fire() {
+        //TODO:kleeµÄFire·½·¨
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

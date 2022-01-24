@@ -8,4 +8,8 @@ public class ProjectileBase : MonoBehaviour,IProjectile {
         sender = characterBase;
     }
 
+    public virtual void Fire() {
+        Debug.Log("ProjectTile的基类Fire方法");
+    }
+
 }

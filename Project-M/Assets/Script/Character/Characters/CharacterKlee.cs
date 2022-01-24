@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -71,6 +72,8 @@ public class CharacterKlee : CharacterBase
                 canDamage.OnDamage(Attack);
             }
         }
+
+        base.NormalAttack(Vector2.zero);
         yield break;
     }
 

@@ -75,14 +75,14 @@ public class CharacterBase : ICharacter,IDamageable {
             //Temp:冲刺需要消耗体力
             Debug.Log($"当前体力为：{CurEnergy}");
             if (UseEnergy(20)) {
-                if (Rigbody.velocity == Vector2.zero) {
+                if (Rigbody.velocity == Vector2.zero && MoveVec == Vector2.zero) {
                     //没有速度，朝着鼠标方向冲刺一段距离
                     MoveState = MoveState.Dash;
                     new UnityTask(StartDash(inputVec));
                 } else {
                     //当前有速度，朝着速度方向冲刺一段距离
                     MoveState = MoveState.Dash;
-                    new UnityTask(StartDash(new Vector2(GameObject.transform.position.x,GameObject.transform.position.y) + Rigbody.velocity));
+                    new UnityTask(StartDash(new Vector2(GameObject.transform.position.x,GameObject.transform.position.y) + MoveVec));
                 }
             }
         }
@@ -91,11 +91,27 @@ public class CharacterBase : ICharacter,IDamageable {
     public virtual void Update() {
         if (State == CharacterState.Attack) {
             //TODO:攻击的时候需要停止无法移动，但是又可以通过冲刺打断攻击进入移动状态
+
+            
         }else if (State == CharacterState.Move) {
             //TODO：移动的时候可以随时进入攻击状态
             UpdateMoveVec();
 
             //TODO:随时进入攻击状态
+        }
+        
+        UpdateState();
+    }
+
+    public void UpdateState() {
+        switch (State) {
+            case CharacterState.Attack:
+                if (Animator.GetBool("IsMove") == true) {
+                    Animator.SetBool("IsMove",false);
+                }
+                break;
+            case CharacterState.Move:
+                break;
         }
     }
 
@@ -126,7 +142,10 @@ public class CharacterBase : ICharacter,IDamageable {
 
     public void UpdatePosition() {
         //TODO:根据物理引擎更新角色的状态
-        Move(MoveVec);
+        if (State == CharacterState.Move) {
+            Move(MoveVec);  
+        }
+
     }
 
     IEnumerator StartDash(Vector2 inputVector) {
@@ -169,6 +188,7 @@ public class CharacterBase : ICharacter,IDamageable {
 
     public virtual void NormalAttack(Vector2 inputVec) {
         Debug.Log("基础的攻击方法");
+        State = CharacterState.Move;
     }
 
     public virtual bool UseEnergy(int energy) {
