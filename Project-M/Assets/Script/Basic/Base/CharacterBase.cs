@@ -3,17 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum MoveState {
-    Idle,
-    Move,
-    Dash,
-    Run
-}
-
 public enum CharacterState{
     Move,
     Attack,
-
+    Idle
 }
 
 public class CharacterBase : ICharacter,IDamageable {
@@ -28,7 +21,6 @@ public class CharacterBase : ICharacter,IDamageable {
     public int MoveSpeed;
     public string CharacterName;
 
-    public MoveState MoveState;
     public CharacterState State;
     public bool Invincible;
 
@@ -71,17 +63,15 @@ public class CharacterBase : ICharacter,IDamageable {
         //短时间内冲刺有CD
         //冲刺消耗体力
         //冲刺后如果还按住冲刺键，进入奔跑状态
-        if (MoveState == MoveState.Move || MoveState == MoveState.Idle) {
+        if (State == CharacterState.Move) {
             //Temp:冲刺需要消耗体力
             Debug.Log($"当前体力为：{CurEnergy}");
             if (UseEnergy(20)) {
                 if (Rigbody.velocity == Vector2.zero && MoveVec == Vector2.zero) {
                     //没有速度，朝着鼠标方向冲刺一段距离
-                    MoveState = MoveState.Dash;
                     new UnityTask(StartDash(inputVec));
                 } else {
                     //当前有速度，朝着速度方向冲刺一段距离
-                    MoveState = MoveState.Dash;
                     new UnityTask(StartDash(new Vector2(GameObject.transform.position.x,GameObject.transform.position.y) + MoveVec));
                 }
             }
@@ -160,12 +150,11 @@ public class CharacterBase : ICharacter,IDamageable {
         //冲刺停止
         Rigbody.velocity = Vector2.zero;
         Animator.SetBool("IsDash",false);
-        MoveState = MoveState.Move;
 
     }
 
     public virtual void Move(Vector2 inputVec) {
-        if (MoveState == MoveState.Move || MoveState == MoveState.Idle) {
+        if (State == CharacterState.Move) {
             if (Mathf.Abs(inputVec.x) == 1 && Mathf.Abs(inputVec.y) == 1) {
                 Animator.SetBool("IsMove",true);
                 Rigbody.velocity = inputVec * (MoveSpeed / Mathf.Sqrt(2));
@@ -182,7 +171,6 @@ public class CharacterBase : ICharacter,IDamageable {
                 Rigbody.velocity /= 1.5f;
             }
 
-            MoveState = MoveState.Move;
         }
     }
 

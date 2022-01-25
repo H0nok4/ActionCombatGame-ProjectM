@@ -73,7 +73,7 @@ public class CharacterKlee : CharacterBase
             }
         }
 
-        base.NormalAttack(Vector2.zero);
+
         yield break;
     }
 
