@@ -21,7 +21,6 @@ public class CharacterBase : ICharacter,IDamageable {
     public int MoveSpeed;
     public string CharacterName;
 
-    public CharacterState State;
     public bool Invincible;
 
     public long LastTimeUseEnergy;
@@ -34,6 +33,7 @@ public class CharacterBase : ICharacter,IDamageable {
     public Weapon Weapon;
     public Animator Animator;
     public Rigidbody2D Rigbody;
+    public CharacterStateMeching StateMeching;
 
     public virtual void Init(CharacterProperty property) {
         InitWithCharacterProperty(property);
@@ -63,47 +63,26 @@ public class CharacterBase : ICharacter,IDamageable {
         //短时间内冲刺有CD
         //冲刺消耗体力
         //冲刺后如果还按住冲刺键，进入奔跑状态
-        if (State == CharacterState.Move) {
+        
             //Temp:冲刺需要消耗体力
-            Debug.Log($"当前体力为：{CurEnergy}");
-            if (UseEnergy(20)) {
-                if (Rigbody.velocity == Vector2.zero && MoveVec == Vector2.zero) {
-                    //没有速度，朝着鼠标方向冲刺一段距离
-                    new UnityTask(StartDash(inputVec));
-                } else {
-                    //当前有速度，朝着速度方向冲刺一段距离
-                    new UnityTask(StartDash(new Vector2(GameObject.transform.position.x,GameObject.transform.position.y) + MoveVec));
-                }
+        Debug.Log($"当前体力为：{CurEnergy}");
+        if (UseEnergy(20)) {
+            if (Rigbody.velocity == Vector2.zero && MoveVec == Vector2.zero) {
+                //没有速度，朝着鼠标方向冲刺一段距离
+                new UnityTask(StartDash(inputVec));
+            } else {
+                //当前有速度，朝着速度方向冲刺一段距离
+                new UnityTask(StartDash(new Vector2(GameObject.transform.position.x,GameObject.transform.position.y) + MoveVec));
             }
         }
+        
     }
 
     public virtual void Update() {
-        if (State == CharacterState.Attack) {
-            //TODO:攻击的时候需要停止无法移动，但是又可以通过冲刺打断攻击进入移动状态
-
-            
-        }else if (State == CharacterState.Move) {
-            //TODO：移动的时候可以随时进入攻击状态
-            UpdateMoveVec();
-
-            //TODO:随时进入攻击状态
-        }
-        
-        UpdateState();
+        StateMeching.Run();
     }
 
-    public void UpdateState() {
-        switch (State) {
-            case CharacterState.Attack:
-                if (Animator.GetBool("IsMove") == true) {
-                    Animator.SetBool("IsMove",false);
-                }
-                break;
-            case CharacterState.Move:
-                break;
-        }
-    }
+
 
     public void UpdateMoveVec() {
         int MoveX = 0;
@@ -132,10 +111,7 @@ public class CharacterBase : ICharacter,IDamageable {
 
     public void UpdatePosition() {
         //TODO:根据物理引擎更新角色的状态
-        if (State == CharacterState.Move) {
-            Move(MoveVec);  
-        }
-
+        Move(MoveVec);
     }
 
     IEnumerator StartDash(Vector2 inputVector) {
@@ -154,29 +130,30 @@ public class CharacterBase : ICharacter,IDamageable {
     }
 
     public virtual void Move(Vector2 inputVec) {
-        if (State == CharacterState.Move) {
-            if (Mathf.Abs(inputVec.x) == 1 && Mathf.Abs(inputVec.y) == 1) {
-                Animator.SetBool("IsMove",true);
-                Rigbody.velocity = inputVec * (MoveSpeed / Mathf.Sqrt(2));
-            } else if (inputVec.x != 0 || inputVec.y != 0) {
-                Animator.SetBool("IsMove",true);
-                Rigbody.velocity = inputVec * MoveSpeed;
-            } else {
-                Animator.SetBool("IsMove",false);
-                Rigbody.velocity = Vector2.zero;
-            }
-
-            if (Mathf.Abs(Vector2.Angle(Rigbody.velocity,(PlayerController.Instance.GetPlayerMouseWorldPos() - GameObject.transform.position))) > 90) {
-                //当鼠标指向的方向和前进方向的夹角大于90°，说明移动和目视方向是反向的，减缓移动速度
-                Rigbody.velocity /= 1.5f;
-            }
-
+        
+        if (Mathf.Abs(inputVec.x) == 1 && Mathf.Abs(inputVec.y) == 1) {
+            Animator.SetBool("IsMove",true);
+            Rigbody.velocity = inputVec * (MoveSpeed / Mathf.Sqrt(2));
+        } else if (inputVec.x != 0 || inputVec.y != 0) {
+            Animator.SetBool("IsMove",true);
+            Rigbody.velocity = inputVec * MoveSpeed;
+        } else {
+            Animator.SetBool("IsMove",false);
+            Rigbody.velocity = Vector2.zero;
         }
+
+        if (Mathf.Abs(Vector2.Angle(Rigbody.velocity,(PlayerController.Instance.GetPlayerMouseWorldPos() - GameObject.transform.position))) > 90) {
+            //当鼠标指向的方向和前进方向的夹角大于90°，说明移动和目视方向是反向的，减缓移动速度
+            Rigbody.velocity /= 1.5f;
+        }
+
+        
     }
 
     public virtual void NormalAttack(Vector2 inputVec) {
         Debug.Log("基础的攻击方法");
-        State = CharacterState.Move;
+        //TODO:攻击有冷却
+        StateMeching.ChangeState(StateMeching.curState,BattleManager.attackState);
     }
 
     public virtual bool UseEnergy(int energy) {

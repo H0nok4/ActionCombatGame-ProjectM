@@ -13,9 +13,17 @@ public class Idle : CharacterStateBase
         }
     }
 
-    public override void Run(CharacterBase character) {
-        character.MoveVec = Vector2.zero;
-        character.Animator.SetBool("IsMove",false);
+    public override void Run(CharacterBase character,CharacterStateMeching meching) {
+        character.UpdateMoveVec();
+        if (character.MoveVec == Vector2.zero) {
+            character.Animator.SetBool("IsMove",false);
+        }
+        else {
+            meching.ChangeState(this,BattleManager.moveState);
+        }
+
+
+        
     }
 
     public override void Exit(CharacterBase character) {

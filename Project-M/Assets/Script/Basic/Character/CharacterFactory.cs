@@ -17,6 +17,8 @@ public class CharacterFactory
         characterBase.Sprite = character.GetComponentInChildren<SpriteRenderer>();
         characterBase.Animator = character.GetComponent<Animator>();
         characterBase.Rigbody = character.GetComponent<Rigidbody2D>();
+        characterBase.StateMeching = new CharacterStateMeching();
+        characterBase.StateMeching.Init(characterBase);
         return characterBase;
     }
 

@@ -13,9 +13,16 @@ public class Move : CharacterStateBase
         }
     }
 
-    public override void Run(CharacterBase character) {
+    public override void Run(CharacterBase character,CharacterStateMeching meching) {
         character.UpdateMoveVec();
-        character.Move(character.MoveVec);
+        if (character.MoveVec == Vector2.zero) {
+            meching.ChangeState(this,BattleManager.idleState);
+        }
+        else {
+            character.Animator.SetBool("IsMove",true);
+        }
+
+
     }
 
 

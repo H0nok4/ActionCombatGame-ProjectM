@@ -14,7 +14,7 @@ public class CharacterStateBase : ICharacterState {
         Debug.Log("CharacterState的基础Enter方法");
     }
 
-    public virtual void Run(CharacterBase character) {
+    public virtual void Run(CharacterBase character,CharacterStateMeching meching) {
         Debug.Log("CharacterState的基础Run方法");
     }
 

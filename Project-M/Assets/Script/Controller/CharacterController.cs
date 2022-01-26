@@ -28,7 +28,6 @@ public class CharacterController : MonoSingleton<CharacterController>
             characterBase.Smash(PlayerController.Instance.GetPlayerMouseWorldPos());
         }else if (PlayerController.Instance.GetPressAttackButton()) {
             characterBase.NormalAttack(PlayerController.Instance.GetPlayerMouseWorldPos());
-            characterBase.State = CharacterState.Attack;
         }
     }
 
