@@ -27,6 +27,7 @@ public class CharacterBase : ICharacter,IDamageable {
 
     //物理状态相关
     public Vector2 MoveVec;
+    public bool IsAttack;
 
     public GameObject GameObject;
     public SpriteRenderer Sprite;
@@ -126,7 +127,6 @@ public class CharacterBase : ICharacter,IDamageable {
         //冲刺停止
         Rigbody.velocity = Vector2.zero;
         Animator.SetBool("IsDash",false);
-
     }
 
     public virtual void Move(Vector2 inputVec) {
@@ -146,15 +146,23 @@ public class CharacterBase : ICharacter,IDamageable {
             //当鼠标指向的方向和前进方向的夹角大于90°，说明移动和目视方向是反向的，减缓移动速度
             Rigbody.velocity /= 1.5f;
         }
+    }
 
-        
+    public void StartAttack() {
+        StateMeching.ChangeState(StateMeching.curState,BattleManager.attackState);
     }
 
     public virtual void NormalAttack(Vector2 inputVec) {
         Debug.Log("基础的攻击方法");
         //TODO:攻击有冷却
-        StateMeching.ChangeState(StateMeching.curState,BattleManager.attackState);
+        IsAttack = true;
     }
+
+    public virtual void StopAttack() {
+        Debug.Log("Stop Attack");
+        IsAttack = false;
+    }
+
 
     public virtual bool UseEnergy(int energy) {
         var curTime = (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000000;
@@ -198,4 +206,5 @@ public class CharacterBase : ICharacter,IDamageable {
 
         return CurHealth;
     }
+    
 }

@@ -7,6 +7,7 @@ public class CharacterKlee : CharacterBase
 {
     public override void NormalAttack(Vector2 inputVec) {
         //TODO:KleeµÄÆÕÍ¨¹¥»÷
+        base.NormalAttack(inputVec);
         this.Rigbody.velocity = Vector2.zero;
 
         var fireObject = GameObjectPool.Instance.CreatProjectileFromPool("Klee_Attack_Projectile");

@@ -9,11 +9,11 @@ public class Attack : CharacterStateBase
         character.MoveVec = Vector2.zero;
         character.Animator.SetBool("IsMove",false);
         character.Animator.SetBool("IsDash",false);
+        character.Animator.SetBool("IsAttack",true);
     }
 
     public override void Run(CharacterBase character,CharacterStateMeching meching) {
         character.NormalAttack(PlayerController.Instance.GetPlayerMouseWorldPos());
-
         meching.ChangeState(this,BattleManager.idleState);
     }
 

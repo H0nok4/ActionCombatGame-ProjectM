@@ -6,6 +6,7 @@ using UnityEngine;
 public class CharacterController : MonoSingleton<CharacterController>
 {
     public CharacterBase characterBase;
+    
 
     public override void OnInitialize() {
 
@@ -27,7 +28,7 @@ public class CharacterController : MonoSingleton<CharacterController>
         }else if (PlayerController.Instance.GetNormalSmashInput()) {
             characterBase.Smash(PlayerController.Instance.GetPlayerMouseWorldPos());
         }else if (PlayerController.Instance.GetPressAttackButton()) {
-            characterBase.NormalAttack(PlayerController.Instance.GetPlayerMouseWorldPos());
+            characterBase.StartAttack();
         }
     }
 

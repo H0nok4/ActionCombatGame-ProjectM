@@ -178,6 +178,7 @@ GameObject:
   - component: {fileID: 6274431397723669124}
   - component: {fileID: 3293272952804003839}
   - component: {fileID: 4046697862928444934}
+  - component: {fileID: 3523350469409225408}
   m_Layer: 0
   m_Name: Klee
   m_TagString: Untagged
@@ -267,3 +268,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5963383, y: 0.281673}
   m_EdgeRadius: 0
+--- !u!114 &3523350469409225408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6274431397723669125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88c192d8f8c6d004aa07411f6db5a4df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

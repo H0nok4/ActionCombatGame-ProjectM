@@ -12,6 +12,9 @@ public class CharacterFactory
         weapon.transform.SetParent(character.transform);
         weapon.transform.position = Vector3.zero;
 
+        var animationController = character.GetComponent<CharacterAnimationEventController>();
+        animationController.characterBase = characterBase;
+
         characterBase.GameObject = character;
         characterBase.Weapon = weapon.GetComponent<Weapon>();
         characterBase.Sprite = character.GetComponentInChildren<SpriteRenderer>();
