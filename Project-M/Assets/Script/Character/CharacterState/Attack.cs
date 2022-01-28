@@ -6,7 +6,7 @@ public class Attack : CharacterStateBase
 {
 
     public override void Enter(CharacterBase character) {
-        character.MoveVec = Vector2.zero;
+        character.InputMoveVec = Vector2.zero;
         character.Animator.SetBool("IsMove",false);
         character.Animator.SetBool("IsDash",false);
         character.Animator.SetBool("IsAttack",true);

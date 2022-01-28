@@ -21,13 +21,16 @@ public class CharacterBase : ICharacter,IDamageable {
     public int MoveSpeed;
     public string CharacterName;
 
-    public bool Invincible;
+    public bool Invincible;//无敌
 
     public long LastTimeUseEnergy;
 
     //物理状态相关
+
     public Vector2 MoveVec;
+    public Vector2 InputMoveVec;
     public bool IsAttack;
+    public bool IsDash;
 
     public GameObject GameObject;
     public SpriteRenderer Sprite;
@@ -58,22 +61,25 @@ public class CharacterBase : ICharacter,IDamageable {
 
     public virtual void Dash(Vector2 inputVec) {
         //基础通用的冲刺方法，如果有特别的冲刺方式就在各自的类里实现
-        Debug.Log("基础的冲刺方法");
+
         //右键冲刺，如果角色有速度的话，朝着速度方向冲刺一段距离，如果没有速度，朝着鼠标方向冲刺一段距离
         //冲刺过程中应该有无敌帧 
         //短时间内冲刺有CD
         //冲刺消耗体力
         //冲刺后如果还按住冲刺键，进入奔跑状态
-        
-            //Temp:冲刺需要消耗体力
-        Debug.Log($"当前体力为：{CurEnergy}");
-        if (UseEnergy(20)) {
-            if (Rigbody.velocity == Vector2.zero && MoveVec == Vector2.zero) {
+
+        //Temp:冲刺需要消耗体力
+        Debug.Log(CurEnergy);
+        if (IsDash == false && UseEnergy(20)) {
+            Debug.Log("基础的冲刺方法");
+            IsAttack = false;
+            IsDash = true;
+            if (Rigbody.velocity == Vector2.zero && InputMoveVec == Vector2.zero) {
                 //没有速度，朝着鼠标方向冲刺一段距离
                 new UnityTask(StartDash(inputVec));
             } else {
                 //当前有速度，朝着速度方向冲刺一段距离
-                new UnityTask(StartDash(new Vector2(GameObject.transform.position.x,GameObject.transform.position.y) + MoveVec));
+                new UnityTask(StartDash(new Vector2(GameObject.transform.position.x,GameObject.transform.position.y) + InputMoveVec));
             }
         }
         
@@ -81,11 +87,12 @@ public class CharacterBase : ICharacter,IDamageable {
 
     public virtual void Update() {
         StateMeching.Run();
+        UpdateInputVec();
     }
 
 
 
-    public void UpdateMoveVec() {
+    public void UpdateInputVec() {
         int MoveX = 0;
         int MoveY = 0;
 
@@ -102,7 +109,7 @@ public class CharacterBase : ICharacter,IDamageable {
             MoveY -= 1;
         }
 
-        MoveVec = new Vector2(MoveX, MoveY);
+        InputMoveVec = new Vector2(MoveX, MoveY);
     }
 
     public virtual void FixUpdate() {
@@ -112,21 +119,31 @@ public class CharacterBase : ICharacter,IDamageable {
 
     public void UpdatePosition() {
         //TODO:根据物理引擎更新角色的状态
-        Move(MoveVec);
+        //平常接受Input，需要更新的时候才能更新位置
+        if (IsAttack == false) {
+            Move(MoveVec);
+        }
+
+
+    }
+
+    public void UpdateMoveVec() {
+        MoveVec = InputMoveVec;
     }
 
     IEnumerator StartDash(Vector2 inputVector) {
         //开始冲刺
-        Animator.SetBool("IsDash",true);
-        Rigbody.velocity = (inputVector - new Vector2(GameObject.transform.position.x,GameObject.transform.position.y)).normalized * 6;
+        MoveVec = (inputVector - new Vector2(GameObject.transform.position.x,GameObject.transform.position.y)).normalized * 3;
         Invincible = true;
         yield return new WaitForSeconds(0.1f);
         //闪避无敌帧判定
         Invincible = false;
         yield return new WaitForSeconds(0.15f);
         //冲刺停止
-        Rigbody.velocity = Vector2.zero;
-        Animator.SetBool("IsDash",false);
+        MoveVec = Vector2.zero;
+        IsDash = false;
+        StateMeching.ChangeState(BattleManager.dashState,BattleManager.idleState);
+
     }
 
     public virtual void Move(Vector2 inputVec) {

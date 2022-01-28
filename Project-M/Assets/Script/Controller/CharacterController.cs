@@ -24,7 +24,7 @@ public class CharacterController : MonoSingleton<CharacterController>
         characterBase.Update();
 
         if (Input.GetKeyDown(KeyCode.Mouse1)) {
-            characterBase.Dash(PlayerController.Instance.GetPlayerMouseWorldPos());
+            characterBase.StateMeching.ChangeState(characterBase.StateMeching.curState,BattleManager.dashState);
         }else if (PlayerController.Instance.GetNormalSmashInput()) {
             characterBase.Smash(PlayerController.Instance.GetPlayerMouseWorldPos());
         }else if (PlayerController.Instance.GetPressAttackButton()) {

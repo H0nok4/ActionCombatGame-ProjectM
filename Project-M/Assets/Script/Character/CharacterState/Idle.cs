@@ -7,8 +7,8 @@ public class Idle : CharacterStateBase
 
     public override void Enter(CharacterBase character) {
         base.Enter(character);
-        if (character.MoveVec != Vector2.zero) {
-            character.MoveVec = Vector2.zero;
+        if (character.InputMoveVec != Vector2.zero) {
+            character.InputMoveVec = Vector2.zero;
             character.Animator.SetBool("IsMove",false);
         }
     }
@@ -18,7 +18,7 @@ public class Idle : CharacterStateBase
             character.UpdateMoveVec();
         }
  
-        if (character.MoveVec == Vector2.zero) {
+        if (character.InputMoveVec == Vector2.zero) {
             character.Animator.SetBool("IsMove",false);
         }
         else {
