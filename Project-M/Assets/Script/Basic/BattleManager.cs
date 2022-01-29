@@ -17,4 +17,17 @@ public class BattleManager : MonoSingleton<BattleManager>
     public override void OnUnInitialize() {
         base.OnUnInitialize();
     }
+
+    public void CalculateDamage(CharacterBase attacker,CharacterBase defender,int damage) {
+        var realDamage = attacker.Attack + damage;
+
+        if (attacker.Team != defender.Team) {
+            defender.OnDamage(realDamage);
+        }
+    }
+
+    public void CalculateMapObjectDamage(CharacterBase attacker,IMapObjectBase mapObjectBase,int damage) {
+        var realDamage = attacker.Attack + damage;
+        mapObjectBase.OnDamage(realDamage);
+    }
 }

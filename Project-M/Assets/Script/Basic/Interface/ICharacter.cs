@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface ICharacter
 {
-    public void Init(CharacterProperty property);
+    public void Init(CharacterProperty property,Team team);
 
     public void Dash(Vector2 inputVec);
 

@@ -7,6 +7,9 @@ public class CharacterKlee : CharacterBase
 {
     public override void NormalAttack(Vector2 inputVec) {
         //TODO:KleeµÄÆÕÍ¨¹¥»÷
+        if (IsAttack) {
+            return;
+        }
         base.NormalAttack(inputVec);
         this.Rigbody.velocity = Vector2.zero;
 

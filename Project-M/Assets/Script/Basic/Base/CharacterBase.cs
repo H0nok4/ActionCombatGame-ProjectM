@@ -9,6 +9,12 @@ public enum CharacterState{
     Idle
 }
 
+public enum Team {
+    red,
+    blue,
+    wild
+}
+
 public class CharacterBase : ICharacter,IDamageable {
     public int MaxHealth;
     public int CurHealth;
@@ -20,6 +26,7 @@ public class CharacterBase : ICharacter,IDamageable {
     public int CurBurstEnergy;
     public int MoveSpeed;
     public string CharacterName;
+    public Team Team;
 
     public bool Invincible;//无敌
 
@@ -39,10 +46,10 @@ public class CharacterBase : ICharacter,IDamageable {
     public Rigidbody2D Rigbody;
     public CharacterStateMeching StateMeching;
 
-    public virtual void Init(CharacterProperty property) {
-        InitWithCharacterProperty(property);
+    public virtual void Init(CharacterProperty property,Team team) {
+        InitWithCharacterProperty(property,team);
     }
-    public void InitWithCharacterProperty(CharacterProperty property) {
+    public void InitWithCharacterProperty(CharacterProperty property,Team team) {
         MaxHealth = property.Health;
         CurHealth = MaxHealth;
         Attack = property.Attack;
@@ -53,6 +60,8 @@ public class CharacterBase : ICharacter,IDamageable {
         CurBurstEnergy = 0;
         CharacterName = property.CharacterName;
         MoveSpeed = property.MoveSpeed;
+
+        Team = team;
     }
 
     public virtual void Burst(Vector2 inputVec) {
@@ -173,11 +182,6 @@ public class CharacterBase : ICharacter,IDamageable {
         Debug.Log("基础的攻击方法");
         //TODO:攻击有冷却
         IsAttack = true;
-    }
-
-    public virtual void StopAttack() {
-        Debug.Log("Stop Attack");
-        IsAttack = false;
     }
 
 
