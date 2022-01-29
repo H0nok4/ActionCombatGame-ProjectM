@@ -7,7 +7,7 @@ public class CharacterController : MonoSingleton<CharacterController>
 {
     public CharacterBase characterBase;
     
-
+    
     public override void OnInitialize() {
 
     }

@@ -71,9 +71,12 @@ public class CharacterKlee : CharacterBase
         var cols = Physics2D.OverlapCircleAll(new Vector3(fireObject.gameObject.transform.position.x,fireObject.gameObject.transform.position.y,0), 1f);
         foreach (var col in cols) {
             Debug.Log(col.gameObject.name);
-            var canDamage = col.gameObject.GetComponent<IDamageable>();
-            if (canDamage != null) {
-                canDamage.OnDamage(Attack);
+            var isMapObject = col.gameObject.GetComponent<IMapObjectBase>();
+            var isCharacter = col.gameObject.GetComponent<CharacterCanDamaged>();
+            if (isMapObject != null) {
+                BattleManager.Instance.CalculateMapObjectDamage(this,isMapObject,5);
+            } else if (isCharacter != null) {
+                BattleManager.Instance.CalculateDamage(this,isCharacter.characterBase,5);
             }
         }
 

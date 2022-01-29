@@ -22,6 +22,10 @@ public class CharacterFactory
         characterBase.Rigbody = character.GetComponent<Rigidbody2D>();
         characterBase.StateMeching = new CharacterStateMeching();
         characterBase.StateMeching.Init(characterBase);
+
+        var characterTag = character.gameObject.AddComponent<CharacterCanDamaged>();
+        characterTag.characterBase = characterBase;
+
         return characterBase;
     }
 
