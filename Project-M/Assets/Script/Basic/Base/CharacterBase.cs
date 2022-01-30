@@ -79,7 +79,7 @@ public class CharacterBase : ICharacter,IDamageable {
 
         //Temp:冲刺需要消耗体力
         Debug.Log(CurEnergy);
-        if (IsDash == false && UseEnergy(20)) {
+        if (IsDash == false && UseEnergy(40)) {
             Debug.Log("基础的冲刺方法");
             IsAttack = false;
             IsDash = true;
@@ -90,6 +90,8 @@ public class CharacterBase : ICharacter,IDamageable {
                 //当前有速度，朝着速度方向冲刺一段距离
                 new UnityTask(StartDash(new Vector2(GameObject.transform.position.x,GameObject.transform.position.y) + InputMoveVec));
             }
+        } else {
+            StateMeching.ChangeState(StateMeching.curState,StateMeching.preState);
         }
         
     }
@@ -194,18 +196,23 @@ public class CharacterBase : ICharacter,IDamageable {
             return true;
         }
 
+        HPBarController.Instance.UpdateEnergy(CurEnergy);
         return false;
     }
 
     public virtual void RecoverEnergy() {
-        var curTime = (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000000;
-        if (curTime - LastTimeUseEnergy > 1 && CurEnergy < MaxEnergy) {
-            //TODO:恢复体力
-            CurEnergy += 10 * Time.fixedDeltaTime;
-        }
+        if (CurEnergy < MaxEnergy) {
+            var curTime = (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000000;
+            if (curTime - LastTimeUseEnergy > 1 && CurEnergy < MaxEnergy) {
+                //TODO:恢复体力
+                CurEnergy += 10 * Time.fixedDeltaTime;
+            }
 
-        if (CurEnergy > MaxEnergy) {
-            CurEnergy = MaxEnergy;
+            if (CurEnergy > MaxEnergy) {
+                CurEnergy = MaxEnergy;
+            }
+
+            HPBarController.Instance.UpdateEnergy(CurEnergy);
         }
     }
 
@@ -225,6 +232,7 @@ public class CharacterBase : ICharacter,IDamageable {
             Debug.Log("角色阵亡");
         }
 
+        HPBarController.Instance.UpdateHP(CurHealth);
         return CurHealth;
     }
     

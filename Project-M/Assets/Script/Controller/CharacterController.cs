@@ -18,6 +18,11 @@ public class CharacterController : MonoSingleton<CharacterController>
         var characterKlee = new CharacterKlee();
         characterKlee.Init(KleeProperty,Team.red);
         characterBase = CharacterFactory.CreatCharacterInstance(characterKlee, "SkyBook");
+
+        //TODO：更新生命和体力条
+        HPBarController.Instance.Init(characterBase.MaxHealth,characterBase.MaxEnergy);
+        HPBarController.Instance.UpdateHP(characterBase.MaxHealth);
+        HPBarController.Instance.UpdateEnergy(characterBase.MaxEnergy);
     }
 
     private void Update() {

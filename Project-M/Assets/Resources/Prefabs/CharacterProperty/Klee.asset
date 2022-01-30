@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Klee
   m_EditorClassIdentifier: 
   _CharacterName: Klee
-  _health: 30
+  _health: 300
   _attack: 5
   _attackRange: 3
-  _energy: 50
+  _energy: 100
   _burstEnergy: 40
   _moveSpeed: 3
