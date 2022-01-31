@@ -23,9 +23,17 @@ public class PlayerController : MonoSingleton<PlayerController> {
         return false;
     }
 
+    public MousePressEvent GetFreeAttackButton() {
+        if (Input.GetKeyUp(KeyCode.Mouse0)) {
+            return new MousePressEvent(KeyCode.Mouse0,(lastTimePressAttackButton - ((DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000))/ 1000);
+        }
+
+        return null;
+    }
+
     public bool GetPressAttackButton() {
-        if (!isHoldingAttackButton && isSmashed == false) {
-            return isAttack;
+        if (Input.GetKeyDown(KeyCode.Mouse0)) {
+            return true;
         }
 
         return false;
@@ -35,7 +43,7 @@ public class PlayerController : MonoSingleton<PlayerController> {
         if (isHoldingAttackButton && isSmashed == false) {
             var curTime = (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000;
             if (curTime - lastTimePressAttackButton > 500) {
-                //按住攻击键超过一秒
+                //按住攻击键超过0.5秒
                 isSmashed = true;
                 return true;
             }
@@ -91,4 +99,15 @@ public class PlayerController : MonoSingleton<PlayerController> {
         return false;
     }
 
+}
+
+
+public class MousePressEvent{
+    KeyCode KeyCode;
+    float Time;
+
+    public MousePressEvent(KeyCode keyCode,float time) {
+        KeyCode = keyCode;
+        Time = time;
+    }
 }

@@ -29,9 +29,11 @@ public class CharacterController : MonoSingleton<CharacterController>
     private void Update() {
         characterBase.Update();
 
-        if (Input.GetKeyDown(KeyCode.Mouse1)) {
+        
+        if (Input.GetKeyDown(KeyCode.Space)) {
             characterBase.StateMeching.ChangeState(characterBase.StateMeching.curState,BattleManager.dashState);
         }else if (PlayerController.Instance.GetNormalSmashInput()) {
+            //TODO:更改为右键开始蓄力重击
             characterBase.Smash(PlayerController.Instance.GetPlayerMouseWorldPos());
         }else if (PlayerController.Instance.GetPressAttackButton()) {
             characterBase.StartAttack();
