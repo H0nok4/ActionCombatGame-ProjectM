@@ -23,6 +23,7 @@ public class CharacterController : MonoSingleton<CharacterController>
         HPBarController.Instance.Init(characterBase.MaxHealth,characterBase.MaxEnergy);
         HPBarController.Instance.UpdateHP(characterBase.MaxHealth);
         HPBarController.Instance.UpdateEnergy(characterBase.MaxEnergy);
+        CameraController.Instance.Init(characterBase.GameObject);
     }
 
     private void Update() {
