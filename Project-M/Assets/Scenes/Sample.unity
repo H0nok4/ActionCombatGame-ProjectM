@@ -383,6 +383,7 @@ GameObject:
   - component: {fileID: 126918543}
   - component: {fileID: 126918545}
   - component: {fileID: 126918546}
+  - component: {fileID: 126918547}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -500,6 +501,19 @@ MonoBehaviour:
   HPBar: {fileID: 2019535695}
   EnergyBarBase: {fileID: 790857893}
   EnergyBar: {fileID: 708391077}
+--- !u!114 &126918547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 126918538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89088341f2107164ab3d1529d1269c0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CharacterObject: {fileID: 0}
 --- !u!1 &465612393
 GameObject:
   m_ObjectHideFlags: 0
