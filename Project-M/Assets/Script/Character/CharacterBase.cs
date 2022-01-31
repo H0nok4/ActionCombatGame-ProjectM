@@ -235,5 +235,13 @@ public class CharacterBase : ICharacter,IDamageable {
         HPBarController.Instance.UpdateHP(CurHealth);
         return CurHealth;
     }
-    
+
+    public virtual void StartCharge() {
+        Debug.Log("StartCharge");
+    }
+
+    public virtual void EndCharge() {
+        Debug.Log("基本的EndCharge方法");
+    }
+
 }

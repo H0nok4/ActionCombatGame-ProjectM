@@ -18,4 +18,7 @@ public interface ICharacter
 
     public void Burst(Vector2 inputVec);
 
+    public void StartCharge();
+
+    public void EndCharge();
 }
