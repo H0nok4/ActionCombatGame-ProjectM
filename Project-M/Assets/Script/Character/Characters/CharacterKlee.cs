@@ -84,7 +84,7 @@ public class CharacterKlee : CharacterBase
         yield break;
     }
 
-    public override void Smash(Vector2 inputVec) {
+    public override void Smash(Vector2 inputVec,float chargeTime) {
         Debug.Log("Klee的重击");
         //TODO：对目标方向发射一条爆炸射线
     }

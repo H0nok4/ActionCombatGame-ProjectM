@@ -19,8 +19,22 @@ public class CharacterGanyu : CharacterBase
         //TODO：后撤步同时生成一朵冰花
     }
 
-    public override void Smash(Vector2 inputVec) {
+    public override void Smash(Vector2 inputVec,float ChargeTime) {
         Debug.Log("Ganyu的重击,开始蓄力");
+        if (ChargeTime < 0.5f) {
+            //如果蓄力时间不足，就只是射一支普通的箭
+            this.NormalAttack(inputVec);
+        }
+
         //TODO：蓄力机制，分1段和2段，一段发射一支强力的箭，二段发射的箭命中后造成AOE伤害
+        if (ChargeTime < 1) {
+            //TODO:1段蓄力，发射一支威力十足的箭
+
+        }
+
+        if (ChargeTime >= 1.25) {
+            //TODO:2段蓄力，发射一支威力十足的箭，并且在碰撞到物体时还会爆炸造成范围AOE
+
+        }
     }
 }

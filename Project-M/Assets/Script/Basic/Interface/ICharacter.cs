@@ -10,7 +10,7 @@ public interface ICharacter
 
     public void NormalAttack(Vector2 inputVec);
 
-    public void Smash(Vector2 inputVec);
+    public void Smash(Vector2 inputVec,float chargeTime);
 
     public void Move(Vector2 inputVec);
 

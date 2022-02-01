@@ -221,7 +221,7 @@ public class CharacterBase : ICharacter,IDamageable {
         throw new System.NotImplementedException();
     }
 
-    public virtual void Smash(Vector2 inputVec) {
+    public virtual void Smash(Vector2 inputVec,float chargeTime) {
         Debug.Log("基础的重击方法");
     }
 
