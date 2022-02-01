@@ -38,6 +38,7 @@ public class CharacterBase : ICharacter,IDamageable {
     public Vector2 InputMoveVec;
     public bool IsAttack;
     public bool IsDash;
+    public bool IsCharge;
 
     public GameObject GameObject;
     public SpriteRenderer Sprite;

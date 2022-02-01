@@ -9,6 +9,7 @@ public class BattleManager : MonoSingleton<BattleManager>
     public static readonly Idle idleState = new Idle();
     public static readonly Move moveState = new Move();
     public static readonly Dash dashState = new Dash();
+    public static readonly Charge chargeState = new Charge();
 
     public override void OnInitialize() {
         base.OnInitialize();

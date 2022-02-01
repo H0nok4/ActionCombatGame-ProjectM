@@ -32,9 +32,9 @@ public class CharacterController : MonoSingleton<CharacterController>
         
         if (Input.GetKeyDown(KeyCode.Space)) {
             characterBase.StateMeching.ChangeState(characterBase.StateMeching.curState,BattleManager.dashState);
-        }else if (PlayerController.Instance.GetNormalSmashInput()) {
+        }else if (PlayerController.Instance.GetSmashKeyDown()) {
             //TODO:更改为右键开始蓄力重击
-            characterBase.Smash(PlayerController.Instance.GetPlayerMouseWorldPos());
+            characterBase.StateMeching.ChangeState(characterBase.StateMeching.curState,BattleManager.chargeState);
         }else if (PlayerController.Instance.GetPressAttackButton()) {
             characterBase.StartAttack();
         }

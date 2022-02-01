@@ -39,6 +39,30 @@ public class PlayerController : MonoSingleton<PlayerController> {
         return false;
     }
 
+    public bool GetSmashHold() {
+        if (Input.GetKey(KeyCode.Mouse1)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool GetSmashKeyDown() {
+        if (Input.GetKeyDown(KeyCode.Mouse1)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool GetSmashKeyUp() {
+        if (Input.GetKeyUp(KeyCode.Mouse1)) {
+            return true;
+        }
+
+        return false;
+    }
+
     public bool GetNormalSmashInput() {
         if (isHoldingAttackButton && isSmashed == false) {
             var curTime = (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000;
