@@ -22,6 +22,5 @@ namespace Cainos.PixelArtTopDown_Basic
                 sr.sortingLayerName = sortingLayer;
             }
         }
-
     }
 }

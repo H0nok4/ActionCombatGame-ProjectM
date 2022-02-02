@@ -6,7 +6,10 @@ using UnityEngine;
 public enum CharacterState{
     Move,
     Attack,
-    Idle
+    Idle,
+    Dash,
+    OnDamage,
+    Charge
 }
 
 public enum Team {
@@ -27,6 +30,7 @@ public class CharacterBase : ICharacter,IDamageable {
     public int MoveSpeed;
     public string CharacterName;
     public Team Team;
+    public CharacterState characterState;
 
     public bool Invincible;//ÎÞµÐ
 
@@ -39,6 +43,7 @@ public class CharacterBase : ICharacter,IDamageable {
     public bool IsAttack;
     public bool IsDash;
     public bool IsCharge;
+    public bool IsOnDamaged;
 
     public GameObject GameObject;
     public SpriteRenderer Sprite;
@@ -232,6 +237,7 @@ public class CharacterBase : ICharacter,IDamageable {
         if (CurHealth <= 0) {
             Debug.Log("½ÇÉ«ÕóÍö");
         }
+        StateMeching.ChangeState(StateMeching.curState,BattleManager.onDamageState);
 
         HPBarController.Instance.UpdateHP(CurHealth);
         return CurHealth;

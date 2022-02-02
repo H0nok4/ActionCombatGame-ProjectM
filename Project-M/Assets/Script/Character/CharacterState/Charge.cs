@@ -7,6 +7,7 @@ public class Charge : CharacterStateBase
 {
     long startChargeTime;
     public override void Enter(CharacterBase character) {
+        character.characterState = CharacterState.Charge;
         character.IsCharge = true;
         startChargeTime = DateTime.Now.ToUniversalTime().Ticks;
         character.MoveSpeed = 2;
@@ -16,14 +17,16 @@ public class Charge : CharacterStateBase
     public override void Run(CharacterBase character,CharacterStateMeching meching) {
         //TODO：增加时间，如果当前玩家松开了右键，结算
         character.UpdateMoveVec();
+        var chargeTime = ((DateTime.Now.ToUniversalTime().Ticks - startChargeTime) / 10000000.0f);
         if (PlayerController.Instance.GetSmashHold()) {
             //还在按住重击键
             Debug.Log("StillCharge");
+            //TODO:通过蓄力时间来改变动画
+
         } else {
             //松开了
             Debug.Log("Smash!");
             //TODO：根据蓄力时间释放重击
-            var chargeTime = ((DateTime.Now.ToUniversalTime().Ticks  - startChargeTime) / 10000000.0f);
             Debug.Log($"Time = {chargeTime}");
             character.Smash(PlayerController.Instance.GetPlayerMouseWorldPos(),chargeTime);
             character.StateMeching.ChangeState(this,BattleManager.idleState);

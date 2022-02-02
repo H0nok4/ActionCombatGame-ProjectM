@@ -5,6 +5,7 @@ using UnityEngine;
 public class Dash : CharacterStateBase {
 
     public override void Enter(CharacterBase character) {
+        character.characterState = CharacterState.Dash;
         if (character.CurEnergy < 20) {
             character.StateMeching.ChangeState(character.StateMeching.curState,character.StateMeching.preState);
         }

@@ -8,6 +8,7 @@ public class Move : CharacterStateBase
 
     }
     public override void Enter(CharacterBase character) {
+        character.characterState = CharacterState.Move;
         if (character.Animator.GetBool("IsMove") == false) {
             character.Animator.SetBool("IsMove",true);
         }
