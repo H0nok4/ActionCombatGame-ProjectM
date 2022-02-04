@@ -14,8 +14,8 @@ public class CharacterController : MonoSingleton<CharacterController>
 
     private void Start() {
         //Test
-        var KleeProperty = DataCenter.Instance.GetCharacterPropertyByName("Klee");
-        var characterKlee = new CharacterKlee();
+        var KleeProperty = DataCenter.Instance.GetCharacterPropertyByName("Ganyu");
+        var characterKlee = new CharacterGanyu();
         characterKlee.Init(KleeProperty,Team.red);
         characterBase = CharacterFactory.CreatCharacterInstance(characterKlee, "SkyBook");
 

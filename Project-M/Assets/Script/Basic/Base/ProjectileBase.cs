@@ -4,11 +4,22 @@ using UnityEngine;
 
 public class ProjectileBase : MonoBehaviour,IProjectile {
     public CharacterBase sender;
-    public void Init(CharacterBase characterBase) {
+    public virtual void Init(CharacterBase characterBase) {
         sender = characterBase;
     }
 
-    public virtual void Fire() {
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.gameObject.GetComponent<CharacterCanDamaged>() != null) {
+            Debug.Log("On projectile trigger");
+            Trigger();
+        }
+
+        if (collision.gameObject.GetComponent<IMapObjectBase>()!= null) {
+            Trigger();
+        }
+    }
+
+    public virtual void Trigger() {
         Debug.Log("ProjectTile的基类Fire方法");
     }
 

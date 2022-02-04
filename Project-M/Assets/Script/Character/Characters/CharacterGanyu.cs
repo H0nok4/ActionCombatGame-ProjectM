@@ -5,8 +5,23 @@ using UnityEngine;
 public class CharacterGanyu : CharacterBase
 {
     public override void NormalAttack(Vector2 inputVec) {
-        base.NormalAttack(inputVec);
         //TODO:超目标方向发射一支箭
+        if (IsAttack) {
+            return;
+        }
+        base.NormalAttack(inputVec);
+        this.Rigbody.velocity = Vector2.zero;
+
+        var fireObject = GameObjectPool.Instance.CreatProjectileFromPool("Ganyu_Attack_Projectile");
+        fireObject.GetComponent<GanyuProjectile>().Init(this);
+        var angel = new Vector3(0,0,Vector2.Angle(Vector2.up,inputVec - new Vector2(GameObject.transform.position.x,GameObject.transform.position.y)));
+        fireObject.transform.eulerAngles =  angel * -(Sprite.flipX == true ? -1 : 1);
+        fireObject.transform.position = Weapon.transform.position;
+        var rig = fireObject.GetComponent<Rigidbody2D>();
+        rig.velocity = (inputVec - new Vector2(GameObject.transform.position.x,GameObject.transform.position.y)).normalized * 10;
+
+
+
     }
 
     public override void Burst(Vector2 inputVec) {
