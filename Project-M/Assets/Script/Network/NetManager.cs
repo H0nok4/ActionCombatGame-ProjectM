@@ -14,6 +14,19 @@ public class NetManager : MonoSingleton<NetManager> {
         server.Initialize();
         client.Initialize();
 
-        client.Send();
+    }
+
+    private void FixedUpdate() {
+        var characterMsg = new CharacterPosMsg();
+        characterMsg.x = CharacterController.Instance.characterPosX;
+        characterMsg.y = CharacterController.Instance.characterPosY;
+
+        var msgData = ProtoManager.Serilize(characterMsg);
+        var msg = ProtoManager.PackMessage(MessageType.CharacterPos, msgData);
+        var msgSerilized = ProtoManager.SerilizeMessage(msg);
+
+
+        client.Send(msgSerilized);
+
     }
 }

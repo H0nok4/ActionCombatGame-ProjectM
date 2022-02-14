@@ -20,23 +20,7 @@ public class Client {
         SeverEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"),8222);
     }
 
-    public void Send() {
-        TestMsg msg = new TestMsg();
-        msg.TestInt = 18;
-        msg.TestStr = "This is a test Msg";
-        msg.TestList = new List<int>();
-        msg.TestList.Add(3);
-        msg.TestList.Add(545);
-        msg.TestList.Add(43);
-        msg.TestList.Add(324);
-        msg.TestDic = new Dictionary<int, int>();
-        msg.TestDic.Add(231,3213);
-        msg.TestDic.Add(3213,213124);
-
-        var msgData = ProtoManager.Serilize(msg);
-        var message = ProtoManager.PackMessage(MessageType.Test, msgData);
-        var sendData = ProtoManager.SerilizeMessage(message);
-
+    public void Send(byte[] sendData) {
         ClientSocket.SendTo(sendData,SeverEndPoint);
     }
 }

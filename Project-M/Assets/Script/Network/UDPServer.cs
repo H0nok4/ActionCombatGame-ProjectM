@@ -14,6 +14,7 @@ public class Server
     private IPEndPoint _endPoint;//服务端口
     private EndPoint[] _clientEndPoint;//客户端口
 
+    private int _clientIndex = 0;
     private int _recvSize = 4096;
     private byte[] _bufferRecv;
 
@@ -25,24 +26,27 @@ public class Server
         _socket.Bind(_endPoint);
         _bufferRecv = new byte[_recvSize];
         _clientEndPoint = new EndPoint[4];
-        _clientEndPoint[0] = new IPEndPoint(IPAddress.Any,1111);
+        _clientEndPoint[_clientIndex++] = new IPEndPoint(IPAddress.Any,1111);
         _socket.BeginReceiveFrom(_bufferRecv,0,_recvSize,SocketFlags.None,ref _clientEndPoint[0],ReceiveClientMessage,_socket);
     }
 
     public void ReceiveClientMessage(IAsyncResult message) {
         int messageSize = _socket.EndReceiveFrom(message,ref _clientEndPoint[0]);
         if (messageSize > 0) {
+            Debug.Log("Recive Msg");
             byte[] _recvedMessage = _bufferRecv.Take(_recvSize).ToArray();
 
             var msg = ProtoManager.DeserilizeMessage(_recvedMessage);
-            if ((MessageType)msg.type == MessageType.Test) {
-                var msgData = ProtoManager.Deserilize<TestMsg>(msg.Data);
-                Debug.Log(msgData.TestInt);
-                Debug.Log(msgData.TestStr);
-                Debug.Log(msgData.TestList);
-                Debug.Log(msgData.TestDic);
+            try {
+                if (msg.type == (int)MessageType.CharacterPos) {
+                    var msgData = ProtoManager.Deserilize<CharacterPosMsg>(msg.Data);
+                    CharacterController.Instance.PosChangeMsgQueue.Enqueue(new CharacterPosChange(){Pos = new Vector2(msgData.x,msgData.y)});
+                    Debug.Log($"Recvice characterPosMsg x= {msgData.x},y = {msgData.y}");
+                }
             }
-
+            catch{
+                Debug.Log("Error");
+            }
 
             _socket.BeginReceiveFrom(_bufferRecv,0,_recvSize,SocketFlags.None,ref _clientEndPoint[0],ReceiveClientMessage,_socket);
         }

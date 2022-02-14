@@ -5,5 +5,7 @@ public enum MessageType{
 
     Connect = 2,
     OnConnectSuccess = 3,
-    Disconnect = 4
+    Disconnect = 4,
+
+    CharacterPos = 5
 }
