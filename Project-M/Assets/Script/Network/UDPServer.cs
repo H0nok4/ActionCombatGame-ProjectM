@@ -38,7 +38,7 @@ public class Server
 
             var msg = ProtoManager.DeserilizeMessage(_recvedMessage);
             try {
-                if (msg.type == (int)MessageType.CharacterPos) {
+                if (msg.Type == (int)MessageType.CharacterPos) {
                     var msgData = ProtoManager.Deserilize<CharacterPosMsg>(msg.Data);
                     CharacterController.Instance.PosChangeMsgQueue.Enqueue(new CharacterPosChange(){Pos = new Vector2(msgData.x,msgData.y)});
                     Debug.Log($"Recvice characterPosMsg x= {msgData.x},y = {msgData.y}");

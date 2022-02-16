@@ -7,13 +7,18 @@ using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
 public class Message {
-    public int type;
+    public int Type;
+    public int Frame;
     public int Length;
     public byte[] Data;
 }
 
-public static class ProtoManager{
+public static class ProtoManager {
 
+    private const int _typeLength = 4;
+    private const int _lengthLength = 4;
+    private const int _frameLength = 4;
+    
     /// <summary>
     /// 序列化消息内容
     /// </summary>
@@ -49,17 +54,23 @@ public static class ProtoManager{
 
     public static Message PackMessage(MessageType type, byte[] data) {
         Message message = new Message();
-        message.type = (int)type;
+        message.Type = (int)type;
         message.Length = data.Length;
         message.Data = data;
         return message;
     }
 
     public static byte[] SerilizeMessage(Message message) {
-        byte[] bytes = new byte[message.Length + 8];
-        Buffer.BlockCopy(BitConverter.GetBytes(message.type),0,bytes,0,4);
-        Buffer.BlockCopy(BitConverter.GetBytes(message.Length),0,bytes,4,4);
-        Buffer.BlockCopy(message.Data,0,bytes,8,message.Data.Length);
+        byte[] bytes = new byte[message.Length + 12];
+        int index = 0;
+        Buffer.BlockCopy(BitConverter.GetBytes(message.Type),0,bytes,index,_typeLength);
+        index += _typeLength;
+        Buffer.BlockCopy(BitConverter.GetBytes(message.Frame),0,bytes,index,_frameLength);
+        index += _frameLength;
+        Buffer.BlockCopy(BitConverter.GetBytes(message.Length),0,bytes,index,_lengthLength);
+        index += _lengthLength;
+
+        Buffer.BlockCopy(message.Data,0,bytes,index,message.Data.Length);
         return bytes;
     }
 
@@ -73,7 +84,7 @@ public static class ProtoManager{
         int length = BitConverter.ToInt32(data.Skip(4).Take(4).ToArray(),0);
         byte[] content = data.Skip(8).Take(length).ToArray();
 
-        message.type = type;
+        message.Type = type;
         message.Length = length;
         message.Data = content;
 
