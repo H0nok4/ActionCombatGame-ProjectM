@@ -40,7 +40,7 @@ public class Server
             try {
                 if (msg.Type == (int)MessageType.CharacterPos) {
                     var msgData = ProtoManager.Deserilize<CharacterPosMsg>(msg.Data);
-                    CharacterController.Instance.PosChangeMsgQueue.Enqueue(new CharacterPosChange(){Pos = new Vector2(msgData.x,msgData.y)});
+                    NetManager.Instance.testQueue.Enqueue(msgData);
                     Debug.Log($"Recvice characterPosMsg x= {msgData.x},y = {msgData.y}");
                 }
             }

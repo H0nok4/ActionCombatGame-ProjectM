@@ -48,7 +48,7 @@ public static class ProtoManager {
         BinaryFormatter formatter = new BinaryFormatter();
         using (MemoryStream stream = new MemoryStream(data)) {
             object obj = formatter.Deserialize(stream);
-            return (T) obj;
+            return (T) obj; 
         }
     }
 
@@ -75,16 +75,18 @@ public static class ProtoManager {
     }
 
     public static Message DeserilizeMessage(byte[] data){
-        if (data == null || data.Length < 8) {
+        if (data == null || data.Length < 12) {
             return null;
         }
 
         Message message = new Message();
         int type = BitConverter.ToInt32(data.Take(4).ToArray(),0);
-        int length = BitConverter.ToInt32(data.Skip(4).Take(4).ToArray(),0);
-        byte[] content = data.Skip(8).Take(length).ToArray();
+        int frame = BitConverter.ToInt32(data.Skip(4).Take(4).ToArray(), 0);
+        int length = BitConverter.ToInt32(data.Skip(8).Take(4).ToArray(),0);
+        byte[] content = data.Skip(12).Take(length).ToArray();
 
         message.Type = type;
+        message.Frame = frame;
         message.Length = length;
         message.Data = content;
 
