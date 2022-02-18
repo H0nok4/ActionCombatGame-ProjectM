@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class NetManager : MonoSingleton<NetManager> {
     public int Port = 8222;
+    public short PlayerID = 1;
     private bool isServer = true;
     public Server server;
     public Client client;
     public int frame;
-    public Queue<CharacterPosMsg> testQueue = new Queue<CharacterPosMsg>();
+    public Queue<Message> msgQueue = new Queue<Message>();
     private bool start = false;
-    private CharacterPosMsg msg = null;
+    private Message msg = null;
+
+    public List<INetObject> netObjects = new List<INetObject>();
 
     private void Start() {
         if (isServer) {
@@ -31,18 +34,7 @@ public class NetManager : MonoSingleton<NetManager> {
         if (frame % 4 == 0) {
             if (isServer) {
                 //TODO:从队列中取出消息
-                if (start == false) {
-                    if (testQueue.Count > 1) {
-                        Debug.Log("Start");
-                        start = true;
-                        msg = testQueue.Dequeue();
-                    }
-                }
-                else {
-                    if (testQueue.Count > 0) {
-                        msg = testQueue.Dequeue();
-                    }
-                }
+
             }
             else {
                 //TODO:发送消息
@@ -50,16 +42,26 @@ public class NetManager : MonoSingleton<NetManager> {
             }
         }
 
-        //插值移动
+        if (start == false) {
+            if (msgQueue.Count > 1) {
+                Debug.Log("Start");
+                start = true;
+                msg = msgQueue.Dequeue();
+            }
+        } else {
+            while (msgQueue.Count > 0) {
+                msg = msgQueue.Dequeue();
+            }
+        }
+
+
+
+
 
     }
 
     private void Update() {
-        if (msg != null) {
-            CharacterController.Instance.characterBase.GameObject.transform.position = Vector3.Lerp(
-                CharacterController.Instance.characterBase.GameObject.transform.position,new Vector3(msg.x,msg.y,0),
-                5 * Time.deltaTime);
-        }
+
     }
 
     public void SendCharacterPos() {
@@ -73,5 +75,14 @@ public class NetManager : MonoSingleton<NetManager> {
 
 
         client.Send(msgSerilized);
+    }
+
+    public void OnReciveMessage(Message msg) {
+        //TODO:处理不同种类的信息
+        var type = ((MessageType) msg.Type);
+        switch (type) {
+            case MessageType.CharacterPos:
+                break;
+        }
     }
 }

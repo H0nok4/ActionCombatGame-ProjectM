@@ -37,19 +37,11 @@ public class Server
             byte[] _recvedMessage = _bufferRecv.Take(_recvSize).ToArray();
 
             var msg = ProtoManager.DeserilizeMessage(_recvedMessage);
-            try {
-                if (msg.Type == (int)MessageType.CharacterPos) {
-                    var msgData = ProtoManager.Deserilize<CharacterPosMsg>(msg.Data);
-                    NetManager.Instance.testQueue.Enqueue(msgData);
-                    Debug.Log($"Recvice characterPosMsg x= {msgData.x},y = {msgData.y}");
-                }
-            }
-            catch{
-                Debug.Log("Error");
-            }
+            NetManager.Instance.msgQueue.Enqueue(msg);
 
             _socket.BeginReceiveFrom(_bufferRecv,0,_recvSize,SocketFlags.None,ref _clientEndPoint[0],ReceiveClientMessage,_socket);
         }
     }
+
 }
 

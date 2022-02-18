@@ -6,6 +6,8 @@ using System.Net.Sockets;
 using UnityEngine;
 
 public class Client {
+    public int PlayerID = 1;
+
     public Socket ClientSocket;
     public EndPoint SeverEndPoint;
 

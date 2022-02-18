@@ -7,4 +7,5 @@ using UnityEngine;
 public class CharacterPosMsg {
     public float x;
     public float y;
+    public CharacterState CharacterState;
 }
