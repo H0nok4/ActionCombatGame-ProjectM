@@ -2,11 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 
-public class CharacterController : MonoSingleton<CharacterController>
-{
+public class CharacterPosChange {
+    public Vector2 Pos;
+}
+
+public class CharacterController : MonoSingleton<CharacterController> ,INetObject {
+    public Queue<CharacterPosChange> PosChangeMsgQueue = new Queue<CharacterPosChange>();
     public CharacterBase characterBase;
-    
+    public float characterPosX = 0;
+    public float characterPosY = 0;
     
     public override void OnInitialize() {
 
@@ -28,7 +34,10 @@ public class CharacterController : MonoSingleton<CharacterController>
 
     private void Update() {
         characterBase.Update();
-
+        while (PosChangeMsgQueue.Count > 0) {
+            var pos = PosChangeMsgQueue.Dequeue();
+            characterBase.GameObject.transform.position = pos.Pos;
+        }
         
         if (Input.GetKeyDown(KeyCode.Space)) {
 
@@ -39,6 +48,9 @@ public class CharacterController : MonoSingleton<CharacterController>
         }else if (PlayerController.Instance.GetPressAttackButton()) {
             characterBase.StartAttack();
         }
+
+        characterPosX = characterBase.GameObject.transform.position.x;
+        characterPosY = characterBase.GameObject.transform.position.y;
     }
 
     private void FixedUpdate() {
@@ -50,6 +62,13 @@ public class CharacterController : MonoSingleton<CharacterController>
         characterBase.RecoverEnergy();
     }
 
+    public void SetCharacterPos(float x, float y) {
+        characterBase.GameObject.transform.position = new Vector2(x,y);
+    }
+
+    public Vector3 GetCharacterPos() {
+        return characterBase.GameObject.transform.position;
+    }
 
     public void UpdateWeaponRotation() {
         var mousePos = PlayerController.Instance.GetPlayerMouseWorldPos();
@@ -66,5 +85,24 @@ public class CharacterController : MonoSingleton<CharacterController>
         } else {
             characterBase.Sprite.flipX = true;
         }
+    }
+
+    public Message Send() {
+        //TODO:创建一个角色消息，传给服务器
+        CharacterMsg cMsg = new CharacterMsg();
+        cMsg.x = characterBase.GameObject.transform.position.x;
+        cMsg.y = characterBase.GameObject.transform.position.y;
+        cMsg.CharacterState = characterBase.characterState;
+
+        return ProtoManager.PackMessage(MessageType.Character, ProtoManager.Serilize(cMsg));
+
+    }
+
+    public void Recive(object obj) {
+        var characterMessage = ((CharacterMsg) obj);
+    }
+
+    public MessageType NeedMessage() {
+        return MessageType.Character;
     }
 }

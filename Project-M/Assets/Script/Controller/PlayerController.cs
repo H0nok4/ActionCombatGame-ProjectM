@@ -15,6 +15,20 @@ public class PlayerController : MonoSingleton<PlayerController> {
 
     public bool isAttack;
     public bool isSmashed;
+
+    private Dictionary<KeyCode, bool> keyDic = new Dictionary<KeyCode, bool>();
+
+    private void Awake() {
+        var keycodes = Enum.GetValues(typeof(KeyCode));
+        foreach (var keycode in keycodes) {
+            keyDic.Add((KeyCode)keycode,false);
+        }
+
+        foreach (var kvp in keyDic) {
+            Debug.Log(kvp.Key);
+        }
+    }
+
     public bool GetPlayerPressKey(KeyCode code) {
         if (Input.GetKey(code)) {
             return true;
