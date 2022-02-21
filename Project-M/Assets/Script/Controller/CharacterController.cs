@@ -8,7 +8,7 @@ public class CharacterPosChange {
     public Vector2 Pos;
 }
 
-public class CharacterController : MonoSingleton<CharacterController> {
+public class CharacterController : MonoSingleton<CharacterController> ,INetObject {
     public Queue<CharacterPosChange> PosChangeMsgQueue = new Queue<CharacterPosChange>();
     public CharacterBase characterBase;
     public float characterPosX = 0;
@@ -85,5 +85,24 @@ public class CharacterController : MonoSingleton<CharacterController> {
         } else {
             characterBase.Sprite.flipX = true;
         }
+    }
+
+    public Message Send() {
+        //TODO:创建一个角色消息，传给服务器
+        CharacterMsg cMsg = new CharacterMsg();
+        cMsg.x = characterBase.GameObject.transform.position.x;
+        cMsg.y = characterBase.GameObject.transform.position.y;
+        cMsg.CharacterState = characterBase.characterState;
+
+        return ProtoManager.PackMessage(MessageType.Character, ProtoManager.Serilize(cMsg));
+
+    }
+
+    public void Recive(object obj) {
+        var characterMessage = ((CharacterMsg) obj);
+    }
+
+    public MessageType NeedMessage() {
+        return MessageType.Character;
     }
 }

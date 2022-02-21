@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public interface INetObject {
-    public void Send();
+    public Message Send();
     public void Recive(object obj);
     public MessageType NeedMessage();
 

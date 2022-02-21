@@ -65,12 +65,12 @@ public class NetManager : MonoSingleton<NetManager> {
     }
 
     public void SendCharacterPos() {
-        var characterMsg = new CharacterPosMsg();
+        var characterMsg = new CharacterMsg();
         characterMsg.x = CharacterController.Instance.characterPosX;
         characterMsg.y = CharacterController.Instance.characterPosY;
 
         var msgData = ProtoManager.Serilize(characterMsg);
-        var msg = ProtoManager.PackMessage(MessageType.CharacterPos,msgData);
+        var msg = ProtoManager.PackMessage(MessageType.Character,msgData);
         var msgSerilized = ProtoManager.SerilizeMessage(msg);
 
 
@@ -81,7 +81,7 @@ public class NetManager : MonoSingleton<NetManager> {
         //TODO:处理不同种类的信息
         var type = ((MessageType) msg.Type);
         switch (type) {
-            case MessageType.CharacterPos:
+            case MessageType.Character:
                 break;
         }
     }

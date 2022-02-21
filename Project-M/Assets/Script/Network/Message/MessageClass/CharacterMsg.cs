@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class CharacterPosMsg {
+public class CharacterMsg {
     public float x;
     public float y;
     public CharacterState CharacterState;
