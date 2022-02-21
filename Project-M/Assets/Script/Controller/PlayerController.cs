@@ -81,7 +81,7 @@ public class PlayerController : MonoSingleton<PlayerController> {
         if (isHoldingAttackButton && isSmashed == false) {
             var curTime = (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000;
             if (curTime - lastTimePressAttackButton > 500) {
-                //°´×¡¹¥»÷¼ü³¬¹ý0.5Ãë
+                //ï¿½ï¿½×¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½0.5ï¿½ï¿½
                 isSmashed = true;
                 return true;
             }
@@ -116,7 +116,7 @@ public class PlayerController : MonoSingleton<PlayerController> {
     }
 
     /// <summary>
-    /// »ñµÃÍæ¼ÒÊó±êµ±Ç°µÄÊÀ½çÎ»ÖÃ
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½êµ±Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½
     /// </summary>
     public Vector3 GetPlayerMouseWorldPos() {
         var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -125,7 +125,7 @@ public class PlayerController : MonoSingleton<PlayerController> {
     }
 
     /// <summary>
-    /// ÐèÒªÅÐ¶ÏÍæ¼ÒÊó±êÎ»ÖÃ£¬½ÇÉ«Ó¦¸ÃÃæÏòÊó±êÄÇÒ»²à
+    /// ï¿½ï¿½Òªï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½Ã£ï¿½ï¿½ï¿½É«Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
     /// </summary>
     public bool isCharacterFlip(Vector3 _characterPos) {
         var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);

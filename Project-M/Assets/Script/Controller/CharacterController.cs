@@ -26,7 +26,7 @@ public class CharacterController : MonoSingleton<CharacterController> ,INetObjec
         characterKlee.Init(KleeProperty,Team.red);
         characterBase = CharacterFactory.CreatCharacterInstance(characterKlee, "SkyBook");
 
-        //TODO£º¸üÐÂÉúÃüºÍÌåÁ¦Ìõ
+        //TODOï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         HPBarController.Instance.Init(characterBase.MaxHealth,characterBase.MaxEnergy);
         HPBarController.Instance.UpdateHP(characterBase.MaxHealth);
         HPBarController.Instance.UpdateEnergy(characterBase.MaxEnergy);
@@ -44,7 +44,7 @@ public class CharacterController : MonoSingleton<CharacterController> ,INetObjec
 
             characterBase.StateMeching.ChangeState(characterBase.StateMeching.curState,BattleManager.dashState);
         }else if (PlayerController.Instance.GetSmashKeyDown()) {
-            //TODO:¸ü¸ÄÎªÓÒ¼ü¿ªÊ¼ÐîÁ¦ÖØ»÷
+            //TODO:ï¿½ï¿½ï¿½ï¿½Îªï¿½Ò¼ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½Ø»ï¿½
             characterBase.StateMeching.ChangeState(characterBase.StateMeching.curState,BattleManager.chargeState);
         }else if (PlayerController.Instance.GetPressAttackButton()) {
             characterBase.StartAttack();
@@ -57,7 +57,7 @@ public class CharacterController : MonoSingleton<CharacterController> ,INetObjec
     private void FixedUpdate() {
         characterBase.FixUpdate();
 
-        //TODO£º½«ÕâÐ©ÒÆµ½½ÇÉ«µÄFixUpdateÖÐ
+        //TODOï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð©ï¿½Æµï¿½ï¿½ï¿½É«ï¿½ï¿½FixUpdateï¿½ï¿½
         ChangeCharacterDirection();
         UpdateWeaponRotation();
         characterBase.RecoverEnergy();
@@ -89,7 +89,7 @@ public class CharacterController : MonoSingleton<CharacterController> ,INetObjec
     }
 
     public Message Send() {
-        //TODO:´´½¨Ò»¸ö½ÇÉ«ÏûÏ¢£¬´«¸ø·þÎñÆ÷
+        //TODO:ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         CharacterMsg cMsg = new CharacterMsg();
         cMsg.x = characterBase.GameObject.transform.position.x;
         cMsg.y = characterBase.GameObject.transform.position.y;
