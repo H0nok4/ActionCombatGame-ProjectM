@@ -428,6 +428,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a35c81744707dc48a9ee213379f8d3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterPosX: 0
+  characterPosY: 0
+  Name: Klee
 --- !u!114 &126918541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1213,6 +1216,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7947911505737750450, guid: d730038d263986f4dac93230e1dd62b0,
         type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7947911505737750450, guid: d730038d263986f4dac93230e1dd62b0,
+        type: 3}
       propertyPath: m_SortingLayerID
       value: -44025399
       objectReference: {fileID: 0}
@@ -1225,6 +1233,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SortingLayer
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7947911505844789838, guid: d730038d263986f4dac93230e1dd62b0,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7947911505844789838, guid: d730038d263986f4dac93230e1dd62b0,
         type: 3}
@@ -12405,6 +12418,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Port: 8222
+  PlayerID: 1
+  frame: 0
 --- !u!4 &1598490558
 Transform:
   m_ObjectHideFlags: 0

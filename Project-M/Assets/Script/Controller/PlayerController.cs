@@ -18,7 +18,7 @@ public class PlayerController : MonoSingleton<PlayerController> {
 
     private Dictionary<KeyCode, bool> keyDic = new Dictionary<KeyCode, bool>();
 
-    private void Awake() {
+    private void Start() {
         var keycodes = Enum.GetValues(typeof(KeyCode));
         foreach (var keycode in keycodes) {
             keyDic.Add((KeyCode)keycode,false);

@@ -13,6 +13,7 @@ public class CharacterController : MonoSingleton<CharacterController> ,INetObjec
     public CharacterBase characterBase;
     public float characterPosX = 0;
     public float characterPosY = 0;
+    public string Name;
     
     public override void OnInitialize() {
 
@@ -20,8 +21,8 @@ public class CharacterController : MonoSingleton<CharacterController> ,INetObjec
 
     private void Start() {
         //Test
-        var KleeProperty = DataCenter.Instance.GetCharacterPropertyByName("Ganyu");
-        var characterKlee = new CharacterGanyu();
+        var KleeProperty = DataCenter.Instance.GetCharacterPropertyByName(Name);
+        var characterKlee = new CharacterKlee();
         characterKlee.Init(KleeProperty,Team.red);
         characterBase = CharacterFactory.CreatCharacterInstance(characterKlee, "SkyBook");
 
