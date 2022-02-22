@@ -430,7 +430,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterPosX: 0
   characterPosY: 0
-  Name: Klee
+  Name: Ganyu
 --- !u!114 &126918541
 MonoBehaviour:
   m_ObjectHideFlags: 0
