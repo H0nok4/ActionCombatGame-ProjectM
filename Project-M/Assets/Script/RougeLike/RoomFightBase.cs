@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoomFightBase{
+[SerializeField]
+public class RoomFightBase : MonoBehaviour{
     public bool IsClear;
     public void Update() {
         if (IsClear) {

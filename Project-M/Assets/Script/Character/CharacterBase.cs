@@ -13,9 +13,7 @@ public enum CharacterState{
 }
 
 public enum Team {
-    red,
-    blue,
-    wild
+    Player,Enemy
 }
 
 public class CharacterBase : ICharacter,IDamageable {

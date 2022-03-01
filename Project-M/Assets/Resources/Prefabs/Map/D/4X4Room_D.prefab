@@ -1040,6 +1040,8 @@ GameObject:
   m_Component:
   - component: {fileID: 49472452890960719}
   - component: {fileID: 2537859821986561406}
+  - component: {fileID: -50174010474229281}
+  - component: {fileID: -2484805916546301965}
   m_Layer: 0
   m_Name: 4X4Room_D
   m_TagString: Untagged
@@ -1077,3 +1079,37 @@ Grid:
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
+--- !u!114 &-50174010474229281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6835129185701961853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5901215f5050e44fbeb5f5768d98f22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  left: 0
+  Up: 0
+  Right: 0
+  Down: 0
+  LeftPos: {x: 0, y: 0}
+  UpPos: {x: 0, y: 0}
+  RightPos: {x: 0, y: 0}
+  DownPos: {x: 0, y: 0}
+  roomFight: {fileID: 0}
+--- !u!114 &-2484805916546301965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6835129185701961853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f79c7761f09ce9469eac533d7299c7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsClear: 0

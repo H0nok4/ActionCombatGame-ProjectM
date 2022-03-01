@@ -23,7 +23,7 @@ public class CharacterController : MonoSingleton<CharacterController> ,INetObjec
         //Test
         var KleeProperty = DataCenter.Instance.GetCharacterPropertyByName(Name);
         var characterKlee = new CharacterKlee();
-        characterKlee.Init(KleeProperty,Team.red);
+        characterKlee.Init(KleeProperty,Team.Player);
         characterBase = CharacterFactory.CreatCharacterInstance(characterKlee, "SkyBook");
 
         //TODO������������������
