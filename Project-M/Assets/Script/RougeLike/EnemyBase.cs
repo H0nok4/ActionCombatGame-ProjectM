@@ -1,15 +1,15 @@
 using System;using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 public class EnemyBase : MonoBehaviour,IDamageable {
     public EnemyStateMeching StateMeching;
-    public EnemyProt Prot;
+    public EnemyProperty Prot;
 
     public int CurHealth;
     public int Attack;
-    public int Defense;
     public int MoveSpeed;
     public int MaxHealth;
 
@@ -20,16 +20,23 @@ public class EnemyBase : MonoBehaviour,IDamageable {
     public Vector2 MoveVec;
     public Rigidbody2D rig;
 
-    public virtual void Init(EnemyProt property,Team team) {
+    private void Start() {
+        Init(Prot,Team.Enemy);
+    }
+
+    public virtual void Init(EnemyProperty property,Team team) {
         Team = team;
         InitWithEnemyProperty(property);
+        StateMeching = new EnemyStateMeching();
+        StateMeching.Init(this);
     }
-    public void InitWithEnemyProperty(EnemyProt property) {
-        MaxHealth = property.MaxHealth;
+    public void InitWithEnemyProperty(EnemyProperty property) {
+        MaxHealth = property.Health;
         MoveSpeed = property.MoveSpeed;
-        Defense = property.Defense;
         Attack = property.Attack;
         CurHealth = MaxHealth;
+
+        rig = GetComponent<Rigidbody2D>();
     }
 
     public void Update() {
@@ -54,12 +61,12 @@ public class EnemyBase : MonoBehaviour,IDamageable {
     }
 
     public virtual void OneSecond() {
-
+        //TODO:一秒一次的事件
     }
 
     public void Move() {
         if (MoveVec != null) {
-            rig.velocity = MoveVec * MoveSpeed * Time.deltaTime;
+            rig.velocity = (MoveVec / MoveVec.magnitude)  * MoveSpeed;
         }
     }
 
@@ -74,11 +81,4 @@ public class EnemyBase : MonoBehaviour,IDamageable {
     }
 }
 
-[CreateAssetMenu(fileName = "New EnemyProt",menuName = "Create EnemyProt")]
-public class EnemyProt : ScriptableObject {
-    public int MaxHealth;
-    public int Attack;
-    public int Defense;
-    public int MoveSpeed;
-}
 
