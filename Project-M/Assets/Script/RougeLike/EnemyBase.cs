@@ -64,9 +64,30 @@ public class EnemyBase : MonoBehaviour,IDamageable {
         //TODO:一秒一次的事件
     }
 
+    public void UpdateFaceDirectionByMoveVec() {
+        if (MoveVec.x < 0) {
+            this.transform.localScale = new Vector3(-1, 1, 1);
+        }
+        else {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+    }
+
+    public void UpdateFaceDirectionByChracter() {
+        if (CharacterController.Instance.characterBase.GameObject.transform.position.x - this.transform.position.x < 0) {
+            this.transform.localScale = new Vector3(-1,1,1);
+        }
+        else {
+            transform.localScale = new Vector3(1,1,1);
+        }
+    }
+
     public void Move() {
-        if (MoveVec != null) {
+        if (MoveVec != null && MoveVec != Vector2.zero) {
             rig.velocity = (MoveVec / MoveVec.magnitude)  * MoveSpeed;
+        }
+        else {
+            rig.velocity = Vector2.zero;
         }
     }
 

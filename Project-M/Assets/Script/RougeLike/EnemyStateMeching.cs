@@ -6,6 +6,7 @@ public class EnemyStateMeching {
     public EnemyStateBase idle = new EnemyIdle();
     public EnemyStateBase Runway = new EnemyRunaway();
     public EnemyStateBase Approch = new EnemyApproch();
+    public EnemyStateBase Careful = new EnemyCareful();
 
     public EnemyBase EnemyBase;
 
@@ -99,6 +100,7 @@ public class EnemyApproch:EnemyStateBase {
     public override void Run(EnemyBase enemyBase, EnemyStateMeching meching) {
         enemyBase.MoveVec = CharacterController.Instance.characterBase.GameObject.transform.position -
                             enemyBase.transform.position;
+        enemyBase.UpdateFaceDirectionByMoveVec();
     }
 
     public override void Thinking(EnemyBase enemyBase) {
@@ -106,10 +108,14 @@ public class EnemyApproch:EnemyStateBase {
             //TODO:进入逃跑状态
             enemyBase.StateMeching.ChangeState(this,enemyBase.StateMeching.Runway);
         }
+
+        if ((enemyBase.transform.position - CharacterController.Instance.characterBase.GameObject.transform.position).magnitude < 2) {
+            enemyBase.StateMeching.ChangeState(this,enemyBase.StateMeching.Careful);
+        }
     }
 
     public override void Exit(EnemyBase enemyBase) {
-        base.Exit(enemyBase);
+        enemyBase.MoveVec = Vector2.zero;
     }
 }
 
@@ -130,6 +136,53 @@ public class EnemyRunaway : EnemyStateBase {
         base.Run(enemyBase, meching);
         enemyBase.MoveVec = enemyBase.gameObject.transform.position -
                             CharacterController.Instance.characterBase.GameObject.transform.position;
+    }
+
+    public override void Exit(EnemyBase enemyBase) {
+        base.Exit(enemyBase);
+    }
+}
+
+public class EnemyCareful : EnemyStateBase {
+    public override void Init(EnemyBase enemyBase) {
+        
+    }
+
+    public override void Enter(EnemyBase enemyBase) {
+        
+    }
+
+    public override void Thinking(EnemyBase enemyBase) {
+        if ((CharacterController.Instance.characterBase.GameObject.transform.position - enemyBase.gameObject.transform.position).magnitude > 2) {
+            enemyBase.StateMeching.ChangeState(this,enemyBase.StateMeching.Approch);
+        }
+    }
+    
+    public override void Run(EnemyBase enemyBase, EnemyStateMeching meching) {
+        //TODO:绕着玩家移动
+        enemyBase.UpdateFaceDirectionByChracter();
+    }
+
+    public override void Exit(EnemyBase enemyBase) {
+
+    }
+}
+
+public class EnemyAttack : EnemyStateBase {
+    public override void Init(EnemyBase enemyBase) {
+        base.Init(enemyBase);
+    }
+
+    public override void Enter(EnemyBase enemyBase) {
+        base.Enter(enemyBase);
+    }
+
+    public override void Thinking(EnemyBase enemyBase) {
+        base.Thinking(enemyBase);
+    }
+
+    public override void Run(EnemyBase enemyBase, EnemyStateMeching meching) {
+        base.Run(enemyBase, meching);
     }
 
     public override void Exit(EnemyBase enemyBase) {
