@@ -13,6 +13,7 @@ public class RoomBase : MonoBehaviour,RoomInterface {
     public Vector2 DownPos;
     public RoomFightBase roomFight;
     public CharacterBase characterBase;
+    public GameObject gameobjectLayer;
     
     public virtual void Enter(Dir enterDir) {
         //TODO:进入房间的方向
@@ -55,10 +56,12 @@ public class RoomBase : MonoBehaviour,RoomInterface {
     public virtual void StartFight() {
         roomFight.StartFight();
         //TODO:关门
+        gameobjectLayer.SetActive(true);
     }
 
     public virtual void EndFight() {
         roomFight.EndFight();
         //TODO:开门
+        gameobjectLayer.SetActive(false);
     }
 }

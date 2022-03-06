@@ -14,6 +14,7 @@ public class BattleManager : MonoSingleton<BattleManager>
 
     public override void OnInitialize() {
         base.OnInitialize();
+        Application.targetFrameRate = 60;
     }
 
     public override void OnUnInitialize() {
@@ -21,6 +22,22 @@ public class BattleManager : MonoSingleton<BattleManager>
     }
 
     public void CalculateDamage(CharacterBase attacker,CharacterBase defender,int damage) {
+        var realDamage = attacker.Attack + damage;
+
+        if (attacker.Team != defender.Team) {
+            defender.OnDamage(realDamage);
+        }
+    }
+
+    public void CalculateDamage(CharacterBase attacker,EnemyBase defender,int damage) {
+        var realDamage = attacker.Attack + damage;
+
+        if (attacker.Team != defender.Team) {
+            defender.OnDamage(realDamage);
+        }
+    }
+
+    public void CalculateDamage(EnemyBase attacker,CharacterBase defender,int damage) {
         var realDamage = attacker.Attack + damage;
 
         if (attacker.Team != defender.Team) {

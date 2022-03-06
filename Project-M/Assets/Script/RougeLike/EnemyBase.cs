@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
+using TMPro;
 
 public class EnemyBase : MonoBehaviour,IDamageable {
     public EnemyStateMeching StateMeching;
@@ -97,9 +98,26 @@ public class EnemyBase : MonoBehaviour,IDamageable {
             //TODO:死亡状态，可能掉落物品
         }
 
-
+        new UnityTask(PlayAnimation(damagePoint));
         return CurHealth;
     }
+
+    IEnumerator PlayAnimation(int DamagePoint) {
+        var ondamageText = GameObjectPool.Instance.CreatUIFromPool("OnHealthChangeText");
+        ondamageText.transform.parent = GameManager.Instance.MainCanvas.transform;
+        var gameobjectScreenPos = Camera.main.WorldToScreenPoint(this.transform.position + Vector3.up);
+        ondamageText.transform.position = Camera.main.ScreenToWorldPoint(gameobjectScreenPos);
+        ondamageText.transform.localScale = Vector3.one;
+        ondamageText.GetComponent<TMP_Text>().text = $"-{DamagePoint}";
+
+        var animator = GetComponent<Animator>();
+        animator.SetBool("OnDamage", true);
+        yield return new WaitForSeconds(0.33f);
+        animator.SetBool("OnDamage", false);
+        GameObjectPool.Instance.RemoveGameObjectToPool(ondamageText);
+    }
+
+
 }
 
 

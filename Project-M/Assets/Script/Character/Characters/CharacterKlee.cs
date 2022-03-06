@@ -64,7 +64,7 @@ public class CharacterKlee : CharacterBase
             curT = curT + ((Time.fixedDeltaTime) / animationTime);//将动画的时间归一化成0~1的范围
             yield return new WaitForFixedUpdate();
         }
-
+        
         GameObjectPool.Instance.RemoveGameObjectToPool(fireObject);
         //TODO:对落地区域造成伤害
         //TEMP:需要根据阵容来判断是否造成伤害
@@ -73,11 +73,17 @@ public class CharacterKlee : CharacterBase
             Debug.Log(col.gameObject.name);
             var isMapObject = col.gameObject.GetComponent<IMapObjectBase>();
             var isCharacter = col.gameObject.GetComponent<CharacterCanDamaged>();
+            var isEnemy = col.gameObject.GetComponent<EnemyBase>();
             if (isMapObject != null) {
                 BattleManager.Instance.CalculateMapObjectDamage(this,isMapObject,5);
             } else if (isCharacter != null) {
                 BattleManager.Instance.CalculateDamage(this,isCharacter.characterBase,5);
+            }else if (isEnemy != null) {
+                BattleManager.Instance.CalculateDamage(this, isEnemy, Attack);//打小怪
             }
+
+            
+
         }
 
 
