@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Map;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
@@ -19,14 +20,16 @@ public class PlayerController : MonoSingleton<PlayerController> {
     private Dictionary<KeyCode, bool> keyDic = new Dictionary<KeyCode, bool>();
 
     private void Start() {
-        var keycodes = Enum.GetValues(typeof(KeyCode));
-        foreach (var keycode in keycodes) {
-            keyDic.Add((KeyCode)keycode,false);
+        var map = MapGenerator.CreateMap(5, 5, 10);
+        for (int i = 0; i < map.MaxY; i++) {
+            Debug.Log($"{(map.Rooms[0,i].IsRoom?"0":"+")} {(map.Rooms[1, i].IsRoom ? "0" : "+")} {(map.Rooms[2, i].IsRoom ? "0" : "+")} {(map.Rooms[3, i].IsRoom ? "0" : "+")} {(map.Rooms[4, i].IsRoom ? "0" : "+")}");
         }
 
-        foreach (var kvp in keyDic) {
-            Debug.Log(kvp.Key);
+        for (int i = 0; i < map.MaxY; i++) {
+            Debug.Log($"{(map.Rooms[0, i].dirType)} {(map.Rooms[1, i].dirType)} {(map.Rooms[2, i].dirType)} {(map.Rooms[3, i].dirType)} {(map.Rooms[4, i].dirType)}");
         }
+
+        Debug.Log($"开始坐标为[{map.StartX},{map.StartY}],结束坐标为[{map.EndX},{map.EndY}]");
     }
 
     public bool GetPlayerPressKey(KeyCode code) {
