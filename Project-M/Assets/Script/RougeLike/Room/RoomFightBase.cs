@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.ReorderableList;
 using UnityEngine;
 
 [SerializeField]
 public class RoomFightBase : MonoBehaviour{
     public bool IsClear;
+    public RoomFightType Type;
+    public List<EnemyBase> Enemys;
+
     public void Update() {
         if (IsClear) {
             //TODO:当房间清理完毕
