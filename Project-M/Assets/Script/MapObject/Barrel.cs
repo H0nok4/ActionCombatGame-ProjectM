@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Barrel : IMapObjectBase
+public class Barrel : MapObjectBase
 {
     public override int OnDamage(int damagePoint) {
 

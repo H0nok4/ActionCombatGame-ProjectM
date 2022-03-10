@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DataCenter : MonoSingleton<DataCenter>
@@ -10,6 +12,9 @@ public class DataCenter : MonoSingleton<DataCenter>
     private readonly Dictionary<string,GameObject> _weapon = new Dictionary<string, GameObject>();
     private readonly Dictionary<string, CharacterProperty> _characterProperty = new Dictionary<string, CharacterProperty>();
     private readonly Dictionary<string, GameObject> _UI = new Dictionary<string, GameObject>();
+    private readonly Dictionary<string, GameObject> _MapObject = new Dictionary<string, GameObject>();
+    private readonly Dictionary<string, GameObject> _RoomFight = new Dictionary<string, GameObject>();
+    private readonly Dictionary<string, GameObject> _Room = new Dictionary<string, GameObject>();
     #endregion
 
     #region 属性
@@ -46,6 +51,9 @@ public class DataCenter : MonoSingleton<DataCenter>
         LoadWeaponFromRes();
         LoadCharacterPropertyFromRes();
         LoadAllUIFromRes();
+        LoadAllMapObjectFromRes();
+        LoadAllRoomFromRes();
+        LoadAllRoomFightFromRes();
     }
 
     #region 调取资源
@@ -93,6 +101,33 @@ public class DataCenter : MonoSingleton<DataCenter>
         Debug.LogError($"读取UI失败，Name = {name}");
         return null;
     }
+
+    public GameObject GetMapObjectByName(string name) {
+        if (_MapObject.ContainsKey(name)) {
+            return _MapObject[name];
+        }
+
+        Debug.LogError($"读取MapObject失败，Name = {name}");
+        return null;
+    }
+
+    public GameObject GetRoomFightByName(string name) {
+        if (_RoomFight.ContainsKey(name)) {
+            return _RoomFight[name];
+        }
+
+        Debug.LogError($"读取RoomFight失败，name = {name}");
+        return null;
+    }
+
+    public GameObject GetRoomByName(string name) {
+        if (_Room.ContainsKey(name)) {
+            return _RoomFight[name];
+        }
+
+        Debug.LogError($"读取Room失败，name = {name}");
+        return null;
+    }
     #endregion
 
 
@@ -131,6 +166,29 @@ public class DataCenter : MonoSingleton<DataCenter>
         foreach (var ui in UIs) {
             _UI.Add(ui.name, (GameObject)ui);
         }
+    }
+
+    public void LoadAllMapObjectFromRes() {
+        var MapObjects = Resources.LoadAll("Prefabs/MapObject");
+        foreach (var mapObject in MapObjects) {
+            _MapObject.Add(mapObject.name,(GameObject)mapObject);
+        }
+    }
+
+    public void LoadAllRoomFightFromRes() {
+        var RoomFights = Resources.LoadAll("Prefabs/RoomFight");
+        foreach (var roomFight in RoomFights) {
+            _RoomFight.Add(roomFight.name,(GameObject)roomFight);
+        }
+        Debug.Log($"加载了{RoomFights.Length}个房间战斗");
+    }
+
+    public void LoadAllRoomFromRes() {
+        var Rooms = Resources.LoadAll("Prefabs/Map");
+        foreach (var room in Rooms) {
+            _Room.Add(room.name,(GameObject)room);
+        }
+        Debug.Log($"加载了{Rooms.Length}个房间");
     }
     #endregion
 

@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class IMapObjectBase : MonoBehaviour,IDamageable {
+public class MapObjectBase : MonoBehaviour,IDamageable {
     public int MaxHealth;
     public int CurHealth;
 

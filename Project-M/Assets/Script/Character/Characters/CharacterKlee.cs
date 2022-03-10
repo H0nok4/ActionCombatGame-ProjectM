@@ -71,7 +71,7 @@ public class CharacterKlee : CharacterBase
         var cols = Physics2D.OverlapCircleAll(new Vector3(fireObject.gameObject.transform.position.x,fireObject.gameObject.transform.position.y,0), 1f);
         foreach (var col in cols) {
             Debug.Log(col.gameObject.name);
-            var isMapObject = col.gameObject.GetComponent<IMapObjectBase>();
+            var isMapObject = col.gameObject.GetComponent<MapObjectBase>();
             var isCharacter = col.gameObject.GetComponent<CharacterCanDamaged>();
             var isEnemy = col.gameObject.GetComponent<EnemyBase>();
             if (isMapObject != null) {

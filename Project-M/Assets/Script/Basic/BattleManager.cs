@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class BattleManager : MonoSingleton<BattleManager>
 {
-    //��ɫ״̬
+    //��ɫ״̬
     public static readonly Attack attackState = new Attack();
     public static readonly Idle idleState = new Idle();
     public static readonly Move moveState = new Move();
     public static readonly Dash dashState = new Dash();
     public static readonly Charge chargeState = new Charge();
     public static readonly OnDamage onDamageState = new OnDamage();
-
+    public int GoldNum = 0;
     public override void OnInitialize() {
         base.OnInitialize();
         Application.targetFrameRate = 60;
+        GoldNum = 0;
     }
 
     public override void OnUnInitialize() {
@@ -45,7 +46,7 @@ public class BattleManager : MonoSingleton<BattleManager>
         }
     }
 
-    public void CalculateMapObjectDamage(CharacterBase attacker,IMapObjectBase mapObjectBase,int damage) {
+    public void CalculateMapObjectDamage(CharacterBase attacker,MapObjectBase mapObjectBase,int damage) {
         var realDamage = attacker.Attack + damage;
         mapObjectBase.OnDamage(realDamage);
     }

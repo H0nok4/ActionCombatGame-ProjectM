@@ -57,6 +57,69 @@ public class GameObjectPool : MonoSingleton<GameObjectPool>
             return instanceGo;
         }
     }
+
+    public GameObject CreatMapObjectFromPool(string objectName) {
+        if (ObjectPool.ContainsKey(objectName)) {
+            var objects = ObjectPool[objectName];
+            var needObject = objects[objects.Count - 1];
+            objects.RemoveAt(objects.Count - 1);
+            if (objects.Count == 0) {
+                ObjectPool.Remove(objectName);
+            }
+            needObject.SetActive(true);
+            needObject.transform.SetParent(null);
+
+            return needObject;
+        }
+        else {
+            var uiGameobejct = DataCenter.Instance.GetMapObjectByName(objectName);
+            var instanceGo = Instantiate(uiGameobejct, Vector3.zero, Quaternion.identity);
+            instanceGo.name = uiGameobejct.name;
+            return instanceGo;
+        }
+    }
+
+    public GameObject CreatRoomFromPool(string objectName) {
+        if (ObjectPool.ContainsKey(objectName)) {
+            var objects = ObjectPool[objectName];
+            var needObject = objects[objects.Count - 1];
+            objects.RemoveAt(objects.Count - 1);
+            if (objects.Count == 0) {
+                ObjectPool.Remove(objectName);
+            }
+            needObject.SetActive(true);
+            needObject.transform.SetParent(null);
+
+            return needObject;
+        }
+        else {
+            var uiGameobejct = DataCenter.Instance.GetRoomByName(objectName);
+            var instanceGo = Instantiate(uiGameobejct, Vector3.zero, Quaternion.identity);
+            instanceGo.name = uiGameobejct.name;
+            return instanceGo;
+        }
+    }
+
+    public GameObject CreatRoomFightFromPool(string objectName) {
+        if (ObjectPool.ContainsKey(objectName)) {
+            var objects = ObjectPool[objectName];
+            var needObject = objects[objects.Count - 1];
+            objects.RemoveAt(objects.Count - 1);
+            if (objects.Count == 0) {
+                ObjectPool.Remove(objectName);
+            }
+            needObject.SetActive(true);
+            needObject.transform.SetParent(null);
+
+            return needObject;
+        }
+        else {
+            var uiGameobejct = DataCenter.Instance.GetRoomFightByName(objectName);
+            var instanceGo = Instantiate(uiGameobejct, Vector3.zero, Quaternion.identity);
+            instanceGo.name = uiGameobejct.name;
+            return instanceGo;
+        }
+    }
     #endregion
 
     #region 直接创造物体
@@ -78,6 +141,13 @@ public class GameObjectPool : MonoSingleton<GameObjectPool>
         var weaponGameObject = DataCenter.Instance.GetWeaponByName(weaponName);
         var instanceGo = Instantiate(weaponGameObject, Vector3.zero, Quaternion.identity);
 
+        return instanceGo;
+    }
+
+    public GameObject CreatMapObject(string mapObjectName) {
+        var mapObjectGameobejct = DataCenter.Instance.GetMapObjectByName(mapObjectName);
+        var instanceGo = Instantiate(mapObjectGameobejct, Vector3.zero, Quaternion.identity);
+        instanceGo.name = mapObjectGameobejct.name;
         return instanceGo;
     }
 

@@ -14,7 +14,7 @@ public class ProjectileBase : MonoBehaviour,IProjectile {
             Trigger();
         }
 
-        if (collision.gameObject.GetComponent<IMapObjectBase>()!= null) {
+        if (collision.gameObject.GetComponent<MapObjectBase>()!= null) {
             Trigger();
         }
     }
