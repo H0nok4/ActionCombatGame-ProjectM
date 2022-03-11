@@ -14,17 +14,19 @@ public class BattleManager : MonoSingleton<BattleManager>
     public static readonly OnDamage onDamageState = new OnDamage();
     public int GoldNum = 0;
 
-    public RoomMap Map;
+    public RoomManager RoomManager;
     public override void OnInitialize() {
         base.OnInitialize();
         Application.targetFrameRate = 60;
         GoldNum = 0;
-        Map = MapGenerator.CreateMap(5, 5, 10);
+        RoomManager = new RoomManager();
         InitBattle();
     }
 
     public void InitBattle() {
         //TODO:初始化战斗，玩家的起始房间没有RoomFight
+        RoomManager.Init();
+
     }
 
     public override void OnUnInitialize() {
