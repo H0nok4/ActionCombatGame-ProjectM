@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using TMPro;
+using Random = UnityEngine.Random;
 
 public class EnemyBase : MonoBehaviour,IDamageable {
     public EnemyStateMeching StateMeching;
@@ -96,8 +97,15 @@ public class EnemyBase : MonoBehaviour,IDamageable {
         CurHealth -= damagePoint;
         if (CurHealth <= 0) {
             //TODO:死亡状态，可能掉落物品
+            var number = Random.Range(0, 2);
+            if (number == 1) {
+                var coin = GameObjectPool.Instance.CreatMapObjectFromPool("Coin");
+                coin.transform.position = this.gameObject.transform.position;
+            }
+            GameObjectPool.Instance.RemoveGameObjectToPool(this.gameObject);
+            return 0;
         }
-
+        
         new UnityTask(PlayAnimation(damagePoint));
         return CurHealth;
     }

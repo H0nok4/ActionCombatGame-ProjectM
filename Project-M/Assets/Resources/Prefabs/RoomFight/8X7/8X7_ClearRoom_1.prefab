@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 522196554864196513}
-  - component: {fileID: 3168653710108867952}
+  - component: {fileID: 7234668513898119209}
   m_Layer: 0
   m_Name: 8X7_ClearRoom_1
   m_TagString: Untagged
@@ -34,7 +34,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3168653710108867952
+--- !u!114 &7234668513898119209
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,12 +43,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 2720845747212814381}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c18fec56176fb64795f440c3ec06105, type: 3}
+  m_Script: {fileID: 11500000, guid: 1f79c7761f09ce9469eac533d7299c7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   IsClear: 0
   Type: 0
-  Enemys:
+  RewardType: 0
+  RewardObject: {fileID: 0}
+  RewardNum: 0
+  targets:
   - {fileID: 2671405515346771086}
   - {fileID: 7439673061242279745}
   - {fileID: 3258164146723792580}

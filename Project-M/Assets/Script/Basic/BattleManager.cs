@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Map;
 using UnityEngine;
 
 public class BattleManager : MonoSingleton<BattleManager>
@@ -12,10 +13,18 @@ public class BattleManager : MonoSingleton<BattleManager>
     public static readonly Charge chargeState = new Charge();
     public static readonly OnDamage onDamageState = new OnDamage();
     public int GoldNum = 0;
+
+    public RoomMap Map;
     public override void OnInitialize() {
         base.OnInitialize();
         Application.targetFrameRate = 60;
         GoldNum = 0;
+        Map = MapGenerator.CreateMap(5, 5, 10);
+        InitBattle();
+    }
+
+    public void InitBattle() {
+        //TODO:初始化战斗，玩家的起始房间没有RoomFight
     }
 
     public override void OnUnInitialize() {

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6747599394241245923}
-  - component: {fileID: 3081130710673171523}
+  - component: {fileID: -8270158019903144738}
   m_Layer: 0
   m_Name: 4X4_ClearRoom_1
   m_TagString: Untagged
@@ -34,7 +34,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3081130710673171523
+--- !u!114 &-8270158019903144738
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,12 +43,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 2117957835742567816}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c18fec56176fb64795f440c3ec06105, type: 3}
+  m_Script: {fileID: 11500000, guid: 1f79c7761f09ce9469eac533d7299c7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   IsClear: 0
   Type: 0
-  Enemys:
+  RewardType: 2
+  RewardObject: {fileID: 7180725457355773501, guid: 397ff3c1e8527d043a7b3848fbd3fb42,
+    type: 3}
+  RewardNum: 1
+  targets:
   - {fileID: 7921127732266599977}
   - {fileID: 6070469017147784658}
   - {fileID: 6284105592022545359}

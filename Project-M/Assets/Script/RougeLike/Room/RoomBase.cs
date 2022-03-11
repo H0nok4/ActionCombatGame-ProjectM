@@ -12,34 +12,38 @@ public class RoomBase : MonoBehaviour,RoomInterface {
     public Vector2 RightPos;
     public Vector2 DownPos;
     public RoomFightBase roomFight;
-    public CharacterBase characterBase;
+
     public GameObject gameobjectLayer;
+    public Dir EnterDir;
+    public Dir ExitDir;
     
     public virtual void Enter(Dir enterDir) {
         //TODO:进入房间的方向
         Debug.Log("进入房间");
+        EnterDir = enterDir;
         StartFight();
     }
 
     public virtual void Exit(Dir existDir) {
         //TODO:离开房间的方向
+        ExitDir = existDir;
     }
 
     public void Update() {
-        if (characterBase == null) {
+        if (CharacterController.Instance.characterBase == null) {
             return;
         }
 
-        if (characterBase.GameObject.transform.position.x < LeftPos.x) {
+        if (CharacterController.Instance.characterBase.GameObject.transform.position.x < LeftPos.x) {
             //TODO:从左离开房间
             Exit(Dir.Left);
-        }else if (characterBase.GameObject.transform.position.y > LeftPos.y) {
+        }else if (CharacterController.Instance.characterBase.GameObject.transform.position.y > LeftPos.y) {
             //TODO:从上离开房间
             Exit(Dir.Up);
-        }else if (characterBase.GameObject.transform.position.x > RightPos.x) {
+        }else if (CharacterController.Instance.characterBase.GameObject.transform.position.x > RightPos.x) {
             //TODO:从又离开房间
             Exit(Dir.Right);
-        }else if (characterBase.GameObject.transform.position.y < DownPos.y) {
+        }else if (CharacterController.Instance.characterBase.GameObject.transform.position.y < DownPos.y) {
             //TODO:从下离开房间
             Exit(Dir.Down);
         }

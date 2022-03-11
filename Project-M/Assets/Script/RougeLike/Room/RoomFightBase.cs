@@ -4,10 +4,10 @@ using Unity.VisualScripting.ReorderableList;
 using UnityEngine;
 
 [SerializeField]
+
 public class RoomFightBase : MonoBehaviour{
     public bool IsClear;
     public RoomFightType Type;
-    public List<EnemyBase> Enemys;
     public RoomRewardType RewardType;
     public GameObject RewardObject;
     public int RewardNum;
@@ -30,10 +30,7 @@ public class RoomFightBase : MonoBehaviour{
     }
 
     public virtual void EndFight() {
-        //TODO:可以掉落东西之类的
-        if (RewardType != RoomRewardType.None) {
-            
-        }
+
     }
 }
 

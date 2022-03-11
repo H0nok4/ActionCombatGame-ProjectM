@@ -162,6 +162,8 @@ namespace Map {
     public class Room {
         public bool IsRoom;
         public RoomDirType dirType;
+        public GameObject RoomGameObject;
+        public RoomBase RoomBase;
     }
 
     public class RoomMap {
