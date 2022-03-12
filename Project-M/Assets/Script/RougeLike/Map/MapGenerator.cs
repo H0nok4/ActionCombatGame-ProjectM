@@ -75,30 +75,30 @@ namespace Map {
                         var room = roomMap.Rooms[i, j];
                         var dirData = FindDirData(i, j, roomMap);
                         if (dirData.Left == true && dirData.Up == true && dirData.Right == true && dirData.Down == true) {
-                            room.dirType = RoomDirType.LURD;
+                            room.dirType = RoomDirType.DLRU;
                         }else if (dirData.Left == false && dirData.Up == true && dirData.Right == true && dirData.Down == true) {
-                            room.dirType = RoomDirType.URD;
+                            room.dirType = RoomDirType.DRU;
                         }
                         else if (dirData.Left == true && dirData.Up == false && dirData.Right == true && dirData.Down == true) {
-                            room.dirType = RoomDirType.LRD;
+                            room.dirType = RoomDirType.DLR;
                         }
                         else if (dirData.Left == true && dirData.Up == true && dirData.Right == false && dirData.Down == true) {
-                            room.dirType = RoomDirType.LUD;
+                            room.dirType = RoomDirType.DLU;
                         }
                         else if (dirData.Left == true && dirData.Up == true && dirData.Right == true && dirData.Down == false) {
-                            room.dirType = RoomDirType.LUR;
+                            room.dirType = RoomDirType.LRU;
                         }
                         else if (dirData.Left == false && dirData.Up == false && dirData.Right == true && dirData.Down == true) {
-                            room.dirType = RoomDirType.RD;
+                            room.dirType = RoomDirType.DR;
                         }
                         else if (dirData.Left == false && dirData.Up == true && dirData.Right == false && dirData.Down == true) {
-                            room.dirType = RoomDirType.UD;
+                            room.dirType = RoomDirType.DU;
                         }
                         else if (dirData.Left == false && dirData.Up == true && dirData.Right == true && dirData.Down == false) {
-                            room.dirType = RoomDirType.UR;
+                            room.dirType = RoomDirType.RU;
                         }
                         else if (dirData.Left == true && dirData.Up == false && dirData.Right == false && dirData.Down == true) {
-                            room.dirType = RoomDirType.LD;
+                            room.dirType = RoomDirType.DL;
                         }
                         else if (dirData.Left == true && dirData.Up == false && dirData.Right == true && dirData.Down == false) {
                             room.dirType = RoomDirType.LR;
@@ -189,9 +189,9 @@ namespace Map {
 
     public enum RoomDirType {
         L,U,R,D,
-        LU,LR,LD,UR,UD,RD,
-        LUR,LUD,LRD,URD,
-        LURD
+        LU,LR,DL,RU,DU,DR,
+        LRU,DLU,DLR,DRU,
+        DLRU
     }
 
     public class RoomDirData {

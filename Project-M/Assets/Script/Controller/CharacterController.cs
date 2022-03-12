@@ -31,6 +31,7 @@ public class CharacterController : MonoSingleton<CharacterController> ,INetObjec
         HPBarController.Instance.UpdateHP(characterBase.MaxHealth);
         HPBarController.Instance.UpdateEnergy(characterBase.MaxEnergy);
         CameraController.Instance.Init(characterBase.GameObject);
+        BattleManager.Instance.RoomManager.EnterStartRoom();
     }
 
     private void Update() {

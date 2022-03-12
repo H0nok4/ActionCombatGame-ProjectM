@@ -122,7 +122,7 @@ public class DataCenter : MonoSingleton<DataCenter>
 
     public GameObject GetRoomByName(string name) {
         if (_Room.ContainsKey(name)) {
-            return _RoomFight[name];
+            return _Room[name];
         }
 
         Debug.LogError($"∂¡»°Room ß∞‹£¨name = {name}");

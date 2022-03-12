@@ -11,7 +11,8 @@ public class RoomBase : MonoBehaviour,RoomInterface {
     public Vector2 UpPos;
     public Vector2 RightPos;
     public Vector2 DownPos;
-    public RoomFightBase roomFight;
+    public RoomFightBase RoomFight;
+    public GameObject RoomFightGameObject;
 
     public GameObject gameobjectLayer;
     public Dir EnterDir;
@@ -21,12 +22,16 @@ public class RoomBase : MonoBehaviour,RoomInterface {
         //TODO:进入房间的方向
         Debug.Log("进入房间");
         EnterDir = enterDir;
-        StartFight();
+        if (!RoomFight.IsClear) {
+            StartFight();
+        }
+
     }
 
     public virtual void Exit(Dir existDir) {
         //TODO:离开房间的方向
         ExitDir = existDir;
+        BattleManager.Instance.RoomManager.ChangeRoom(existDir);
     }
 
     public void Update() {
@@ -48,23 +53,27 @@ public class RoomBase : MonoBehaviour,RoomInterface {
             Exit(Dir.Down);
         }
 
-        roomFight.Update();
-        if (roomFight != null) {
-            if (roomFight.IsClear) {
+
+        if (RoomFight != null) {
+            if (RoomFight.IsClear) {
                 EndFight();
-                roomFight = null;
+                RoomFight = null;
+            }
+            else {
+                RoomFight.Update();
             }
         }
     }
 
     public virtual void StartFight() {
-        roomFight.StartFight();
+        RoomFightGameObject.SetActive(true);
+        RoomFight.StartFight();
         //TODO:关门
         gameobjectLayer.SetActive(true);
     }
 
     public virtual void EndFight() {
-        roomFight.EndFight();
+        RoomFight.EndFight();
         //TODO:开门
         gameobjectLayer.SetActive(false);
     }
