@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Map;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
 
 public class RoomManager {
@@ -39,13 +40,19 @@ public class RoomManager {
     public void EnterStartRoom() {
         CurRoom = Map.Rooms[CurX, CurY];
         Map.Rooms[CurX, CurY].RoomGameObject.SetActive(true);
+        CharacterController.Instance.characterBase.GameObject.transform.parent =
+            CurRoom.RoomGameObject.transform.Find("Background");
         CurRoom.RoomBase.RoomFight.IsClear = true;
         Map.Rooms[CurX, CurY].RoomGameObject.transform.position = new Vector3(0, 0);
-        CharacterController.Instance.characterBase.GameObject.transform.position = new Vector3(0, 0);
+        
+        CurRoom.RoomBase.GetBound();
+        CharacterController.Instance.characterBase.GameObject.transform.localPosition = new Vector3((CurRoom.RoomBase.Left + CurRoom.RoomBase.Right) / 2, (CurRoom.RoomBase.Up + CurRoom.RoomBase.Down) / 2);
+
         Map.Rooms[CurX, CurY].RoomBase.gameobjectLayer.SetActive(false);
     }
 
     public void ChangeRoom(Dir toDir) {
+        CharacterController.Instance.characterBase.GameObject.transform.parent = null;
         CurRoom.RoomGameObject.SetActive(false);
         switch (toDir) {
             case Dir.Down:
@@ -79,6 +86,8 @@ public class RoomManager {
     public void ChangeRoom(Room nextRoom,Dir enterDir) {
         nextRoom.RoomGameObject.SetActive(true);
         CurRoom = nextRoom;
+        CharacterController.Instance.characterBase.GameObject.transform.parent =
+            CurRoom.RoomGameObject.transform.Find("Background");
         switch (enterDir) {
             case Dir.Down:
                 //TODO;从上面进入

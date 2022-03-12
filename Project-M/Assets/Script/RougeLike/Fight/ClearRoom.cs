@@ -22,7 +22,6 @@ public class ClearRoom : RoomFightBase {
                 var reward = GameObjectPool.Instance.CreatMapObjectFromPool(RewardObject.name);
                 reward.transform.position = transform.position;
             }
-
         }
     }
 }
