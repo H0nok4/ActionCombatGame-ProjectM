@@ -249,16 +249,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5901215f5050e44fbeb5f5768d98f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  left: 0
+  Left: 0
   Up: 0
   Right: 0
   Down: 0
-  LeftPos: {x: 0, y: 0}
-  UpPos: {x: 0, y: 0}
-  RightPos: {x: 0, y: 0}
-  DownPos: {x: 0, y: 0}
-  roomFight: {fileID: 0}
+  LeftPos: {x: -1.5, y: -0.5}
+  UpPos: {x: 0.5, y: 1.5}
+  RightPos: {x: 1.5, y: -0.5}
+  DownPos: {x: 0.5, y: -1.5}
+  RoomFight: {fileID: 0}
+  RoomFightGameObject: {fileID: 0}
   gameobjectLayer: {fileID: 2347299947305954865}
+  EnterDir: 0
+  ExitDir: 0
 --- !u!1 &5801285263509217888
 GameObject:
   m_ObjectHideFlags: 0
