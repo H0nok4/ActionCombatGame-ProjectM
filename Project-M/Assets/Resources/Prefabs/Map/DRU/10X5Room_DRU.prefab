@@ -1531,6 +1531,36 @@ CompositeCollider2D:
       - {x: 1.0000293, y: -2}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
+--- !u!1 &3734944526989719861
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6968593508152678620}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6968593508152678620
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3734944526989719861}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.46, y: -0.47, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 144165377297856621}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6662141670906116959
 GameObject:
   m_ObjectHideFlags: 0
@@ -1564,6 +1594,7 @@ Transform:
   - {fileID: 1947593648254293941}
   - {fileID: 2180362005907016620}
   - {fileID: 7366957686997496222}
+  - {fileID: 6968593508152678620}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1591,16 +1622,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5901215f5050e44fbeb5f5768d98f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  left: 0
+  Left: 0
   Up: 0
   Right: 0
   Down: 0
   LeftPos: {x: 0, y: 0}
-  UpPos: {x: 0, y: 0}
-  RightPos: {x: 0, y: 0}
-  DownPos: {x: 0, y: 0}
-  roomFight: {fileID: 0}
+  UpPos: {x: 0.5, y: 3.5}
+  RightPos: {x: 5.5, y: 1.5}
+  DownPos: {x: 0.5, y: -0.5}
+  RoomFight: {fileID: 0}
+  RoomFightGameObject: {fileID: 0}
   gameobjectLayer: {fileID: 6824857738456102029}
+  EnterDir: 0
+  ExitDir: 0
 --- !u!1 &6824857738456102029
 GameObject:
   m_ObjectHideFlags: 0

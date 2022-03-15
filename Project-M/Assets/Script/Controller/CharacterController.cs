@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using PlotSystem;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -32,27 +33,33 @@ public class CharacterController : MonoSingleton<CharacterController> ,INetObjec
         HPBarController.Instance.UpdateEnergy(characterBase.MaxEnergy);
         CameraController.Instance.Init(characterBase.GameObject);
         BattleManager.Instance.RoomManager.EnterStartRoom();
+        GameDirecter.instance.PlayScenario("Test");
     }
 
     private void Update() {
-        characterBase.Update();
-        while (PosChangeMsgQueue.Count > 0) {
-            var pos = PosChangeMsgQueue.Dequeue();
-            characterBase.GameObject.transform.position = pos.Pos;
-        }
-        
-        if (Input.GetKeyDown(KeyCode.Space)) {
+        if (GameManager.Instance.GameState == GameState.Battle) {
+            characterBase.Update();
+            while (PosChangeMsgQueue.Count > 0) {
+                var pos = PosChangeMsgQueue.Dequeue();
+                characterBase.GameObject.transform.position = pos.Pos;
+            }
 
-            characterBase.StateMeching.ChangeState(characterBase.StateMeching.curState,BattleManager.dashState);
-        }else if (PlayerController.Instance.GetSmashKeyDown()) {
-            //TODO:����Ϊ�Ҽ���ʼ�����ػ�
-            characterBase.StateMeching.ChangeState(characterBase.StateMeching.curState,BattleManager.chargeState);
-        }else if (PlayerController.Instance.GetPressAttackButton()) {
-            characterBase.StartAttack();
+            if (Input.GetKeyDown(KeyCode.Space)) {
+
+                characterBase.StateMeching.ChangeState(characterBase.StateMeching.curState, BattleManager.dashState);
+            }
+            else if (PlayerController.Instance.GetSmashKeyDown()) {
+                //TODO:����Ϊ�Ҽ���ʼ�����ػ�
+                characterBase.StateMeching.ChangeState(characterBase.StateMeching.curState, BattleManager.chargeState);
+            }
+            else if (PlayerController.Instance.GetPressAttackButton()) {
+                characterBase.StartAttack();
+            }
+
+            characterPosX = characterBase.GameObject.transform.position.x;
+            characterPosY = characterBase.GameObject.transform.position.y;
         }
 
-        characterPosX = characterBase.GameObject.transform.position.x;
-        characterPosY = characterBase.GameObject.transform.position.y;
     }
 
     private void FixedUpdate() {

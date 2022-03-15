@@ -64,13 +64,14 @@ namespace PlotSystem {
 
         #region 播放剧本
         public void PlayScenario(string Scenario) {
+            GameManager.Instance.GameState = GameState.PlayScenario;
             StartCoroutine(StartPlayScenario(Scenario));
         }
 
         IEnumerator StartPlayScenario(string Scenario) {
             //TODO:切换到上一个游戏状态 GameManager.Instance.SwitchGameState(GameState.PlayScenario);
-            state = ScenarioPlayStatus.start;
-            var texts = textScript.LoadScenarioTexts(StartScenario);
+            state = ScenarioPlayStatus.start;//TODO:test
+            var texts = textScript.LoadScenarioTexts(Scenario);
             curScenarioCommands = textScript.CreatCommands(texts);
             curCommandPosition = 0;
             foreach (var command in curScenarioCommands) {
@@ -91,6 +92,7 @@ namespace PlotSystem {
 
         public void EndPlayScenario() {
             //TODO:反转游戏状态 GameManager.instance.ReverseGameState();
+            GameManager.Instance.GameState = GameState.Battle;//TODO:test
             state = ScenarioPlayStatus.waitForNewScenario;
             curScenarioCommands.Clear();
             curCommandPosition = 0;

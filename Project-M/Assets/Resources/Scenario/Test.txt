@@ -1,0 +1,5 @@
+$Start;
+	text down klee;
+		这是一条测试用Text;
+	endtext;
+$End;

@@ -28,8 +28,21 @@ public class RoomBase : MonoBehaviour,RoomInterface {
         }
 
         GetBound();
-        CharacterController.Instance.characterBase.GameObject.transform.localPosition =
-            new Vector3((Left + Right) / 2, (Up + Down) / 2);
+        switch (enterDir) {
+            case Dir.Up:
+                CharacterController.Instance.characterBase.GameObject.transform.localPosition = UpPos;
+                break;
+            case Dir.Right:
+                CharacterController.Instance.characterBase.GameObject.transform.localPosition = RightPos;
+                break;
+            case Dir.Left:
+                CharacterController.Instance.characterBase.GameObject.transform.localPosition = LeftPos;
+                break;
+            case Dir.Down:
+                CharacterController.Instance.characterBase.GameObject.transform.localPosition = DownPos;
+                break;
+        }
+        
     }
 
     public void GetBound() {

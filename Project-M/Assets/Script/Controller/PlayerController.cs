@@ -20,14 +20,18 @@ public class PlayerController : MonoSingleton<PlayerController> {
     private Dictionary<KeyCode, bool> keyDic = new Dictionary<KeyCode, bool>();
 
     public bool GetPlayerPressKey(KeyCode code) {
-        if (Input.GetKey(code)) {
-            return true;
+        if (GameManager.Instance.GameState == GameState.Battle) {
+            if (Input.GetKey(code)) {
+                return true;
+            }
         }
+
 
         return false;
     }
 
     public MousePressEvent GetFreeAttackButton() {
+        
         if (Input.GetKeyUp(KeyCode.Mouse0)) {
             return new MousePressEvent(KeyCode.Mouse0,(lastTimePressAttackButton - ((DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000))/ 1000);
         }
