@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6564761332503903559}
   - component: {fileID: 6564761332503903558}
   - component: {fileID: 6564761332503903557}
+  - component: {fileID: -2497651781402567337}
   m_Layer: 0
   m_Name: Chest
   m_TagString: Untagged
@@ -103,3 +104,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-2497651781402567337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6564761332503903556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03f1a548dde232d45814918651d6f7e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHealth: 0
+  CurHealth: 0
+  CanOpen: 0

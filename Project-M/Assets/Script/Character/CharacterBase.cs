@@ -49,6 +49,8 @@ public class CharacterBase : ICharacter,IDamageable {
     public Animator Animator;
     public Rigidbody2D Rigbody;
     public CharacterStateMeching StateMeching;
+    public RelicManager RelicManager;
+    public BuffMeching BuffMeching;
 
     public virtual void Init(CharacterProperty property,Team team) {
         InitWithCharacterProperty(property,team);

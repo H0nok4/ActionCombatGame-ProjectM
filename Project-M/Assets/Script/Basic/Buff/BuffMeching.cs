@@ -78,9 +78,7 @@ public class BuffMeching {
             if (m_Buffs[i].durationType == BuffDurationType.limit) {
                 m_Buffs[i].curDurationTimes--;
             }
-
         }
-
     }
 
     public void RemoveBuff() {
