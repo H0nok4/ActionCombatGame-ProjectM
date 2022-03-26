@@ -24,3 +24,15 @@ public class RelicManager {
         relic.OnRemove(Character);
     }
 }
+
+
+public class TestRelic : RelicBase {
+    private Buff atkUp = new AttackUp();
+    public override void OnAdd(CharacterBase character) {
+        throw new System.NotImplementedException();
+    }
+
+    public override void OnRemove(CharacterBase character) {
+        throw new System.NotImplementedException();
+    }
+}

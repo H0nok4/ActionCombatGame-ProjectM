@@ -24,7 +24,7 @@ public class BuffMeching {
     public void AddBuff(Buff newBuff) {
         bool hasSameBuff = false;
         for (int i = 0;i < m_Buffs.Count;i++) {
-            if (m_Buffs[i].id == newBuff.id) {
+            if (m_Buffs[i].ID == newBuff.ID) {
                 //如果有重复的技能，刷新该技能的回合数，尝试叠加层数
                 hasSameBuff = true;
                 m_Buffs[i].curDurationTimes = m_Buffs[i].maxDurationTimes;
@@ -55,7 +55,7 @@ public class BuffMeching {
 
         bool hasSameBuff = false;
         for (int i = 0;i < m_Buffs.Count;i++) {
-            if (m_Buffs[i].id == newBuff.id) {
+            if (m_Buffs[i].ID == newBuff.ID) {
                 //如果有重复的技能，刷新该技能的回合数，尝试叠加层数
                 hasSameBuff = true;
                 m_Buffs[i].curDurationTimes = m_Buffs[i].maxDurationTimes;

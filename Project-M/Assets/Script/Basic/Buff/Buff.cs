@@ -8,8 +8,8 @@ public enum BuffDurationType {
 }
 
 public class Buff {
-    public int id;
-    public string buffName;
+    public int ID;
+    public string BuffName;
     public BuffDurationType durationType;
     public short maxDurationTimes;
     public short curDurationTimes;
