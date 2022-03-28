@@ -34,7 +34,7 @@ public class BattleManager : MonoSingleton<BattleManager>
     }
 
     public void CalculateDamage(CharacterBase attacker,CharacterBase defender,int damage) {
-        var realDamage = attacker.Attack + damage;
+        var realDamage = attacker.CharacterStates[StateType.Attack] + damage;
 
         if (attacker.Team != defender.Team) {
             defender.OnDamage(realDamage);
@@ -42,7 +42,7 @@ public class BattleManager : MonoSingleton<BattleManager>
     }
 
     public void CalculateDamage(CharacterBase attacker,EnemyBase defender,int damage) {
-        var realDamage = attacker.Attack + damage;
+        var realDamage = attacker.CharacterStates[StateType.Attack] + damage;
 
         if (attacker.Team != defender.Team) {
             defender.OnDamage(realDamage);
@@ -58,7 +58,7 @@ public class BattleManager : MonoSingleton<BattleManager>
     }
 
     public void CalculateMapObjectDamage(CharacterBase attacker,MapObjectBase mapObjectBase,int damage) {
-        var realDamage = attacker.Attack + damage;
+        var realDamage = attacker.CharacterStates[StateType.Attack] + damage;
         mapObjectBase.OnDamage(realDamage);
     }
 }

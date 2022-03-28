@@ -169,6 +169,7 @@ public class EnemyCareful : EnemyStateBase {
 }
 
 public class EnemyAttack : EnemyStateBase {
+    public float LastTimeAttack;
     public override void Init(EnemyBase enemyBase) {
         base.Init(enemyBase);
     }
@@ -183,6 +184,10 @@ public class EnemyAttack : EnemyStateBase {
 
     public override void Run(EnemyBase enemyBase, EnemyStateMeching meching) {
         base.Run(enemyBase, meching);
+        if (Time.time - LastTimeAttack > 1.5f) {
+            //TODO£º¹¥»÷£¡
+
+        }
     }
 
     public override void Exit(EnemyBase enemyBase) {

@@ -10,7 +10,7 @@ public class Charge : CharacterStateBase
         character.characterState = CharacterState.Charge;
         character.IsCharge = true;
         startChargeTime = DateTime.Now.ToUniversalTime().Ticks;
-        character.MoveSpeed = 2;
+        character.CharacterStates[StateType.Speed] = 2;
         //TODO:开始蓄力动画
     }
 
@@ -37,6 +37,6 @@ public class Charge : CharacterStateBase
     public override void Exit(CharacterBase character) {
         //将IsCharge = False
         character.IsCharge = false;
-        character.MoveSpeed = 3;
+        character.CharacterStates[StateType.Speed] = 3;
     }
 }

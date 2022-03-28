@@ -11,10 +11,10 @@ public class Buff {
     public int ID;
     public string BuffName;
     public BuffDurationType durationType;
-    public short maxDurationTimes;
-    public short curDurationTimes;
-    public short maxOverlayTimes;
-    public short curOverlayTimes;
+    public int maxDurationTimes;
+    public int curDurationTimes;
+    public int maxOverlayTimes;
+    public int curOverlayTimes;
     public object[] parameter;
     public List<string> tags;
     protected List<BuffEffect> m_buffEffects;

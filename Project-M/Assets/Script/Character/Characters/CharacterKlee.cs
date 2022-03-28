@@ -79,7 +79,7 @@ public class CharacterKlee : CharacterBase
             } else if (isCharacter != null) {
                 BattleManager.Instance.CalculateDamage(this,isCharacter.characterBase,5);
             }else if (isEnemy != null) {
-                BattleManager.Instance.CalculateDamage(this, isEnemy, Attack);//打小怪
+                BattleManager.Instance.CalculateDamage(this, isEnemy, CharacterStates[StateType.Attack]);//打小怪
             }
 
             

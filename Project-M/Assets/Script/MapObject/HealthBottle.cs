@@ -13,8 +13,8 @@ public class HealthBottle : MonoBehaviour
                 //TODO:»ØÑª20µã
                 Debug.Log("CharacterBase != null");
                 var character = CharacterController.Instance.characterBase;
-                if (character.CurHealth + 20 > character.MaxHealth) {
-                    character.CurHealth = character.MaxHealth;
+                if (character.CurHealth + 20 > character.CharacterStates[StateType.MaxHp]) {
+                    character.CurHealth = character.CharacterStates[StateType.MaxHp];
                 }
                 else {
                     character.CurHealth += 20;

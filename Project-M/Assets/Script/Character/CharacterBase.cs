@@ -17,15 +17,12 @@ public enum Team {
 }
 
 public class CharacterBase : ICharacter,IDamageable {
-    public int MaxHealth;
     public int CurHealth;
-    public int Attack;
     public float AttackRange;
     public int MaxEnergy;
     public float CurEnergy;
     public int MaxBurstEnergy;
     public int CurBurstEnergy;
-    public int MoveSpeed;
     public string CharacterName;
     public Team Team;
     public CharacterState characterState;
@@ -34,6 +31,7 @@ public class CharacterBase : ICharacter,IDamageable {
 
     public long LastTimeUseEnergy;
 
+    public Dictionary<StateType, int> CharacterStates = new Dictionary<StateType, int>();
     //物理状态相关
 
     public Vector2 MoveVec;
@@ -56,16 +54,17 @@ public class CharacterBase : ICharacter,IDamageable {
         InitWithCharacterProperty(property,team);
     }
     public void InitWithCharacterProperty(CharacterProperty property,Team team) {
-        MaxHealth = property.Health;
-        CurHealth = MaxHealth;
-        Attack = property.Attack;
+        CharacterStates.Add(StateType.Attack,property.Attack);
+        CharacterStates.Add(StateType.MaxHp,property.Health);
+        CharacterStates.Add(StateType.Speed,property.MoveSpeed);
+
+        CurHealth = CharacterStates[StateType.MaxHp];
         AttackRange = property.AttackRange;
         MaxEnergy = property.Energy;
         CurEnergy = MaxEnergy;
         MaxBurstEnergy = property.BurstEnergy;
         CurBurstEnergy = 0;
         CharacterName = property.CharacterName;
-        MoveSpeed = property.MoveSpeed;
 
         Team = team;
     }
@@ -167,10 +166,10 @@ public class CharacterBase : ICharacter,IDamageable {
         
         if (Mathf.Abs(inputVec.x) == 1 && Mathf.Abs(inputVec.y) == 1) {
             Animator.SetBool("IsMove",true);
-            Rigbody.velocity = inputVec * (MoveSpeed / Mathf.Sqrt(2));
+            Rigbody.velocity = inputVec * (CharacterStates[StateType.Speed] / Mathf.Sqrt(2));
         } else if (inputVec.x != 0 || inputVec.y != 0) {
             Animator.SetBool("IsMove",true);
-            Rigbody.velocity = inputVec * MoveSpeed;
+            Rigbody.velocity = inputVec * CharacterStates[StateType.Speed];
         } else {
             Animator.SetBool("IsMove",false);
             Rigbody.velocity = Vector2.zero;

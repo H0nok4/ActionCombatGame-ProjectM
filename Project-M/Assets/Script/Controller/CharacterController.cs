@@ -28,8 +28,8 @@ public class CharacterController : MonoSingleton<CharacterController> ,INetObjec
         characterBase = CharacterFactory.CreatCharacterInstance(characterKlee, "SkyBook");
 
         //TODO������������������
-        HPBarController.Instance.Init(characterBase.MaxHealth,characterBase.MaxEnergy);
-        HPBarController.Instance.UpdateHP(characterBase.MaxHealth);
+        HPBarController.Instance.Init(characterBase.CharacterStates[StateType.MaxHp], characterBase.MaxEnergy);
+        HPBarController.Instance.UpdateHP(characterBase.CharacterStates[StateType.MaxHp]);
         HPBarController.Instance.UpdateEnergy(characterBase.MaxEnergy);
         CameraController.Instance.Init(characterBase.GameObject);
         BattleManager.Instance.RoomManager.EnterStartRoom();

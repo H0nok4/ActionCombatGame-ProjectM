@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class BuffEffect : IBuffEffect {
     public Buff m_Buff;
-    public virtual void StateChange(ref int stateValue,CharacterBase character)//√在SrpgClassUnit的GetState方法中触发
+    public virtual void StateChange_Add(ref int stateValue,StateType stateType)//√在SrpgClassUnit的GetState方法中触发
     {
+
+    }
+
+    public virtual void StateChange_Plus(ref int stateValue, StateType stateType) {
 
     }
 
