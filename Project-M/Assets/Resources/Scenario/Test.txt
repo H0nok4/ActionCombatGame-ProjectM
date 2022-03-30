@@ -1,5 +1,37 @@
 $Start;
 	text down klee;
 		这是一条测试用Text;
+		接下来是不同位置的对话位置测试;
 	endtext;
+	text top klee;
+		这里是上方对话框;
+	endtext;
+	text mid klee;
+		这里是中间对话框;
+		接下来是选项测试;
+	endtext;
+	
+	option;
+		option1 这里是前往剧情点1;
+		option2 这里是前往剧情点2;
+	endoption;
+	
+	if option1 == 1 goto #剧情点1;
+	if option2 == 1 goto #剧情点2;
+	goto #剧情点1;
+	
+	#剧情点1;
+	text down klee;
+		这里是剧情点1;
+		剧情测试到此为止;
+	endtext;
+	goto #结束;
+	
+	#剧情点2;
+	text down klee;
+		这里是剧情点2;
+		剧情测试到此为止;
+	endtext;
+	
+	#结束;
 $End;

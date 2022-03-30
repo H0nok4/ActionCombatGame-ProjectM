@@ -7,6 +7,7 @@ public class EnemyStateMeching {
     public EnemyStateBase Runway = new EnemyRunaway();
     public EnemyStateBase Approch = new EnemyApproch();
     public EnemyStateBase Careful = new EnemyCareful();
+    public EnemyStateBase Attack = new EnemyAttack();
 
     public EnemyBase EnemyBase;
 
@@ -109,7 +110,7 @@ public class EnemyApproch:EnemyStateBase {
             enemyBase.StateMeching.ChangeState(this,enemyBase.StateMeching.Runway);
         }
 
-        if ((enemyBase.transform.position - CharacterController.Instance.characterBase.GameObject.transform.position).magnitude < 2) {
+        if ((enemyBase.transform.position - CharacterController.Instance.characterBase.GameObject.transform.position).magnitude < 3) {
             enemyBase.StateMeching.ChangeState(this,enemyBase.StateMeching.Careful);
         }
     }
@@ -153,9 +154,19 @@ public class EnemyCareful : EnemyStateBase {
     }
 
     public override void Thinking(EnemyBase enemyBase) {
-        if ((CharacterController.Instance.characterBase.GameObject.transform.position - enemyBase.gameObject.transform.position).magnitude > 2) {
+        if ((CharacterController.Instance.characterBase.GameObject.transform.position - enemyBase.gameObject.transform.position).magnitude > 3) {
             enemyBase.StateMeching.ChangeState(this,enemyBase.StateMeching.Approch);
         }
+
+        if (enemyBase.CurHealth / (float)enemyBase.MaxHealth < 0.2) {
+            //TODO:½øÈëÌÓÅÜ×´Ì¬
+            enemyBase.StateMeching.ChangeState(this, enemyBase.StateMeching.Runway);
+        }
+
+        if (Random.Range(0,2) == 1) {
+            enemyBase.StateMeching.ChangeState(this,enemyBase.StateMeching.Attack);
+        }
+
     }
     
     public override void Run(EnemyBase enemyBase, EnemyStateMeching meching) {
@@ -176,18 +187,28 @@ public class EnemyAttack : EnemyStateBase {
 
     public override void Enter(EnemyBase enemyBase) {
         base.Enter(enemyBase);
+        Debug.Log("Enemy½øÈëAttack×´Ì¬");
     }
 
     public override void Thinking(EnemyBase enemyBase) {
         base.Thinking(enemyBase);
+        if ((enemyBase.transform.position - CharacterController.Instance.characterBase.GameObject.transform.position).magnitude < 3) {
+            enemyBase.StateMeching.ChangeState(this, enemyBase.StateMeching.Careful);
+        }
     }
 
     public override void Run(EnemyBase enemyBase, EnemyStateMeching meching) {
         base.Run(enemyBase, meching);
         if (Time.time - LastTimeAttack > 1.5f) {
+            Debug.Log("Enemy Attack");
             //TODO£º¹¥»÷£¡
+            enemyBase.AttackTarget(CharacterController.Instance.characterBase.GameObject.transform.position);
 
+            enemyBase.StateMeching.ChangeState(this, enemyBase.StateMeching.Careful);
+            LastTimeAttack = Time.time;
         }
+
+        
     }
 
     public override void Exit(EnemyBase enemyBase) {

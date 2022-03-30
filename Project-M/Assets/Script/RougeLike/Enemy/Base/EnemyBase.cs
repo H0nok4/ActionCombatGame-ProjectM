@@ -122,6 +122,9 @@ public class EnemyBase : MonoBehaviour,IDamageable {
         GameObjectPool.Instance.RemoveGameObjectToPool(ondamageText);
     }
 
+    public virtual void AttackTarget(Vector2 targetPos) {
+
+    }
 
 }
 

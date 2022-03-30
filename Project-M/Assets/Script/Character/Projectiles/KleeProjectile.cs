@@ -5,9 +5,5 @@ using UnityEngine;
 
 public class KleeProjectile : ProjectileBase
 {
-    public override void Trigger() {
-        //TODO:kleeµÄFire·½·¨
-
-    }
 
 }

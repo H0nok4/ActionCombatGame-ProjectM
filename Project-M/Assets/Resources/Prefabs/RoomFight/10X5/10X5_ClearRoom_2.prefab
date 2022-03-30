@@ -51,7 +51,7 @@ MonoBehaviour:
   RewardObject: {fileID: 0}
   RewardNum: 0
   targets:
-  - {fileID: 9182334400704812111}
+  - {fileID: 3867646890976572533}
   - {fileID: 1419972216207672842}
 --- !u!1001 &5770561667745096639
 PrefabInstance:
@@ -215,15 +215,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6789992002066772383}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &9182334400704812111 stripped
+--- !u!114 &3867646890976572533 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2401775110910567888, guid: a5572e636c46e244cacec90457f88e73,
+  m_CorrespondingSourceObject: {fileID: 7752455943406978538, guid: a5572e636c46e244cacec90457f88e73,
     type: 3}
   m_PrefabInstance: {fileID: 6789992002066772383}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03afb20138999e340aeacd5e5dd1b30d, type: 3}
+  m_Script: {fileID: 11500000, guid: 61f2554981ce39944b4f25f6c817b2d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

@@ -1,18 +1,20 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GanyuProjectile : ProjectileBase
+public class SkullProjectile : ProjectileBase
 {
     float startTime;
-    public override void Init(CharacterBase characterBase) {
-        base.Init(characterBase);
+    public override void Init(EnemyBase enemyBase) {
+        base.Init(enemyBase);
         startTime = 0;
     }
     public override void Trigger(Collider2D collision) {
-        Debug.Log("GanyuProjectile的Trigger方法");
         //TODO:对目标造成少量伤害
+        var character = collision.gameObject.GetComponent<CharacterCanDamaged>();
+        if (character != null) {
+            character.characterBase.OnDamage(EnemySender.Attack);
+        }
         GameObjectPool.Instance.RemoveGameObjectToPool(this.gameObject);
     }
 

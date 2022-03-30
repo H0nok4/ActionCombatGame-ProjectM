@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2401775110910567890}
   - component: {fileID: 2401775110910567889}
-  - component: {fileID: 2401775110910567888}
   - component: {fileID: 2401775110910567891}
   - component: {fileID: 2401775110910567916}
   - component: {fileID: 2401775110910567917}
+  - component: {fileID: 7752455943406978538}
   m_Layer: 0
   m_Name: Skull
   m_TagString: Untagged
@@ -87,28 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2401775110910567888
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2401775110910567895}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03afb20138999e340aeacd5e5dd1b30d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Prot: {fileID: 11400000, guid: 20ebf36f0e9ece64eafac491ec65a291, type: 2}
-  CurHealth: 0
-  Attack: 0
-  MoveSpeed: 0
-  MaxHealth: 0
-  Team: 1
-  Timer: 0
-  Tick: 0
-  MoveVec: {x: 0, y: 0}
-  rig: {fileID: 0}
 --- !u!50 &2401775110910567891
 Rigidbody2D:
   serializedVersion: 4
@@ -175,3 +153,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.6753951, y: 0.6599374}
   m_EdgeRadius: 0
+--- !u!114 &7752455943406978538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2401775110910567895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61f2554981ce39944b4f25f6c817b2d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Prot: {fileID: 11400000, guid: 20ebf36f0e9ece64eafac491ec65a291, type: 2}
+  CurHealth: 0
+  Attack: 0
+  MoveSpeed: 0
+  MaxHealth: 0
+  Team: 0
+  Timer: 0
+  Tick: 0
+  MoveVec: {x: 0, y: 0}
+  rig: {fileID: 0}
