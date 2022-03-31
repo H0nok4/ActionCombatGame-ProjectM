@@ -1,0 +1,12 @@
+using System.Collections;
+using System.Collections.Generic;
+using MyUI;
+using UnityEngine;
+
+public class ExitButton : ButtonBase
+{
+    public override void OnClick() {
+        //πÿ±’”Œœ∑
+        Application.Quit();
+    }
+}

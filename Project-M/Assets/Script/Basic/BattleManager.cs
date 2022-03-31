@@ -61,4 +61,9 @@ public class BattleManager : MonoSingleton<BattleManager>
         var realDamage = attacker.CharacterStates[StateType.Attack] + damage;
         mapObjectBase.OnDamage(realDamage);
     }
+
+    public void EndBattle(bool isWin) {
+        //TODO:结算流程，记录时间，获得的金币，考虑上传到服务器
+
+    }
 }
