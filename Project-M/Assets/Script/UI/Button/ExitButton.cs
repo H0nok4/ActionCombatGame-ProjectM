@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using MyUI;
 using UnityEngine;
 
-public class ExitButton : ButtonBase
-{
-    public override void OnClick() {
-        //关闭游戏
-        Application.Quit();
+namespace MyUI {
+    public class ExitButton : ButtonBase {
+        public override void OnClick() {
+            //关闭游戏
+            Application.Quit();
+        }
     }
 }
+
