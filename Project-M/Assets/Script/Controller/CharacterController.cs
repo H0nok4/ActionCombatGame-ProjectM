@@ -25,9 +25,14 @@ public class CharacterController : MonoSingleton<CharacterController> ,INetObjec
         var KleeProperty = DataCenter.Instance.GetCharacterPropertyByName(Name);
         var characterKlee = new CharacterKlee();
         characterKlee.Init(KleeProperty,Team.Player);
-        characterBase = CharacterFactory.CreatCharacterInstance(characterKlee, "SkyBook");
-
+        
+        InitBattleWithCharacter(characterKlee);
         //TODO������������������
+
+    }
+
+    public void InitBattleWithCharacter(CharacterBase character) {
+        characterBase = CharacterFactory.CreatCharacterInstance(character, "SkyBook");
         HPBarController.Instance.Init(characterBase.CharacterStates[StateType.MaxHp], characterBase.MaxEnergy);
         HPBarController.Instance.UpdateHP(characterBase.CharacterStates[StateType.MaxHp]);
         HPBarController.Instance.UpdateEnergy(characterBase.MaxEnergy);
