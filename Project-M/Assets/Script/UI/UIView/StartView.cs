@@ -6,5 +6,4 @@ namespace MyUI {
     public class StartView : UIBase {
 
     }
-
 }
