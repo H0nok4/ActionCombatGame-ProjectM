@@ -17,14 +17,13 @@ public class BattleManager : MonoSingleton<BattleManager>
     public RoomManager RoomManager;
     public override void OnInitialize() {
         base.OnInitialize();
-        Application.targetFrameRate = 60;
-        GoldNum = 0;
-        RoomManager = new RoomManager();
-        InitBattle();
     }
 
     public void InitBattle() {
         //TODO:初始化战斗，玩家的起始房间没有RoomFight
+        Application.targetFrameRate = 60;
+        GoldNum = 0;
+        RoomManager = new RoomManager();
         RoomManager.Init();
 
     }
