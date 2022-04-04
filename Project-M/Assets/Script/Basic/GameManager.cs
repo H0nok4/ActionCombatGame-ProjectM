@@ -8,13 +8,13 @@ public class GameManager : MonoSingleton<GameManager> {
     public GameState GameState;
 
     private void Update() {
-        if (GameState == GameState.PlayScenario) {
+        if (GameState == GameState.PlayScenario && GameDirecter.instance != null) {
             GameDirecter.instance.HandleUpdate();
         }
     }
 }
 
 public enum GameState {
-    Battle,
-    PlayScenario
+    PlayScenario,
+    Battle
 }

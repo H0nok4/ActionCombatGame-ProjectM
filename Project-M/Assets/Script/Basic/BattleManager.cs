@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Map;
 using UnityEngine;
+using PlotSystem;
 
 public class BattleManager : MonoSingleton<BattleManager>
 {
@@ -19,13 +20,29 @@ public class BattleManager : MonoSingleton<BattleManager>
         base.OnInitialize();
     }
 
-    public void InitBattle() {
+    public void InitBattle(string characterName) {
         //TODO:初始化战斗，玩家的起始房间没有RoomFight
+
         Application.targetFrameRate = 60;
         GoldNum = 0;
         RoomManager = new RoomManager();
         RoomManager.Init();
 
+        var KleeProperty = DataCenter.Instance.GetCharacterPropertyByName(characterName);
+        var characterKlee = new CharacterKlee();
+        characterKlee.Init(KleeProperty, Team.Player);
+
+        InitBattleWithCharacter(characterKlee);
+    }
+
+    public void InitBattleWithCharacter(CharacterBase character) {
+        CharacterController.Instance.characterBase = CharacterFactory.CreatCharacterInstance(character, "SkyBook");
+        HPBarController.Instance.Init(CharacterController.Instance.characterBase.CharacterStates[StateType.MaxHp], CharacterController.Instance.characterBase.MaxEnergy);
+        HPBarController.Instance.UpdateHP(CharacterController.Instance.characterBase.CharacterStates[StateType.MaxHp]);
+        HPBarController.Instance.UpdateEnergy(CharacterController.Instance.characterBase.MaxEnergy);
+        CameraController.Instance.Init(CharacterController.Instance.characterBase.GameObject);
+        RoomManager.EnterStartRoom();
+        GameDirecter.instance.PlayScenario("Test");
     }
 
     public override void OnUnInitialize() {

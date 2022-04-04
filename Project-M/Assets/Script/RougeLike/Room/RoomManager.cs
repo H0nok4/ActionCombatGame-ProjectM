@@ -106,6 +106,7 @@ public class RoomManager {
 
     }
 
+
     public string GetRamdonRoomSize() {
         return RoomSize[Random.Range(0, RoomSize.Length)];
     }

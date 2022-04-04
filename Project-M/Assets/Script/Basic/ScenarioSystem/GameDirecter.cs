@@ -92,6 +92,7 @@ namespace PlotSystem {
 
         public void EndPlayScenario() {
             //TODO:·´×ªÓÎÏ·×´Ì¬ GameManager.instance.ReverseGameState();
+            Debug.Log("GameState To Battle");
             GameManager.Instance.GameState = GameState.Battle;//TODO:test
             state = ScenarioPlayStatus.waitForNewScenario;
             curScenarioCommands.Clear();

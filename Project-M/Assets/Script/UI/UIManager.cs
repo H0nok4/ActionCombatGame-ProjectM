@@ -5,6 +5,8 @@ using UnityEngine;
 public class UIManager : MonoSingleton<UIManager> {
     public List<UIBase> UIPool = new List<UIBase>();
 
+    public GameObject BattleCanvas;
+    public GameObject PageCanvas;
     public UIBase StartPage1;
     public UIBase StartPage2;
 
@@ -44,5 +46,18 @@ public class UIManager : MonoSingleton<UIManager> {
             UIPool.RemoveAt(UIPool.Count - 1);
             UIPool[UIPool.Count - 1].Show();
         }
+    }
+
+    public void HidePageCanvas() {
+        PageCanvas.SetActive(false);
+        StartPage1.CloseSelf();
+        StartPage2.CloseSelf();
+        UIPool.Clear();
+        BattleCanvas.SetActive(true);
+    }
+
+    public void ShowPageCanvas(int defalutPageIndex) {
+        BattleCanvas.SetActive(false);
+        PageCanvas.SetActive(true);
     }
 }

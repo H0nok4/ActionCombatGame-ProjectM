@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class DataCenter : MonoSingleton<DataCenter>
 {
+    public Action OnResLoaded;
+
     #region 资源集
     private readonly Dictionary<string,GameObject> _projectile = new Dictionary<string,GameObject>();
     private readonly Dictionary<string,GameObject> _character = new Dictionary<string, GameObject>();
@@ -54,6 +56,9 @@ public class DataCenter : MonoSingleton<DataCenter>
         LoadAllMapObjectFromRes();
         LoadAllRoomFromRes();
         LoadAllRoomFightFromRes();
+
+        OnResLoaded?.Invoke();
+        OnResLoaded = null;
     }
 
     #region 调取资源

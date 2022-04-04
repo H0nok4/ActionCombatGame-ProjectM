@@ -1,9 +1,8 @@
-using System.Collections;
+
 using System.Collections.Generic;
-using PlotSystem;
-using Unity.VisualScripting;
+
 using UnityEngine;
-using UnityEngine.Rendering;
+
 
 public class CharacterPosChange {
     public Vector2 Pos;
@@ -16,33 +15,9 @@ public class CharacterController : MonoSingleton<CharacterController> ,INetObjec
     public float characterPosY = 0;
     public string Name;
     
-    public override void OnInitialize() {
-
-    }
-
-    private void Start() {
-        //Test
-        var KleeProperty = DataCenter.Instance.GetCharacterPropertyByName(Name);
-        var characterKlee = new CharacterKlee();
-        characterKlee.Init(KleeProperty,Team.Player);
-        
-        InitBattleWithCharacter(characterKlee);
-        //TODO������������������
-
-    }
-
-    public void InitBattleWithCharacter(CharacterBase character) {
-        characterBase = CharacterFactory.CreatCharacterInstance(character, "SkyBook");
-        HPBarController.Instance.Init(characterBase.CharacterStates[StateType.MaxHp], characterBase.MaxEnergy);
-        HPBarController.Instance.UpdateHP(characterBase.CharacterStates[StateType.MaxHp]);
-        HPBarController.Instance.UpdateEnergy(characterBase.MaxEnergy);
-        CameraController.Instance.Init(characterBase.GameObject);
-        BattleManager.Instance.RoomManager.EnterStartRoom();
-        GameDirecter.instance.PlayScenario("Test");
-    }
 
     private void Update() {
-        if (GameManager.Instance.GameState == GameState.Battle) {
+        if (GameManager.Instance.GameState == GameState.Battle && characterBase != null) {
             characterBase.Update();
             while (PosChangeMsgQueue.Count > 0) {
                 var pos = PosChangeMsgQueue.Dequeue();
@@ -68,12 +43,15 @@ public class CharacterController : MonoSingleton<CharacterController> ,INetObjec
     }
 
     private void FixedUpdate() {
-        characterBase.FixUpdate();
+        if(characterBase != null) {
+            characterBase.FixUpdate();
 
-        //TODO������Щ�Ƶ���ɫ��FixUpdate��
-        ChangeCharacterDirection();
-        UpdateWeaponRotation();
-        characterBase.RecoverEnergy();
+            //TODO������Щ�Ƶ���ɫ��FixUpdate��
+            ChangeCharacterDirection();
+            UpdateWeaponRotation();
+            characterBase.RecoverEnergy();
+        }
+
     }
 
     public void SetCharacterPos(float x, float y) {
