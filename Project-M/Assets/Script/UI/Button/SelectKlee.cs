@@ -6,7 +6,11 @@ namespace MyUI {
     public class SelectKlee : ButtonBase {
         public override void OnClick() {
             UIManager.Instance.HidePageCanvas();
-            BattleManager.Instance.InitBattle("Klee");
+            var characterProperty = DataCenter.Instance.GetCharacterPropertyByName("Klee");
+            CharacterBase character = new CharacterKlee();
+
+            character.Init(characterProperty, Team.Player);
+            BattleManager.Instance.InitBattle(character);
 
         }
 

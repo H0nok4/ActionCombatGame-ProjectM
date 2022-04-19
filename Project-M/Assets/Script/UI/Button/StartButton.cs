@@ -6,7 +6,7 @@ namespace MyUI {
         public override void OnClick() {
             //TODO:进入选择英雄页面
             Debug.Log("进入选择英雄页面");
-            UIManager.Instance.Show(UIManager.Instance.StartPage2);
+            UIManager.Instance.Show(UIManager.Instance.SelectHeroPage);
         }
 
     }

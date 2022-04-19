@@ -18,7 +18,7 @@ namespace Map {
             int curX = startX;
             int curY = startY;
             while (index < count - 1) {
-                var dir = Random.Range(0, 4);
+                var dir = Random.Range(0, 4);//随机出方向
                 switch (dir) {
                     case 0:
                         //TODO:Left
@@ -61,7 +61,7 @@ namespace Map {
                             }
                         }
                         break;
-                }
+                }//通过不同的方向生成地图
 
                 if (index == count - 1) {
                     roomMap.EndX = curX;
@@ -123,7 +123,7 @@ namespace Map {
                 }
             }
 
-            //TODO:房间方向类型生成完毕，开始设置房间的战斗类型
+            //房间方向类型生成完毕，开始设置房间的战斗类型
 
 
             return roomMap;

@@ -7,6 +7,7 @@ namespace MyUI {
         public override void OnClick() {
             //TODO:进入设置页面
             Debug.Log("进入设置页面");
+            UIManager.Instance.Show(UIManager.Instance.EndPage);
         }
     }
 }

@@ -7,6 +7,9 @@ public class GameManager : MonoSingleton<GameManager> {
     public GameObject MainCanvas;
     public GameState GameState;
 
+    private void Start() {
+        UIManager.Instance.Show(UIManager.Instance.StartPage);
+    }
     private void Update() {
         if (GameState == GameState.PlayScenario && GameDirecter.instance != null) {
             GameDirecter.instance.HandleUpdate();

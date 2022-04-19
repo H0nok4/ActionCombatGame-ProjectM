@@ -5,18 +5,6 @@ using UnityEngine;
 public class UIManager : MonoSingleton<UIManager> {
     public List<UIBase> UIPool = new List<UIBase>();
 
-    public GameObject BattleCanvas;
-    public GameObject PageCanvas;
-    public UIBase StartPage1;
-    public UIBase StartPage2;
-
-    private void Start() {
-        Init();
-    }
-    public void Init() {
-        UIPool.Add(StartPage1);
-        StartPage1.Show();
-    }
     public void Show(UIBase ui) {
         if (!UIPool.Contains(ui)) {
             if (UIPool.Count > 0) {
@@ -27,7 +15,7 @@ public class UIManager : MonoSingleton<UIManager> {
             ui.Show();
         }
         else {
-            //TODO:已经开启了，把他移到最上面
+            //已经开启了，把他移到最上面
             for (int i = 0; i < UIPool.Count; i++) {
                 if (UIPool[i] == ui) {
                     UIPool.RemoveAt(i);
@@ -35,28 +23,34 @@ public class UIManager : MonoSingleton<UIManager> {
                 UIPool[UIPool.Count - 1].CloseSelf();
                 UIPool.Add(ui);
                 ui.Show();
+                break;
             }
         }
-
     }
 
     public void CloseCurrentUI() {
-        if (UIPool.Count > 0) {
+        if (UIPool.Count > 1) {
             UIPool[UIPool.Count - 1].CloseSelf();
             UIPool.RemoveAt(UIPool.Count - 1);
             UIPool[UIPool.Count - 1].Show();
         }
     }
 
+    public GameObject BattleCanvas;
+    public GameObject PageCanvas;
+    public UIBase StartPage;
+    public UIBase SelectHeroPage;
+    public UIBase EndPage;
+
     public void HidePageCanvas() {
         PageCanvas.SetActive(false);
-        StartPage1.CloseSelf();
-        StartPage2.CloseSelf();
+        StartPage.CloseSelf();
+        SelectHeroPage.CloseSelf();
         UIPool.Clear();
         BattleCanvas.SetActive(true);
     }
 
-    public void ShowPageCanvas(int defalutPageIndex) {
+    public void ShowPageCanvas() {
         BattleCanvas.SetActive(false);
         PageCanvas.SetActive(true);
     }

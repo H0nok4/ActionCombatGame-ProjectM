@@ -6,7 +6,7 @@ using PlotSystem;
 
 public class BattleManager : MonoSingleton<BattleManager>
 {
-    //��ɫ״̬
+    //玩家角色状态实例
     public static readonly Attack attackState = new Attack();
     public static readonly Idle idleState = new Idle();
     public static readonly Move moveState = new Move();
@@ -18,21 +18,16 @@ public class BattleManager : MonoSingleton<BattleManager>
     public RoomManager RoomManager;
     public override void OnInitialize() {
         base.OnInitialize();
+        Application.targetFrameRate = 60;
     }
 
-    public void InitBattle(string characterName) {
-        //TODO:初始化战斗，玩家的起始房间没有RoomFight
-
-        Application.targetFrameRate = 60;
+    public void InitBattle(CharacterBase character) {
+        //初始化战斗，玩家的起始房间没有RoomFight
         GoldNum = 0;
         RoomManager = new RoomManager();
         RoomManager.Init();
 
-        var KleeProperty = DataCenter.Instance.GetCharacterPropertyByName(characterName);
-        var characterKlee = new CharacterKlee();
-        characterKlee.Init(KleeProperty, Team.Player);
-
-        InitBattleWithCharacter(characterKlee);
+        InitBattleWithCharacter(character);
     }
 
     public void InitBattleWithCharacter(CharacterBase character) {
@@ -41,13 +36,11 @@ public class BattleManager : MonoSingleton<BattleManager>
         HPBarController.Instance.UpdateHP(CharacterController.Instance.characterBase.CharacterStates[StateType.MaxHp]);
         HPBarController.Instance.UpdateEnergy(CharacterController.Instance.characterBase.MaxEnergy);
         CameraController.Instance.Init(CharacterController.Instance.characterBase.GameObject);
-        RoomManager.EnterStartRoom();
-        GameDirecter.instance.PlayScenario("Test");
+        RoomManager.EnterStartRoom();//进入房间
+
+        GameDirecter.instance.PlayScenario("Test");//战斗开始播放剧情
     }
 
-    public override void OnUnInitialize() {
-        base.OnUnInitialize();
-    }
 
     public void CalculateDamage(CharacterBase attacker,CharacterBase defender,int damage) {
         var realDamage = attacker.CharacterStates[StateType.Attack] + damage;
@@ -79,7 +72,8 @@ public class BattleManager : MonoSingleton<BattleManager>
     }
 
     public void EndBattle(bool isWin) {
-        //TODO:结算流程，记录时间，获得的金币，考虑上传到服务器
         //TODO:弹起结算页面
+        UIManager.Instance.ShowPageCanvas();
+        UIManager.Instance.Show(UIManager.Instance.EndPage);
     }
 }
