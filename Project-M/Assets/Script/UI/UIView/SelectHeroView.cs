@@ -6,6 +6,7 @@ using UnityEngine;
 namespace MyUI {
     public class SelectHeroView : UIBase {
         public ButtonBase BackButton;
+
         public TMP_Text TextLv;
         public TMP_Text TextGold;
 

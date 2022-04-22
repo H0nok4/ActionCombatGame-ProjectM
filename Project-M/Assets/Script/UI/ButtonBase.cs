@@ -32,7 +32,6 @@ namespace MyUI {
         }
 
         public virtual void OnClick() {
-            Debug.Log("有没有实现点击事件的ButtonUI");
             OnMouseClick.Invoke();
         }
     }

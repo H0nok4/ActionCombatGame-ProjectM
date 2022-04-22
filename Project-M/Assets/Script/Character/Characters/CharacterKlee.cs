@@ -81,11 +81,9 @@ public class CharacterKlee : CharacterBase
             }else if (isEnemy != null) {
                 BattleManager.Instance.CalculateDamage(this, isEnemy, CharacterStates[StateType.Attack]);//¥Ú–°π÷
             }
-
-            
-
         }
 
+        this.IsAttack = false;
 
         yield break;
     }
